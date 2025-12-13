@@ -30,8 +30,12 @@ export const deskStructure: StructureResolver = S =>
             .title('Categories')
         ),
 
-      S.divider(),
+      S.listItem()
+        .title('Genres')
+        .icon(TagIcon)
+        .child(S.documentTypeList('genre').title('Genres')),
 
+      S.divider(),
       S.listItem()
         .title('Comments & ratings')
         .icon(CommentIcon)
