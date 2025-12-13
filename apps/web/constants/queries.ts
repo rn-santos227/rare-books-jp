@@ -40,3 +40,21 @@ export const GENRES_QUERY = groq`
     "slug": slug.current
   }
 `;
+
+export const PROMOTIONS_QUERY = groq`
+  *[_type == "promotion" && active == true]|order(priority asc, _createdAt desc){
+    _id,
+    title,
+    tagline,
+    description,
+    ctaLabel,
+    ctaHref,
+    theme,
+    badge,
+    priority,
+    active,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt
+  }
+`;
+
