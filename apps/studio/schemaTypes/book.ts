@@ -51,6 +51,15 @@ export default defineType({
     }),
 
     defineField({
+      name: 'inventory',
+      title: 'Inventory',
+      type: 'number',
+      description: 'Available stock for this title.',
+      validation: Rule => Rule.integer().min(0),
+      initialValue: 0,
+    }),
+
+    defineField({
       name: 'condition',
       title: 'Condition',
       type: 'string',
