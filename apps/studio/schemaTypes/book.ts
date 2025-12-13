@@ -52,10 +52,10 @@ export default defineType({
 
     defineField({
       name: 'inventory',
-      title: 'Inventory',
+      title: 'In Stock',
       type: 'number',
-      description: 'Available stock for this title.',
-      validation: Rule => Rule.integer().min(0),
+      description: 'How many copies are available to sell.',
+      validation: Rule => Rule.min(0).integer(),
       initialValue: 0,
     }),
 
