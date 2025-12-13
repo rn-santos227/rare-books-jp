@@ -1,5 +1,9 @@
 import { defineType, defineField } from 'sanity'
 
+type ReviewParent = {
+  reviewType?: 'editorial' | 'user'
+}
+
 export default defineType({
   name: 'review',
   title: 'Review',
@@ -51,7 +55,7 @@ export default defineType({
       description: '1 (worst) to 5 (best)',
       validation: Rule =>
         Rule.custom((value, context) => {
-          const parent = context.parent as { reviewType?: string }
+          const parent = context.parent as ReviewParent
 
           if (parent?.reviewType === 'user' && !value) {
             return 'User reviews require a rating'
