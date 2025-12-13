@@ -1,1 +1,1 @@
-"# The Rare Books JP Headless CMS Marketplace" 
+# The Rare Books JP Headless CMS Marketplace
