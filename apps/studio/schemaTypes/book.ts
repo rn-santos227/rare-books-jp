@@ -21,6 +21,14 @@ export default defineType({
     }),
 
     defineField({
+      name: 'genres',
+      title: 'Genres',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'genre' }] }],
+      options: { layout: 'tags' },
+    }),
+
+    defineField({
       name: 'author',
       title: 'Author',
       type: 'string',
