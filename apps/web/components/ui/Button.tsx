@@ -1,11 +1,15 @@
-import { ButtonHTMLAttributes } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type SharedProps = {
   variant?: ButtonVariant;
   fullWidth?: boolean;
 };
+
+type ButtonProps =
+  | (ButtonHTMLAttributes<HTMLButtonElement> & SharedProps & { href?: undefined })
+  | (AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps & { href: string });
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
@@ -30,5 +34,9 @@ export function Button({
     .filter(Boolean)
     .join(" ");
 
-  return <button className={classes} {...props} />;
+  if ("href" in props && props.href) {
+    return <a className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)} />;
+  }
+  
+  return <button className={classes} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)} />;
 }
