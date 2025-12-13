@@ -55,9 +55,16 @@ export default function HomePageClient({ books, categories, genres }: Props) {
     [filteredBooks],
   );
 
+  const activeCategory = filters.categoryId
+    ? categories.find((category) => category._id === filters.categoryId)
+    : null;
+  const activeGenre = filters.genreId
+    ? genres.find((genre) => genre._id === filters.genreId)
+    : null;
+
   return (
-    <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
-      <aside className="flex flex-col gap-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+    <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
+      <aside className="flex flex-col gap-6 rounded-3xl bg-white/95 p-6 shadow-sm ring-1 ring-gray-200">
         <div className="flex items-center justify-between gap-2">
           <div>
             <p className="text-sm font-semibold text-indigo-600">Filters</p>
@@ -200,6 +207,123 @@ export default function HomePageClient({ books, categories, genres }: Props) {
           <Badge tone="info" className="text-sm">
             {filteredBooks.length} matches
           </Badge>
+        </div>
+
+
+        <div className="flex flex-col gap-3 rounded-3xl bg-white/90 p-4 shadow-sm ring-1 ring-gray-200">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2 rounded-2xl bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-gray-200">
+              <span className="text-xs font-semibold uppercase text-slate-500">
+                Category
+              </span>
+              <select
+                className="bg-transparent text-sm font-semibold focus:outline-none"
+                value={filters.categoryId ?? ""}
+                onChange={(event) =>
+                  updateFilter(
+                    "categoryId",
+                    event.target.value === "" ? null : event.target.value,
+                  )
+                }
+              >
+                <option value="">All</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2 rounded-2xl bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-gray-200">
+              <span className="text-xs font-semibold uppercase text-slate-500">
+                Genre
+              </span>
+              <select
+                className="bg-transparent text-sm font-semibold focus:outline-none"
+                value={filters.genreId ?? ""}
+                onChange={(event) =>
+                  updateFilter(
+                    "genreId",
+                    event.target.value === "" ? null : event.target.value,
+                  )
+                }
+              >
+                <option value="">All</option>
+                {genres.map((genre) => (
+                  <option key={genre._id} value={genre._id}>
+                    {genre.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2 rounded-2xl bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-gray-200">
+              <span className="text-xs font-semibold uppercase text-slate-500">
+                Price
+              </span>
+              <span className="font-semibold text-slate-800">
+                ¥{filters.priceRange[0].toLocaleString()} - ¥
+                {filters.priceRange[1].toLocaleString()}
+              </span>
+            </div>
+
+            <Button
+              variant="secondary"
+              className="ml-auto"
+              onClick={resetFilters}
+            >
+              Clear all
+            </Button>
+          </div>
+
+          {(activeCategory || activeGenre || filters.searchQuery) && (
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
+              <span className="uppercase tracking-wide text-slate-400">Active</span>
+              {activeCategory && (
+                <Badge
+                  tone="info"
+                  className="flex items-center gap-2 bg-sky-50 text-sky-700"
+                >
+                  {activeCategory.name}
+                  <button
+                    className="text-slate-500 hover:text-slate-700"
+                    onClick={() => updateFilter("categoryId", null)}
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+              {activeGenre && (
+                <Badge
+                  tone="neutral"
+                  className="flex items-center gap-2 bg-slate-100 text-slate-700"
+                >
+                  {activeGenre.name}
+                  <button
+                    className="text-slate-500 hover:text-slate-700"
+                    onClick={() => updateFilter("genreId", null)}
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+              {filters.searchQuery && (
+                <Badge
+                  tone="neutral"
+                  className="flex items-center gap-2 bg-indigo-50 text-indigo-700"
+                >
+                  {filters.searchQuery}
+                  <button
+                    className="text-slate-500 hover:text-slate-700"
+                    onClick={() => updateFilter("searchQuery", "")}
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
