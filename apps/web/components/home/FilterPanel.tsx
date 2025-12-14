@@ -44,6 +44,18 @@ export function FiltersPanel({
           <p className="text-sm font-semibold text-indigo-600">Filters</p>
           <p className="text-xs text-slate-500">Craft the perfect shelf</p>
         </div>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            className="text-sm font-semibold text-indigo-700"
+            onClick={resetFilters}
+          >
+            Reset
+          </Button>
+          <Button variant="secondary" onClick={onCollapse}>
+            Collapse
+          </Button>
+        </div>
       </div>
    </aside>
   )
