@@ -28,3 +28,18 @@ const conditions: { label: string; value: string }[] = [
   { label: "Damaged", value: "damaged" },
 ];
 
+export function FiltersPanel({
+  filters,
+  categories,
+  genres,
+  priceBounds,
+  updateFilter,
+  resetFilters,
+  onCollapse,
+}: FiltersPanelProps) {
+  return (
+   <aside className="flex flex-col gap-6 rounded-3xl bg-white/95 p-6 shadow-sm ring-1 ring-gray-200">
+    
+   </aside>
+  )
+}
