@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import BookCard from "@/components/home/BookCard";
+import { FiltersPanel } from "@/components/home/FiltersPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { TextField } from "@/components/ui/TextArea";
 import { useFilters } from "@/hooks/useFilters";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
@@ -17,29 +17,6 @@ const conditions: { label: string; value: string }[] = [
   { label: "Damaged", value: "damaged" },
 ];
 
-function FilterPill({
-  active,
-  label,
-  onClick,
-}: {
-  active: boolean;
-  label: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:shadow-sm ${
-        active
-          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-          : "border-gray-200 bg-white text-slate-700"
-      }`}
-    >
-      {label}
-    </button>
-  );
-}
-
 type Props = {
   books: Book[];
   categories: Category[];
@@ -49,6 +26,7 @@ type Props = {
 export default function HomePageClient({ books, categories, genres }: Props) {
   const { filters, filteredBooks, priceBounds, updateFilter, resetFilters } =
     useFilters(books);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(true);
 
   const bestSellers = useMemo(
     () => filteredBooks.slice(0, 8),
@@ -63,140 +41,20 @@ export default function HomePageClient({ books, categories, genres }: Props) {
     : null;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
-      <aside className="flex flex-col gap-6 rounded-3xl bg-white/95 p-6 shadow-sm ring-1 ring-gray-200">
-        <div className="flex items-center justify-between gap-2">
-          <div>
-            <p className="text-sm font-semibold text-indigo-600">Filters</p>
-            <p className="text-xs text-slate-500">Craft the perfect shelf</p>
-          </div>
-          <Button
-            variant="ghost"
-            className="text-sm font-semibold text-indigo-700"
-            onClick={resetFilters}
-          >
-            Reset
-          </Button>
-        </div>
-
-        <TextField
-          placeholder="Search by title or author"
-          value={filters.searchQuery}
-          onChange={(event) => updateFilter("searchQuery", event.target.value)}
+    <div
+      className={`grid gap-8 ${isFiltersOpen ? "lg:grid-cols-[320px_1fr]" : ""}`}
+    >
+      {isFiltersOpen && (
+        <FiltersPanel
+          filters={filters}
+          categories={categories}
+          genres={genres}
+          priceBounds={priceBounds}
+          updateFilter={updateFilter}
+          resetFilters={resetFilters}
+          onCollapse={() => setIsFiltersOpen(false)}
         />
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-slate-800">Categories</h3>
-            <Badge tone="info">{categories.length}</Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <FilterPill
-                key={category._id}
-                label={category.name}
-                active={filters.categoryId === category._id}
-                onClick={() =>
-                  updateFilter(
-                    "categoryId",
-                    filters.categoryId === category._id ? null : category._id,
-                  )
-                }
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-slate-800">Genres</h3>
-            <Badge tone="neutral">{genres.length}</Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {genres.map((genre) => (
-              <FilterPill
-                key={genre._id}
-                label={genre.name}
-                active={filters.genreId === genre._id}
-                onClick={() =>
-                  updateFilter(
-                    "genreId",
-                    filters.genreId === genre._id ? null : genre._id,
-                  )
-                }
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-slate-800">Condition</h3>
-            <Badge tone="success">Verified</Badge>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {conditions.map((condition) => (
-              <FilterPill
-                key={condition.value}
-                label={condition.label}
-                active={filters.condition === condition.value}
-                onClick={() =>
-                  updateFilter(
-                    "condition",
-                    filters.condition === condition.value
-                      ? null
-                      : condition.value,
-                  )
-                }
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-800">Price</h3>
-            <Badge tone="neutral">
-              ¥{filters.priceRange[0].toLocaleString()} - ¥
-              {filters.priceRange[1].toLocaleString()}
-            </Badge>
-          </div>
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <label className="flex flex-col gap-1 text-slate-600">
-              <span>Min</span>
-              <input
-                type="number"
-                min={priceBounds[0]}
-                max={priceBounds[1]}
-                value={filters.priceRange[0]}
-                onChange={(event) =>
-                  updateFilter("priceRange", [
-                    Number(event.target.value),
-                    filters.priceRange[1],
-                  ])
-                }
-                className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-slate-600">
-              <span>Max</span>
-              <input
-                type="number"
-                min={filters.priceRange[0]}
-                max={priceBounds[1]}
-                value={filters.priceRange[1]}
-                onChange={(event) =>
-                  updateFilter("priceRange", [
-                    filters.priceRange[0],
-                    Number(event.target.value) || priceBounds[1],
-                  ])
-                }
-                className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-              />
-            </label>
-          </div>
-        </div>
-      </aside>
+      )}
 
       <section className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
