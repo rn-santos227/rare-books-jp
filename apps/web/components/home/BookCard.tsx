@@ -16,7 +16,7 @@ type Props = {
 
 export default function BookCard({ book }: Props) {
   return (
-    <article className="group flex h-full flex-col gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg">
+    <article className="group grid h-full grid-rows-[auto,1fr] gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg">
       <div className="relative overflow-hidden rounded-xl bg-slate-50">
         <div className="aspect-3/4 overflow-hidden">
           <ImageViewer
@@ -56,7 +56,7 @@ export default function BookCard({ book }: Props) {
       </div>
       <div className="flex flex-1 flex-col gap-2 px-1">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-base font-semibold text-slate-900">{book.title}</h3>
+          <h3 className="text-base font-semibold leading-snug text-slate-900 wrap-break-word">{book.title}</h3>
           <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Live</span>
         </div>
         <p className="text-xs font-medium uppercase tracking-wide text-slate-500">

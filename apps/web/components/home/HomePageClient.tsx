@@ -327,7 +327,7 @@ export default function HomePageClient({ books, categories, genres }: Props) {
         </div>
 
         <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
             {bestSellers.map((book) => (
               <BookCard key={book._id} book={book} />
             ))}
