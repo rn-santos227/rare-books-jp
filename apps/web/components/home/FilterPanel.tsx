@@ -21,4 +21,10 @@ type FiltersPanelProps = {
   onCollapse: () => void;
 };
 
+const conditions: { label: string; value: string }[] = [
+  { label: "New", value: "new" },
+  { label: "Like New", value: "like_new" },
+  { label: "Used", value: "used" },
+  { label: "Damaged", value: "damaged" },
+];
 
