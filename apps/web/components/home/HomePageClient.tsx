@@ -10,13 +10,6 @@ import { Book } from "@/types/book";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
 
-const conditions: { label: string; value: string }[] = [
-  { label: "New", value: "new" },
-  { label: "Like New", value: "like_new" },
-  { label: "Used", value: "used" },
-  { label: "Damaged", value: "damaged" },
-];
-
 type Props = {
   books: Book[];
   categories: Category[];
@@ -62,11 +55,21 @@ export default function HomePageClient({ books, categories, genres }: Props) {
             <p className="text-sm font-semibold text-indigo-600">Live catalog</p>
             <h2 className="text-2xl font-bold text-slate-900">Latest arrivals</h2>
           </div>
-          <Badge tone="info" className="text-sm">
-            {filteredBooks.length} matches
-          </Badge>
+          <div className="flex items-center gap-3">
+            {!isFiltersOpen && (
+              <Button
+                variant="secondary"
+                className="font-semibold"
+                onClick={() => setIsFiltersOpen(true)}
+              >
+                Show filters
+              </Button>
+            )}
+            <Badge tone="info" className="text-sm">
+              {filteredBooks.length} matches
+            </Badge>
+          </div>
         </div>
-
 
         <div className="flex flex-col gap-3 rounded-3xl bg-white/90 p-4 shadow-sm ring-1 ring-gray-200">
           <div className="flex flex-wrap items-center gap-3">
