@@ -35,9 +35,19 @@ export default function HomePageClient({ books, categories, genres }: Props) {
 
   return (
     <div
-      className={`grid gap-8 ${isFiltersOpen ? "lg:grid-cols-[320px_1fr]" : ""}`}
+      className={`grid gap-8 transition-[grid-template-columns] duration-300 ease-in-out ${
+        isFiltersOpen ? "lg:grid-cols-[320px_1fr]" : "lg:grid-cols-1"
+      }`}
+
     >
-      {isFiltersOpen && (
+      <div
+        data-open={isFiltersOpen}
+        aria-hidden={!isFiltersOpen}
+        className={`origin-top overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-2 data-[open=false]:pointer-events-none data-[open=false]:opacity-0 ${
+          isFiltersOpen ? "max-h-500" : "max-h-0"
+        }`}
+      >
+
         <FiltersPanel
           filters={filters}
           categories={categories}
@@ -47,7 +57,7 @@ export default function HomePageClient({ books, categories, genres }: Props) {
           resetFilters={resetFilters}
           onCollapse={() => setIsFiltersOpen(false)}
         />
-      )}
+      </div>
 
       <section className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
