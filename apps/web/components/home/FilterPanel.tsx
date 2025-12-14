@@ -85,6 +85,28 @@ export function FiltersPanel({
           ))}
         </div>
       </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-slate-800">Genres</h3>
+          <Badge tone="neutral">{genres.length}</Badge>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {genres.map((genre) => (
+            <FilterPill
+              key={genre._id}
+              label={genre.name}
+              active={filters.genreId === genre._id}
+              onClick={() =>
+                updateFilter(
+                  "genreId",
+                  filters.genreId === genre._id ? null : genre._id,
+                )
+              }
+            />
+          ))}
+        </div>
+      </div>
    </aside>
   )
 }
