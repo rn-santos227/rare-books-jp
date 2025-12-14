@@ -18,7 +18,6 @@ type FiltersPanelProps = {
     value: FiltersState[Key],
   ) => void;
   resetFilters: () => void;
-  onCollapse: () => void;
 };
 
 const conditions: { label: string; value: string }[] = [
@@ -35,10 +34,9 @@ export function FiltersPanel({
   priceBounds,
   updateFilter,
   resetFilters,
-  onCollapse,
 }: FiltersPanelProps) {
   return (
-   <aside className="flex flex-col gap-6 rounded-3xl bg-white/95 p-6 shadow-sm ring-1 ring-gray-200">
+    <aside className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
       <div className="flex items-center justify-between gap-2">
         <div>
           <p className="text-sm font-semibold text-indigo-600">Filters</p>
@@ -51,9 +49,6 @@ export function FiltersPanel({
             onClick={resetFilters}
           >
             Reset
-          </Button>
-          <Button variant="secondary" onClick={onCollapse}>
-            Collapse
           </Button>
         </div>
       </div>

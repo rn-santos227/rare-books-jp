@@ -52,11 +52,10 @@ export default function HomePageClient({ books, categories, genres }: Props) {
           </Button>
         </div>
 
-
         <div
           data-open={isFiltersOpen}
           aria-hidden={!isFiltersOpen}
-          className={`mt-4 origin-top overflow-hidden rounded-2xl bg-slate-50/60 p-2 transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-1 data-[open=false]:pointer-events-none ${
+          className={`mt-4 origin-top overflow-hidden rounded-2xl transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-1 data-[open=false]:pointer-events-none ${
             isFiltersOpen ? "max-h-300 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
@@ -67,7 +66,6 @@ export default function HomePageClient({ books, categories, genres }: Props) {
             priceBounds={priceBounds}
             updateFilter={updateFilter}
             resetFilters={resetFilters}
-            onCollapse={() => setIsFiltersOpen(false)}
           />
         </div>
       </div>

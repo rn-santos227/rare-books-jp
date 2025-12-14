@@ -17,8 +17,8 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-300">
-            <span className="text-lg font-semibold text-white">Popular genres</span>
-            <Badge tone="info" className="bg-white/5 text-slate-200 ring-1 ring-white/10">
+            <span className="text-lg font-semibold text-black">Popular genres</span>
+            <Badge tone="info" className="bg-white/5 text-slate-500 ring-1 ring-white/10">
               Browse the shelf
             </Badge>
           </div>
@@ -46,8 +46,8 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-300">
-            <span className="text-lg font-semibold text-white">Popular categories</span>
-            <Badge tone="info" className="bg-white/5 text-slate-200 ring-1 ring-white/10">
+            <span className="text-lg font-semibold text-black">Popular categories</span>
+            <Badge tone="info" className="bg-white/5 text-slate-500 ring-1 ring-white/10">
               Live from Studio
             </Badge>
           </div>
@@ -73,8 +73,8 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
       <section className="space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-300">
-            <span className="text-lg font-semibold text-white">Recommended for you</span>
-            <Badge tone="info" className="bg-white/5 text-slate-200 ring-1 ring-white/10">
+            <span className="text-lg font-semibold text-black">Recommended for you</span>
+            <Badge tone="info" className="bg-white/5 text-slate-500 ring-1 ring-white/10">
               {books.length} items
             </Badge>
           </div>
