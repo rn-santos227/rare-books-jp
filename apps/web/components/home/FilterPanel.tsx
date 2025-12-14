@@ -107,6 +107,30 @@ export function FiltersPanel({
           ))}
         </div>
       </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-slate-800">Condition</h3>
+          <Badge tone="warning">{conditions.length}</Badge>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {conditions.map((condition) => (
+            <FilterPill
+              key={condition.value}
+              label={condition.label}
+              active={filters.condition === condition.value}
+              onClick={() =>
+                updateFilter(
+                  "condition",
+                  filters.condition === condition.value
+                    ? null
+                    : condition.value,
+                )
+              }
+            />
+          ))}
+        </div>
+      </div>
    </aside>
   )
 }
