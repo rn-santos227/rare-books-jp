@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface GeneralFooterLayoutProps {
+interface GeneralHeaderLayoutProps {
   children: ReactNode;
   maxWidthClassName?: string;
   padding?: string;
@@ -12,23 +12,23 @@ function composeClassName(parts: Array<string | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
-export function GeneralFooterLayout({
+export function GeneralHeaderLayout({
   children,
   maxWidthClassName = "max-w-6xl",
-  padding = "px-6 py-12",
+  padding = "px-6 py-5",
   className,
   containerClassName,
-}: GeneralFooterLayoutProps) {
+}: GeneralHeaderLayoutProps) {
   return (
-    <footer
+    <header
       className={composeClassName([
-        "border-t border-white/5 bg-[#0d111c] text-slate-200",
+        "border-b border-white/5 bg-[#121420]/95 shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
         className,
       ])}
     >
       <div
         className={composeClassName([
-          "mx-auto flex w-full flex-col gap-8",
+          "mx-auto flex w-full flex-col gap-4",
           maxWidthClassName,
           padding,
           containerClassName,
@@ -36,6 +36,6 @@ export function GeneralFooterLayout({
       >
         {children}
       </div>
-    </footer>
+    </header>
   );
 }
