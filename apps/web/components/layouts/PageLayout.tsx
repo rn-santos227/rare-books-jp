@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 
 type PageBackgroundTone = "muted" | "plain";
-
 interface PageLayoutProps {
   header?: ReactNode;
   hero?: ReactNode;
   children: ReactNode;
+  footer?: ReactNode;
   maxWidthClassName?: string;
   contentPadding?: string;
   contentGap?: string;
@@ -22,6 +22,7 @@ export function PageLayout({
   header,
   hero,
   children,
+  footer,
   maxWidthClassName = "max-w-6xl",
   contentPadding = "px-6 py-10",
   contentGap = "gap-10",
@@ -55,6 +56,7 @@ export function PageLayout({
       >
         {children}
       </div>
+      {footer}
     </main>
   );
 }
