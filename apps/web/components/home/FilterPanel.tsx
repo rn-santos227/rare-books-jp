@@ -131,6 +131,50 @@ export function FiltersPanel({
           ))}
         </div>
       </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-slate-800">Price</h3>
+          <Badge tone="neutral">
+            ¥{filters.priceRange[0].toLocaleString()} - ¥
+            {filters.priceRange[1].toLocaleString()}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-2 gap-3 text-sm">
+          <label className="flex flex-col gap-1 text-slate-600">
+            <span>Min</span>
+            <input
+              type="number"
+              min={priceBounds[0]}
+              max={priceBounds[1]}
+              value={filters.priceRange[0]}
+              onChange={(event) =>
+                updateFilter("priceRange", [
+                  Number(event.target.value),
+                  filters.priceRange[1],
+                ])
+              }
+              className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-slate-600">
+            <span>Max</span>
+            <input
+              type="number"
+              min={filters.priceRange[0]}
+              max={priceBounds[1]}
+              value={filters.priceRange[1]}
+              onChange={(event) =>
+                updateFilter("priceRange", [
+                  filters.priceRange[0],
+                  Number(event.target.value) || priceBounds[1],
+                ])
+              }
+              className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            />
+          </label>
+        </div>
+      </div>
    </aside>
   )
 }
