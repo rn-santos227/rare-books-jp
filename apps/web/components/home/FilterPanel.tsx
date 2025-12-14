@@ -39,7 +39,12 @@ export function FiltersPanel({
 }: FiltersPanelProps) {
   return (
    <aside className="flex flex-col gap-6 rounded-3xl bg-white/95 p-6 shadow-sm ring-1 ring-gray-200">
-    
+      <div className="flex items-center justify-between gap-2">
+        <div>
+          <p className="text-sm font-semibold text-indigo-600">Filters</p>
+          <p className="text-xs text-slate-500">Craft the perfect shelf</p>
+        </div>
+      </div>
    </aside>
   )
 }
