@@ -19,7 +19,7 @@ type Props = {
 export default function HomePageClient({ books, categories, genres }: Props) {
   const { filters, filteredBooks, priceBounds, updateFilter, resetFilters } =
     useFilters(books);
-  const [isFiltersOpen, setIsFiltersOpen] = useState(true);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const bestSellers = useMemo(
     () => filteredBooks.slice(0, 8),
@@ -34,29 +34,42 @@ export default function HomePageClient({ books, categories, genres }: Props) {
     : null;
 
   return (
-    <div
-      className={`grid gap-8 transition-[grid-template-columns] duration-300 ease-in-out ${
-        isFiltersOpen ? "lg:grid-cols-[320px_1fr]" : "lg:grid-cols-1"
-      }`}
+    <div className="space-y-8">
+      <div className="rounded-3xl bg-white/95 p-4 shadow-sm ring-1 ring-gray-200">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold text-indigo-600">Filter catalog</p>
+            <p className="text-xs text-slate-500">
+              Open the panel to refine your search.
+            </p>
+          </div>
+          <Button
+            variant="secondary"
+            className="font-semibold"
+            onClick={() => setIsFiltersOpen((prev) => !prev)}
+          >
+            {isFiltersOpen ? "Hide filters" : "Show filters"}
+          </Button>
+        </div>
 
-    >
-      <div
-        data-open={isFiltersOpen}
-        aria-hidden={!isFiltersOpen}
-        className={`origin-top overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-2 data-[open=false]:pointer-events-none data-[open=false]:opacity-0 ${
-          isFiltersOpen ? "max-h-500" : "max-h-0"
-        }`}
-      >
 
-        <FiltersPanel
-          filters={filters}
-          categories={categories}
-          genres={genres}
-          priceBounds={priceBounds}
-          updateFilter={updateFilter}
-          resetFilters={resetFilters}
-          onCollapse={() => setIsFiltersOpen(false)}
-        />
+        <div
+          data-open={isFiltersOpen}
+          aria-hidden={!isFiltersOpen}
+          className={`mt-4 origin-top overflow-hidden rounded-2xl bg-slate-50/60 p-2 transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-1 data-[open=false]:pointer-events-none ${
+            isFiltersOpen ? "max-h-300 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <FiltersPanel
+            filters={filters}
+            categories={categories}
+            genres={genres}
+            priceBounds={priceBounds}
+            updateFilter={updateFilter}
+            resetFilters={resetFilters}
+            onCollapse={() => setIsFiltersOpen(false)}
+          />
+        </div>
       </div>
 
       <section className="space-y-6">
@@ -65,20 +78,9 @@ export default function HomePageClient({ books, categories, genres }: Props) {
             <p className="text-sm font-semibold text-indigo-600">Live catalog</p>
             <h2 className="text-2xl font-bold text-slate-900">Latest arrivals</h2>
           </div>
-          <div className="flex items-center gap-3">
-            {!isFiltersOpen && (
-              <Button
-                variant="secondary"
-                className="font-semibold"
-                onClick={() => setIsFiltersOpen(true)}
-              >
-                Show filters
-              </Button>
-            )}
-            <Badge tone="info" className="text-sm">
-              {filteredBooks.length} matches
-            </Badge>
-          </div>
+          <Badge tone="info" className="text-sm">
+            {filteredBooks.length} matches
+          </Badge>
         </div>
 
         <div className="flex flex-col gap-3 rounded-3xl bg-white/90 p-4 shadow-sm ring-1 ring-gray-200">
