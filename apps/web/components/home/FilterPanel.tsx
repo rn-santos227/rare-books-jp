@@ -64,6 +64,27 @@ export function FiltersPanel({
         onChange={(event) => updateFilter("searchQuery", event.target.value)}
       />
 
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-slate-800">Categories</h3>
+          <Badge tone="info">{categories.length}</Badge>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => (
+            <FilterPill
+              key={category._id}
+              label={category.name}
+              active={filters.categoryId === category._id}
+              onClick={() =>
+                updateFilter(
+                  "categoryId",
+                  filters.categoryId === category._id ? null : category._id,
+                )
+              }
+            />
+          ))}
+        </div>
+      </div>
    </aside>
   )
 }
