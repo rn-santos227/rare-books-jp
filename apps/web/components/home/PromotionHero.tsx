@@ -10,3 +10,12 @@ interface PromotionHeroProps {
 }
 
 
+export function PromotionHero({
+  categoriesCount,
+  genresCount,
+  promotion,
+}: PromotionHeroProps) {
+  return (
+    <div className="border-b border-white/5 bg-linear-to-r from-[#ff4d67] via-[#ff5f6d] to-[#ffb347] text-white"></div>
+  );
+}
