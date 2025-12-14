@@ -57,6 +57,13 @@ export function FiltersPanel({
           </Button>
         </div>
       </div>
+
+      <TextField
+        placeholder="Search by title or author"
+        value={filters.searchQuery}
+        onChange={(event) => updateFilter("searchQuery", event.target.value)}
+      />
+
    </aside>
   )
 }
