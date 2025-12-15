@@ -40,3 +40,21 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 
+export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
+  const { toasts, show, dismiss, toneStyles } = useToast();
+  const { formState, setFormState, errors, isSubmitting, handleSubmit } = useReviewForm({
+    bookId,
+    onSuccess: () =>
+      show({
+        title: "Review submitted",
+        description: "Thanks! New reviews appear after they are approved.",
+        tone: "success",
+      }),
+    onError: (message) =>
+      show({
+        title: "Could not submit review",
+        description: message,
+        tone: "warning",
+      }),
+  });
+}
