@@ -65,7 +65,33 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
       contentPadding="px-6 py-12"
       contentGap="gap-12"
     >
-      
+      <div className="grid items-start gap-10 lg:grid-cols-[1fr,0.9fr]">
+        <div className="space-y-6">
+          <div className="overflow-hidden rounded-3xl bg-slate-100 shadow-sm ring-1 ring-slate-200">
+            <div className="aspect-3/4">
+              <ImageViewer
+                src={heroImage}
+                alt={book.title}
+                fallbackLabel="Cover coming soon"
+                className="h-full"
+                imgClassName="object-contain"
+              />
+            </div>
+          </div>
+
+          {book.gallery && book.gallery.length > 1 && (
+            <div className="grid grid-cols-3 gap-3">
+              {book.gallery.slice(1, 4).map((url) => (
+                <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                  <div className="aspect-3/4">
+                    <ImageViewer src={url} alt={`${book.title} preview`} className="h-full" imgClassName="object-cover" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>     
+      </div>
       <BookReviewSection bookId={book._id} reviews={reviews} />
     </PageLayout>
   )
