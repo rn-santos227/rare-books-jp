@@ -21,7 +21,7 @@ export const TextArea = forwardRef(function TextArea(
   return (
     <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
       {label && <span>{label}</span>}
-      <textarea ref={ref} rows={rows} className={fieldClasses} {...props} />
+      <textarea ref={ref} className={fieldClasses} rows={rows} {...props} />
       {error ? (
         <span className="text-xs font-normal text-rose-600">{error}</span>
       ) : helperText ? (
