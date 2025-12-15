@@ -1,14 +1,14 @@
-import { ForwardedRef, InputHTMLAttributes, forwardRef } from "react";
+import { ForwardedRef, TextareaHTMLAttributes, forwardRef } from "react";
 
-type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
+type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label?: string;
   helperText?: string;
   error?: string;
 };
 
-export const TextField = forwardRef(function TextField(
-  { label, helperText, error, className, ...props }: TextFieldProps,
-  ref: ForwardedRef<HTMLInputElement>,
+export const TextArea = forwardRef(function TextArea(
+  { label, helperText, error, className, rows = 4, ...props }: TextAreaProps,
+  ref: ForwardedRef<HTMLTextAreaElement>,
 ) {
   const fieldClasses = [
     "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100",
@@ -21,7 +21,7 @@ export const TextField = forwardRef(function TextField(
   return (
     <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
       {label && <span>{label}</span>}
-      <input ref={ref} className={fieldClasses} {...props} />
+      <textarea ref={ref} rows={rows} className={fieldClasses} {...props} />
       {error ? (
         <span className="text-xs font-normal text-rose-600">{error}</span>
       ) : helperText ? (
