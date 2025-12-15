@@ -85,4 +85,14 @@ export const BOOK_BY_SLUG_QUERY = groq`
   }
 `;
 
-
+export const REVIEWS_BY_BOOK_QUERY = groq`
+  *[_type == "review" && status == "approved" && book->slug.current == $slug]|order(_createdAt desc){
+    _id,
+    reviewType,
+    reviewerName,
+    title,
+    rating,
+    "createdAt": _createdAt,
+    "bodyText": coalesce(pt::text(body), "")
+  }
+`;
