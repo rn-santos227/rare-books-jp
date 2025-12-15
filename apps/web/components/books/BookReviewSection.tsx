@@ -68,5 +68,55 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
   const ratingValue = Number(formState.rating) || 0;
   const reviewCountLabel = reviews.length === 1 ? "1 review" : `${reviews.length} reviews`;
 
+  return (
+    <section className="space-y-6 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900">Reviews</h2>
+          <p className="text-sm text-slate-600">{reviewCountLabel}</p>
+        </div>
+        <RatingDisplay rating={averageRating} />
+      </div>
 
+      <form onSubmit={handleSubmit} className="grid gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-100">
+        <div className="grid gap-4 sm:grid-cols-[1fr,140px] sm:items-end">
+          <TextField
+            label="Your name"
+            placeholder="How should we credit you?"
+            value={formState.reviewerName}
+            onChange={(event) => setFormState((prev) => ({ ...prev, reviewerName: event.target.value }))}
+          />
+          <RatingInput
+            value={ratingValue}
+            onChange={(value) => setFormState((prev) => ({ ...prev, rating: String(value) }))}
+            error={errors.rating}
+          />
+        </div>
+        <TextArea
+          label="Your review"
+          placeholder="What did you enjoy, notice, or wish was different about this book?"
+          value={formState.bodyText}
+          onChange={(event) => setFormState((prev) => ({ ...prev, bodyText: event.target.value }))}
+          rows={5}
+          error={errors.bodyText}
+        />
+        <div className="flex items-center justify-end gap-3">
+          <p className="text-xs text-slate-500">Reviews are published after a quick moderation check.</p>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Submit review"}
+          </Button>
+        </div>
+      </form>
+
+      <div className="space-y-4">
+        {reviews.length === 0 ? (
+          <p className="text-sm text-slate-600">No reviews yet. Be the first to share your thoughts.</p>
+        ) : (
+          reviews.map((review) => <ReviewCard key={review._id} review={review} />)
+        )}
+      </div>
+
+      <ToastStack toasts={toasts} dismiss={dismiss} toneStyles={toneStyles} />
+    </section>
+  );
 }
