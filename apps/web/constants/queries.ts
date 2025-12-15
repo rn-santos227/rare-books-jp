@@ -12,6 +12,7 @@ export const BOOKS_QUERY = groq`
     inventory,
     "slug": slug.current,
     "imageUrl": images[0].asset->url,
+    "gallery": images[].asset->url,
     "category": category->{
       _id,
       name,
@@ -57,4 +58,31 @@ export const PROMOTIONS_QUERY = groq`
     "imageAlt": image.alt
   }
 `;
+
+export const BOOK_BY_SLUG_QUERY = groq`
+  *[_type == "book" && slug.current == $slug && status == "published"][0]{
+    _id,
+    title,
+    author,
+    price,
+    condition,
+    featured,
+    description,
+    inventory,
+    "slug": slug.current,
+    "imageUrl": images[0].asset->url,
+    "gallery": images[].asset->url,
+    "category": category->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    "genres": genres[]->{
+      _id,
+      name,
+      "slug": slug.current
+    }
+  }
+`;
+
 
