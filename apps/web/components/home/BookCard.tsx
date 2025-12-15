@@ -73,7 +73,18 @@ export default function BookCard({ book }: Props) {
         <p className="line-clamp-2 text-sm text-slate-600">
           {book.description ?? "Added from Studio. Complete description coming soon."}
         </p>
-        <Button variant="secondary" fullWidth className="mt-auto">
+        <Button
+          variant="secondary"
+          fullWidth
+          className="mt-auto"
+          href={book.slug ? `/books/${book.slug}` : "#"}
+          aria-disabled={!book.slug}
+          onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+            if (!book.slug) {
+              event.preventDefault();
+            }
+          }}
+        >
           View details
         </Button>
       </div>
