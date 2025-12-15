@@ -17,4 +17,26 @@ type BookReviewSectionProps = {
   reviews: Review[];
 };
 
+function ReviewCard({ review }: { review: Review }) {
+  const reviewer = review.reviewerName || "Anonymous reader";
+  const body = review.bodyText || "No written feedback.";
+  const date = review.createdAt ? new Date(review.createdAt).toLocaleDateString() : "";
+
+  return (
+    <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold text-slate-900">{review.title || reviewer}</p>
+          <p className="text-xs uppercase tracking-wide text-slate-500">
+            {review.reviewType === "editorial" ? "Editorial" : "Reader review"}
+          </p>
+        </div>
+        <RatingDisplay rating={review.rating} showValue={false} ariaLabel={`Rating: ${review.rating ?? "no"} out of 5`} />
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-slate-700">{body}</p>
+      {date && <p className="mt-3 text-xs text-slate-400">{date}</p>}
+    </article>
+  );
+}
+
 
