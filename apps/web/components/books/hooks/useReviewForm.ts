@@ -57,5 +57,32 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
       return;
     }
 
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookId,
+          reviewerName: formState.reviewerName || "Anonymous reader",
+          rating: ratingNumber,
+          bodyText: formState.bodyText,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: "Failed to submit" }));
+        throw new Error(error.message || "Unable to send review");
+      }
+
+      setFormState({ reviewerName: "", rating: "5", bodyText: "" });
+      setErrors({});
+      onSuccess?.();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Please try again shortly.";
+      onError?.(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 }
