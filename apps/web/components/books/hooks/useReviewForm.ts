@@ -42,4 +42,10 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
 
     return validationErrors;
   };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+  };
 }
