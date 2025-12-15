@@ -57,4 +57,16 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
         tone: "warning",
       }),
   });
+
+
+  const averageRating = useMemo(() => {
+    if (!reviews.length) return null;
+    const total = reviews.reduce((sum, review) => sum + (review.rating ?? 0), 0);
+    return total / reviews.length;
+  }, [reviews]);
+
+  const ratingValue = Number(formState.rating) || 0;
+  const reviewCountLabel = reviews.length === 1 ? "1 review" : `${reviews.length} reviews`;
+
+
 }
