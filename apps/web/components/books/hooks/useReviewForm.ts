@@ -25,4 +25,21 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
   });
   const [errors, setErrors] = useState<ReviewFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const ratingNumber = useMemo(() => Number(formState.rating) || 0, [formState.rating]);
+  const validate = (): ReviewFormErrors => {
+    const validationErrors: ReviewFormErrors = {};
+
+    if (!formState.bodyText.trim()) {
+      validationErrors.bodyText = "Please share a few words about the book.";
+    } else if (formState.bodyText.trim().length < MIN_REVIEW_LENGTH) {
+      validationErrors.bodyText = `Reviews should be at least ${MIN_REVIEW_LENGTH} characters.`;
+    }
+
+    if (ratingNumber < 1 || ratingNumber > 5) {
+      validationErrors.rating = "Choose a rating between 1 and 5.";
+    }
+
+    return validationErrors;
+  };
 }
