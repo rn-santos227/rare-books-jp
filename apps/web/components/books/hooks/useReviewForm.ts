@@ -78,4 +78,13 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
       setIsSubmitting(false);
     }
   };
+
+  return {
+    formState,
+    setFormState,
+    errors,
+    isSubmitting,
+    handleSubmit,
+    setErrors,
+  };
 }
