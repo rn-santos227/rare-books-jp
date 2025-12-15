@@ -90,7 +90,44 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
               ))}
             </div>
           )}
-        </div>     
+        </div>
+
+        <div className="flex flex-col gap-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <div className="flex flex-wrap items-center gap-3">
+            {book.condition && <Badge tone="info">{book.condition.replace("_", " ")}</Badge>}
+            <InventoryBadge inventory={book.inventory} />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-3xl font-semibold text-slate-900">{book.title}</h1>
+            <p className="text-lg text-slate-600">{book.author ?? "Unknown author"}</p>
+          </div>
+
+          <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+            <div>
+              <p className="text-sm uppercase tracking-wide text-slate-500">Price</p>
+              <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price)}</p>
+            </div>
+            <Button className="px-6">Add to cart</Button>
+          </div>
+
+          <p className="text-base leading-relaxed text-slate-700">
+            {book.description || "A detailed description from the curator will be added soon."}
+          </p>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <DetailsList label="Category" value={book.category?.name} />
+            <DetailsList label="Genre" value={book.genres?.map((genre) => genre.name).join(", ")} />
+            <DetailsList label="Condition" value={book.condition?.replace("_", " ")} />
+            <DetailsList label="Inventory" value={book.inventory ?? "N/A"} />
+          </div>
+
+          {book.featured && (
+            <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 ring-1 ring-amber-100">
+              Featured pick from our collection
+            </div>
+          )}
+        </div>
       </div>
       <BookReviewSection bookId={book._id} reviews={reviews} />
     </PageLayout>
