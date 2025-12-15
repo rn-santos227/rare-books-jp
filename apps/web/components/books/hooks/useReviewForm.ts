@@ -5,3 +5,12 @@ export type ReviewFormState = {
   rating: string;
   bodyText: string;
 };
+
+export type ReviewFormErrors = Partial<Record<keyof ReviewFormState, string>>;
+
+type UseReviewFormParams = {
+  bookId: string;
+  onSuccess?: () => void;
+  onError?: (message: string) => void;
+};
+
