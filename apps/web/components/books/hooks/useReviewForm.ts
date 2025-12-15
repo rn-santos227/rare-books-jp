@@ -1,5 +1,7 @@
 import { FormEvent, useMemo, useState } from "react";
 
+import { submitReview } from "@/lib/api/reviews";
+
 export type ReviewFormState = {
   reviewerName: string;
   rating: string;
@@ -59,21 +61,12 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          bookId,
-          reviewerName: formState.reviewerName || "Anonymous reader",
-          rating: ratingNumber,
-          bodyText: formState.bodyText,
-        }),
+      await submitReview({
+        bookId,
+        reviewerName: formState.reviewerName || "Anonymous reader",
+        rating: ratingNumber,
+        bodyText: formState.bodyText,
       });
-
-      if (!response.ok) {
-        const error = await response.json().catch(() => ({ message: "Failed to submit" }));
-        throw new Error(error.message || "Unable to send review");
-      }
 
       setFormState({ reviewerName: "", rating: "5", bodyText: "" });
       setErrors({});
