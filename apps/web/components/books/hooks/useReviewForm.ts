@@ -14,3 +14,15 @@ type UseReviewFormParams = {
   onError?: (message: string) => void;
 };
 
+
+const MIN_REVIEW_LENGTH = 10;
+
+export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParams) {
+  const [formState, setFormState] = useState<ReviewFormState>({
+    reviewerName: "",
+    rating: "5",
+    bodyText: "",
+  });
+  const [errors, setErrors] = useState<ReviewFormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+}
