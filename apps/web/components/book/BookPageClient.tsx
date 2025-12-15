@@ -65,68 +65,81 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
       contentPadding="px-6 py-12"
       contentGap="gap-12"
     >
-      <div className="grid items-start gap-10 lg:grid-cols-[1fr,0.9fr]">
-        <div className="space-y-6">
-          <div className="overflow-hidden rounded-3xl bg-slate-100 shadow-sm ring-1 ring-slate-200">
-            <div className="aspect-3/4">
-              <ImageViewer
-                src={heroImage}
-                alt={book.title}
-                fallbackLabel="Cover coming soon"
-                className="h-full"
-                imgClassName="object-contain"
-              />
-            </div>
-          </div>
+      <div className="flex flex-col gap-8">
+        <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
+          <Link href="/" className="font-semibold text-indigo-700 hover:text-indigo-800">
+            Home
+          </Link>
+          <span className="text-slate-400">/</span>
+          <Link href="/books" className="font-semibold text-indigo-700 hover:text-indigo-800">
+            Books
+          </Link>
+          <span className="text-slate-400">/</span>
+          <span className="text-slate-500">{book.title}</span>
+        </nav>
 
-          {book.gallery && book.gallery.length > 1 && (
-            <div className="grid grid-cols-3 gap-3">
-              {book.gallery.slice(1, 4).map((url) => (
-                <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                  <div className="aspect-3/4">
-                    <ImageViewer src={url} alt={`${book.title} preview`} className="h-full" imgClassName="object-cover" />
+        <div className="grid items-start gap-8 lg:grid-cols-[420px,1fr] xl:grid-cols-[480px,1fr]">
+          <div className="space-y-4 lg:sticky lg:top-8">
+            <div className="overflow-hidden rounded-3xl bg-slate-50 shadow-sm ring-1 ring-slate-200">
+              <div className="aspect-3/4 max-h-130">
+                <ImageViewer
+                  src={heroImage}
+                  alt={book.title}
+                  fallbackLabel="Cover coming soon"
+                  className="h-full"
+                  imgClassName="object-contain"
+                />
+              </div>
+            </div>
+
+           {book.gallery && book.gallery.length > 1 && (
+              <div className="grid grid-cols-3 gap-3">
+                {book.gallery.slice(1, 4).map((url) => (
+                  <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                    <div className="aspect-3/4">
+                      <ImageViewer src={url} alt={`${book.title} preview`} className="h-full" imgClassName="object-cover" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col gap-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <div className="flex flex-wrap items-center gap-3">
+              {book.condition && <Badge tone="info">{book.condition.replace("_", " ")}</Badge>}
+              <InventoryBadge inventory={book.inventory} />
             </div>
-          )}
-        </div>
 
-        <div className="flex flex-col gap-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <div className="flex flex-wrap items-center gap-3">
-            {book.condition && <Badge tone="info">{book.condition.replace("_", " ")}</Badge>}
-            <InventoryBadge inventory={book.inventory} />
-          </div>
-
-          <div className="space-y-2">
-            <h1 className="text-3xl font-semibold text-slate-900">{book.title}</h1>
-            <p className="text-lg text-slate-600">{book.author ?? "Unknown author"}</p>
-          </div>
-
-          <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-slate-500">Price</p>
-              <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price)}</p>
+            <div className="space-y-2">
+              <h1 className="text-3xl font-semibold text-slate-900">{book.title}</h1>
+              <p className="text-lg text-slate-600">{book.author ?? "Unknown author"}</p>
             </div>
-            <Button className="px-6">Add to cart</Button>
-          </div>
 
-          <p className="text-base leading-relaxed text-slate-700">
-            {book.description || "A detailed description from the curator will be added soon."}
-          </p>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            <DetailsList label="Category" value={book.category?.name} />
-            <DetailsList label="Genre" value={book.genres?.map((genre) => genre.name).join(", ")} />
-            <DetailsList label="Condition" value={book.condition?.replace("_", " ")} />
-            <DetailsList label="Inventory" value={book.inventory ?? "N/A"} />
-          </div>
-
-          {book.featured && (
-            <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 ring-1 ring-amber-100">
-              Featured pick from our collection
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+              <div>
+                <p className="text-sm uppercase tracking-wide text-slate-500">Price</p>
+                <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price)}</p>
+              </div>
+              <Button className="px-6">Add to cart</Button>
             </div>
-          )}
+
+            <p className="text-base leading-relaxed text-slate-700">
+              {book.description || "A detailed description from the curator will be added soon."}
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <DetailsList label="Category" value={book.category?.name} />
+              <DetailsList label="Genre" value={book.genres?.map((genre) => genre.name).join(", ")} />
+              <DetailsList label="Condition" value={book.condition?.replace("_", " ")} />
+              <DetailsList label="Inventory" value={book.inventory ?? "N/A"} />
+            </div>
+
+
+            {book.featured && (
+              <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 ring-1 ring-amber-100">
+                Featured pick from our collection
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <BookReviewSection bookId={book._id} reviews={reviews} />

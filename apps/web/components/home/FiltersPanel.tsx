@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { TextField } from "@/components/ui/TextArea";
+import { TextField } from "@/components/ui/TextField";
 import { FiltersState } from "@/hooks/useFilters";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
