@@ -47,5 +47,15 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
     event.preventDefault();
     if (isSubmitting) return;
 
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      if (validationErrors.bodyText) {
+        onError?.(validationErrors.bodyText);
+      }
+      return;
+    }
+
   };
 }
