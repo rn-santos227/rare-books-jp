@@ -30,10 +30,22 @@ function InventoryBadge({ inventory }: { inventory?: number | null }) {
   );
 }
 
-function DetailsList({ label, value }: { label: string; value?: string | number | null }) {
+function DetailsList({
+  label,
+  value,
+  className,
+}: {
+  label: string;
+  value?: string | number | null;
+  className?: string;
+}) {
   if (!value && value !== 0) return null;
   return (
-    <div className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm">
+    <div
+      className={["flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm", className]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <span className="font-medium text-slate-600">{label}</span>
       <span className="font-semibold text-slate-900">{value}</span>
     </div>
@@ -78,7 +90,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
           <span className="text-slate-500">{book.title}</span>
         </nav>
 
-        <div className="grid items-start gap-8 lg:grid-cols-[420px,1fr] xl:grid-cols-[480px,1fr]">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(360px,420px)_minmax(0,1fr)]">
           <div className="space-y-4 lg:sticky lg:top-8">
             <div className="overflow-hidden rounded-3xl bg-slate-50 shadow-sm ring-1 ring-slate-200">
               <div className="aspect-3/4 max-h-130">
@@ -92,7 +104,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
               </div>
             </div>
 
-           {book.gallery && book.gallery.length > 1 && (
+            {book.gallery && book.gallery.length > 1 && (
               <div className="grid grid-cols-3 gap-3">
                 {book.gallery.slice(1, 4).map((url) => (
                   <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
@@ -127,12 +139,15 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
               {book.description || "A detailed description from the curator will be added soon."}
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              <DetailsList label="Category" value={book.category?.name} />
-              <DetailsList label="Genre" value={book.genres?.map((genre) => genre.name).join(", ")} />
+              <DetailsList className="sm:col-span-2" label="Category" value={book.category?.name} />
+              <DetailsList
+                label="Genre"
+                value={book.genres?.map((genre) => genre.name).join(", ")}
+                className="sm:col-span-2"
+              />
               <DetailsList label="Condition" value={book.condition?.replace("_", " ")} />
               <DetailsList label="Inventory" value={book.inventory ?? "N/A"} />
             </div>
-
 
             {book.featured && (
               <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 ring-1 ring-amber-100">
