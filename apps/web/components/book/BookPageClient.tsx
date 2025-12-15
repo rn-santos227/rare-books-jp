@@ -45,4 +45,28 @@ type BookPageClientProps = {
   reviews: Review[];
 };
 
+export function BookPageClient({ book, reviews }: BookPageClientProps) {
+  const heroImage = book.imageUrl ?? book.gallery?.[0];
 
+  return (
+    <PageLayout
+      backgroundTone="plain"
+      header={
+        <GeneralHeaderLayout>
+          <div className="flex items-center justify-between gap-4">
+            <div className="text-lg font-semibold text-white">The Rare Books JP</div>
+            <Link href="/" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
+              ← Back to catalog
+            </Link>
+          </div>
+        </GeneralHeaderLayout>
+      }
+      footer={<SiteFooter />}
+      contentPadding="px-6 py-12"
+      contentGap="gap-12"
+    >
+      
+      <BookReviewSection bookId={book._id} reviews={reviews} />
+    </PageLayout>
+  )
+}
