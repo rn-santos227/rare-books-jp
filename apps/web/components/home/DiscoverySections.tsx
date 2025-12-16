@@ -1,4 +1,4 @@
-import HomePageClient from "@/components/home/HomePageClient";
+import BookCard from "@/components/home/BookCard";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Book } from "@/types/book";
@@ -22,7 +22,11 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
               Browse the shelf
             </Badge>
           </div>
-          <Button variant="ghost" className="text-sm text-slate-200 hover:bg-white/10">
+          <Button
+            variant="ghost"
+            href="/catalog"
+            className="text-sm text-slate-200 hover:bg-white/10"
+          >
             See all
           </Button>
         </div>
@@ -51,7 +55,11 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
               Live from Studio
             </Badge>
           </div>
-          <Button variant="ghost" className="text-sm text-slate-200 hover:bg-white/10">
+          <Button
+            variant="ghost"
+            href="/catalog"
+            className="text-sm text-slate-200 hover:bg-white/10"
+          >
             See all
           </Button>
         </div>
@@ -71,19 +79,30 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
       </section>
 
       <section className="space-y-5">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-slate-300">
-            <span className="text-lg font-semibold text-black">Recommended for you</span>
-            <Badge tone="info" className="bg-white/5 text-slate-500 ring-1 ring-white/10">
-              {books.length} items
-            </Badge>
+            <div>
+              <span className="text-lg font-semibold text-black">Latest arrivals</span>
+              <p className="text-sm text-slate-600">Freshly added books from our shelves.</p>
+            </div>
           </div>
-          <Button variant="ghost" className="text-sm text-slate-200 hover:bg-white/10">
-            See all
-          </Button>
+          <div className="flex items-center gap-3">
+            <Badge tone="info" className="bg-white/5 text-slate-500 ring-1 ring-white/10">
+              {books.length} new
+            </Badge>
+            <Button variant="secondary" href="/catalog" className="text-sm font-semibold">
+              Browse catalog
+            </Button>
+          </div>
         </div>
-        <HomePageClient books={books} categories={categories} genres={genres} />
+
+        <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {books.slice(0, 6).map((book) => (
+            <BookCard key={book._id} book={book} />
+          ))}
+        </div>
       </section>
     </>
   );
 }
+

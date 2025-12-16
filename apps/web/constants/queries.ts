@@ -6,6 +6,7 @@ export const BOOKS_QUERY = groq`
     title,
     author,
     price,
+    "createdAt": _createdAt,
     condition,
     featured,
     description,

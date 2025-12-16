@@ -32,6 +32,13 @@ export default async function Home() {
       }));
 
   const promotion = promotions[0];
+  const latestBooks = [...books]
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt ?? 0).getTime() -
+        new Date(a.createdAt ?? 0).getTime(),
+    )
+    .slice(0, 6);
 
   return (
     <HomePageLayout
@@ -49,7 +56,11 @@ export default async function Home() {
       }
       footer={<SiteFooter />}
     >
-      <DiscoverySections books={books} categories={categories} genres={genres} />
+      <DiscoverySections
+        books={latestBooks}
+        categories={categories}
+        genres={genres}
+      />
     </HomePageLayout>
   );
 }

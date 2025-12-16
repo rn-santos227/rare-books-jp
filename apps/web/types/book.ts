@@ -16,4 +16,5 @@ export type Book = {
   gallery?: string[];
   category?: Category | null;
   genres?: Genre[];
+  createdAt?: string;
 };
