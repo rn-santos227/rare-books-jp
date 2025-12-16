@@ -62,7 +62,17 @@ export function useCatalog(books: Book[]) {
     () => filteredBooks.slice(0, visibleCount),
     [filteredBooks, visibleCount],
   );
-
   const hasMoreToShow = displayedBooks.length < filteredBooks.length;
-
+  
+  return {
+    filters,
+    filteredBooks,
+    displayedBooks,
+    priceBounds,
+    hasMoreToShow,
+    loadMore,
+    updateFilter: handleUpdateFilter,
+    resetFilters: handleResetFilters,
+    loadMoreRef,
+  };
 }
