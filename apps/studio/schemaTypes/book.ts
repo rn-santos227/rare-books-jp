@@ -99,6 +99,31 @@ export default defineType({
     }),
 
     defineField({
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alternative text',
+              type: 'string',
+              description: 'Describe what is shown in the photo.',
+            },
+          ],
+        },
+      ],
+      options: {
+        layout: 'grid',
+      },
+    }),
+
+    defineField({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',
