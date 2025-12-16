@@ -32,3 +32,12 @@ body {
     sans-serif;
   min-height: 100vh;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
