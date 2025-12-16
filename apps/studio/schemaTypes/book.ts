@@ -14,6 +14,13 @@ export default defineType({
     }),
 
     defineField({
+      name: 'titleJa',
+      title: 'Title (Japanese)',
+      type: 'string',
+      description: 'Localized Japanese title for the book.',
+    }),
+
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'reference',
@@ -35,6 +42,14 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
 
+
+    defineField({
+      name: 'authorJa',
+      title: 'Author (Japanese)',
+      type: 'string',
+      description: 'Localized Japanese author name for the book.',
+    }),
+
     defineField({
       name: 'slug',
       title: 'Slug',
@@ -50,6 +65,14 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'text',
+    }),
+
+    defineField({
+      name: 'descriptionJa',
+      title: 'Description (Japanese)',
+      type: 'text',
+      rows: 4,
+      description: 'Japanese translation of the book description.',
     }),
 
     defineField({

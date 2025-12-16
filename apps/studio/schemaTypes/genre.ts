@@ -14,6 +14,13 @@ export default defineType({
     }),
 
     defineField({
+      name: 'nameJa',
+      title: 'Name (Japanese)',
+      type: 'string',
+      description: 'Localized Japanese name for the genre.',
+    }),
+
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',

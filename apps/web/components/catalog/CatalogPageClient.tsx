@@ -25,7 +25,7 @@ export function CatalogPageClient({ books, categories, genres }: CatalogPageClie
       </nav>
 
       <div className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-        <p className="text-sm font-semibold text-indigo-600">Full catalog</p>
+        <p className="text-sm font-semibold text-indigo-600">Full Catalog</p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold text-slate-900">Browse Rare Books</h1>
