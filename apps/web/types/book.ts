@@ -12,6 +12,7 @@ export type Book = {
   inventory?: number | null;
   slug?: string;
   imageUrl?: string | null;
+  coverAlt?: string | null;
   gallery?: string[];
   category?: Category | null;
   genres?: Genre[];
