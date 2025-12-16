@@ -39,4 +39,30 @@ export function useCatalog(books: Book[]) {
       ),
     [filteredBooks.length],
   );
+
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+    if (!target) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0]?.isIntersecting) return;
+
+        loadMore();
+      },
+      { rootMargin: "200px" },
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [filteredBooks.length, loadMore]);
+
+  const displayedBooks = useMemo(
+    () => filteredBooks.slice(0, visibleCount),
+    [filteredBooks, visibleCount],
+  );
+
+  const hasMoreToShow = displayedBooks.length < filteredBooks.length;
+
 }
