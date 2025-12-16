@@ -28,4 +28,20 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     loadMoreRef,
   } = useCatalog(books);
 
+  return (
+    <div className="grid gap-6 lg:grid-cols-[320px,1fr]">
+     <div className="h-fit lg:top-6">
+        <FiltersPanel
+          filters={filters}
+          categories={categories}
+          genres={genres}
+          priceBounds={priceBounds}
+          updateFilter={updateFilter}
+          resetFilters={resetFilters}
+        />
+      </div>
+
+
+    </div>
+  );
 }
