@@ -75,7 +75,7 @@ export default function BookCard({ book }: Props) {
         </p>
         <Button
           variant="secondary"
-          fullWidth
+          fullwidth
           className="mt-auto"
           href={book.slug ? `/books/${book.slug}` : "#"}
           aria-disabled={!book.slug}

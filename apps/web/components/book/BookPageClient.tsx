@@ -59,6 +59,7 @@ type BookPageClientProps = {
 
 export function BookPageClient({ book, reviews }: BookPageClientProps) {
   const heroImage = book.imageUrl ?? book.gallery?.[0];
+  const heroAlt = book.coverAlt ?? book.title;
 
   return (
     <PageLayout
@@ -92,11 +93,11 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(360px,420px)_minmax(0,1fr)]">
           <div className="space-y-4">
-            <div className="rounded-3xl bg-slate-50 shadow-sm ring-1 ring-slate-200">
+            <div className="rounded-3xl bg-slate-50 shadow-sm ring-1 ring-slate-200 p-3">
               <div className="aspect-3/4 max-h-128">
                 <ImageViewer
                   src={heroImage}
-                  alt={book.title}
+                  alt={heroAlt}
                   fallbackLabel="Cover coming soon"
                   className="h-full"
                   imgClassName="object-contain"
@@ -104,12 +105,17 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
               </div>
             </div>
 
-            {book.gallery && book.gallery.length > 1 && (
+            {book.gallery && book.gallery.length > 0 && (
               <div className="grid grid-cols-3 gap-3">
-                {book.gallery.slice(1, 4).map((url) => (
+                {book.gallery.slice(0, 3).map((url, index) => (
                   <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                     <div className="aspect-3/4">
-                      <ImageViewer src={url} alt={`${book.title} preview`} className="h-full" imgClassName="object-cover" />
+                      <ImageViewer
+                        src={url}
+                        alt={`${book.title} preview ${index + 1}`}
+                        className="h-full"
+                        imgClassName="object-cover"
+                      />
                     </div>
                   </div>
                 ))}

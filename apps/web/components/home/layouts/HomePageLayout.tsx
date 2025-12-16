@@ -5,11 +5,12 @@ interface HomePageLayoutProps {
   header: ReactNode;
   banner: ReactNode;
   children: ReactNode;
+  footer?: ReactNode;
 }
 
-export function HomePageLayout({ header, banner, children }: HomePageLayoutProps) {
+export function HomePageLayout({ header, banner, children, footer }: HomePageLayoutProps) {
   return (
-    <PageLayout header={header} hero={banner}>
+    <PageLayout header={header} hero={banner} footer={footer}>
       {children}
     </PageLayout>
   );
