@@ -4,12 +4,15 @@ export const BOOKS_QUERY = groq`
   *[_type == "book" && status == "published"]|order(featured desc, _createdAt desc){
     _id,
     title,
+    titleJa,
     author,
+    authorJa,
     price,
     "createdAt": _createdAt,
     condition,
     featured,
     description,
+    descriptionJa,
     inventory,
     "slug": slug.current,
     "imageUrl": coverImage.asset->url,
@@ -18,11 +21,13 @@ export const BOOKS_QUERY = groq`
     "category": category->{
       _id,
       name,
+      nameJa,
       "slug": slug.current
     },
     "genres": genres[]->{
       _id,
       name,
+      nameJa,
       "slug": slug.current
     }
   }
@@ -32,6 +37,7 @@ export const CATEGORIES_QUERY = groq`
   *[_type == "category"]|order(name asc){
     _id,
     name,
+    nameJa,
     "slug": slug.current
   }
 `;
@@ -40,6 +46,7 @@ export const GENRES_QUERY = groq`
   *[_type == "genre"]|order(name asc){
     _id,
     name,
+    nameJa,
     "slug": slug.current
   }
 `;
@@ -48,12 +55,17 @@ export const PROMOTIONS_QUERY = groq`
   *[_type == "promotion" && active == true]|order(priority asc, _createdAt desc){
     _id,
     title,
+    titleJa,
     tagline,
+    taglineJa,
     description,
+    descriptionJa,
     ctaLabel,
+    ctaLabelJa,
     ctaHref,
     theme,
     badge,
+    badgeJa,
     priority,
     active,
     "imageUrl": image.asset->url,
@@ -65,11 +77,14 @@ export const BOOK_BY_SLUG_QUERY = groq`
   *[_type == "book" && slug.current == $slug && status == "published"][0]{
     _id,
     title,
+    titleJa,
     author,
+    authorJa,
     price,
     condition,
     featured,
     description,
+    descriptionJa,
     inventory,
     "slug": slug.current,
     "imageUrl": images[0].asset->url,
@@ -77,11 +92,13 @@ export const BOOK_BY_SLUG_QUERY = groq`
     "category": category->{
       _id,
       name,
+      nameJa,
       "slug": slug.current
     },
     "genres": genres[]->{
       _id,
       name,
+      nameJa,
       "slug": slug.current
     }
   }
