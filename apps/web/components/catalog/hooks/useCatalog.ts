@@ -27,4 +27,16 @@ export function useCatalog(books: Book[]) {
     updateFilter(key, value);
   };
 
+  const handleResetFilters = () => {
+    resetVisibleCount();
+    resetFilters();
+  };
+
+  const loadMore = useCallback(
+    () =>
+      setVisibleCount((current) =>
+        Math.min(current + LOAD_MORE_BATCH, filteredBooks.length),
+      ),
+    [filteredBooks.length],
+  );
 }
