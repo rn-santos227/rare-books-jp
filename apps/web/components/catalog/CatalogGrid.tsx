@@ -4,7 +4,7 @@ import BookCard from "@/components/home/BookCard";
 import { FiltersPanel } from "@/components/home/FiltersPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { useCatalog } from "./hooks/useCatalog"
+import { useCatalog } from "./hooks/useCatalog";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
@@ -30,7 +30,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[320px,1fr]">
-     <div className="h-fit lg:top-6">
+      <div className="h-fit lg:sticky lg:top-6">
         <FiltersPanel
           filters={filters}
           categories={categories}

@@ -68,8 +68,8 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
         <GeneralHeaderLayout>
           <div className="flex items-center justify-between gap-4">
             <div className="text-lg font-semibold text-white">The Rare Books JP</div>
-            <Link href="/" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
-              ← Back to catalog
+            <Link href="/catalog" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
+              Back to Catalog
             </Link>
           </div>
         </GeneralHeaderLayout>
@@ -84,7 +84,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
             Home
           </Link>
           <span className="text-slate-400">/</span>
-          <Link href="/books" className="font-semibold text-indigo-700 hover:text-indigo-800">
+          <Link href="/catalog" className="font-semibold text-indigo-700 hover:text-indigo-800">
             Books
           </Link>
           <span className="text-slate-400">/</span>
