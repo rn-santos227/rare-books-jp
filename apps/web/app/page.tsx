@@ -31,7 +31,6 @@ export default async function Home() {
         label: category.name,
       }));
 
-  const promotion = promotions[0];
   const latestBooks = [...books]
     .sort(
       (a, b) =>
@@ -51,7 +50,7 @@ export default async function Home() {
         <PromotionHero
           categoriesCount={categories.length}
           genresCount={genres.length}
-          promotion={promotion}
+          promotions={promotions ?? []}
         />
       }
       footer={<SiteFooter />}
