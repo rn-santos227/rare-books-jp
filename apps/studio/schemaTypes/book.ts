@@ -82,10 +82,20 @@ export default defineType({
     }),
 
     defineField({
-      name: 'images',
-      title: 'Images',
-      type: 'array',
-      of: [{ type: 'image' }],
+      name: 'coverImage',
+      title: 'Cover Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alternative text',
+          type: 'string',
+          description: 'Short description for accessibility and SEO.',
+        },
+      ],
     }),
 
     defineField({
