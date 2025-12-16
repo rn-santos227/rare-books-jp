@@ -16,4 +16,15 @@ export function useCatalog(books: Book[]) {
   );
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+  const resetVisibleCount = () =>
+    setVisibleCount(Math.min(INITIAL_BATCH, filteredBooks.length));
+
+  const handleUpdateFilter = <Key extends keyof typeof filters>(
+    key: Key,
+    value: (typeof filters)[Key],
+  ) => {
+    resetVisibleCount();
+    updateFilter(key, value);
+  };
+
 }
