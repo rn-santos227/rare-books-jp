@@ -1,6 +1,7 @@
 import BookCard from "@/components/home/BookCard";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Carousel } from "@/components/ui/Carousel";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
@@ -30,11 +31,11 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
             See all
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+        <Carousel ariaLabel="Popular genres" className="-mx-2 px-2">
           {genres.slice(0, 12).map((genre) => (
             <div
               key={genre._id}
-              className="group flex flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
+              className="group flex min-w-37.5 max-w-45 flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
             >
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-xl">
                 <span role="img" aria-label={genre.name}>
@@ -44,7 +45,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
               <p className="text-sm font-semibold text-white">{genre.name}</p>
             </div>
           ))}
-        </div>
+        </Carousel>
       </section>
 
       <section className="space-y-4">
@@ -63,11 +64,11 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
             See all
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+        <Carousel ariaLabel="Popular categories" className="-mx-2 px-2">
           {categories.slice(0, 12).map((category) => (
             <div
               key={category._id}
-              className="flex flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
+              className="flex min-w-37.5 max-w-45 flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
             >
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-lg text-white">
                 {category.name.slice(0, 2).toUpperCase()}
@@ -75,7 +76,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
               <p className="text-sm font-semibold text-white">{category.name}</p>
             </div>
           ))}
-        </div>
+        </Carousel>
       </section>
 
       <section className="space-y-5">
@@ -96,11 +97,13 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
           </div>
         </div>
 
-        <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <Carousel ariaLabel="Latest arrivals" className="-mx-2 px-2">
           {books.slice(0, 6).map((book) => (
-            <BookCard key={book._id} book={book} />
+           <div key={book._id} className="min-w-70 max-w-[320px] flex-1">
+              <BookCard book={book} />
+            </div>
           ))}
-        </div>
+        </Carousel>
       </section>
     </>
   );

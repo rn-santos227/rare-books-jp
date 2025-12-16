@@ -100,12 +100,6 @@ export function PromotionHero({
                 <p className="text-sm leading-relaxed text-white/80">
                   Create an active promotion in Sanity Studio to highlight seasonal sales, shipping perks, or featured titles right at the top of the homepage.
                 </p>
-                <div className="flex flex-wrap gap-3">
-                  <Button className="bg-white text-[#ff5f6d] shadow-sm">Add promotion</Button>
-                  <Button variant="secondary" className="bg-white/10 text-white ring-1 ring-white/30">
-                    Visit Studio dashboard
-                  </Button>
-                </div>
               </div>
               <div className="flex flex-col justify-center gap-3 rounded-2xl border border-dashed border-white/40 bg-white/5 p-4 text-white/80">
                 <p className="text-sm font-semibold text-white">No active promotions</p>

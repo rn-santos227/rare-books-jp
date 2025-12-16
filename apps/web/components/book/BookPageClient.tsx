@@ -8,6 +8,7 @@ import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Carousel } from "@/components/ui/Carousel";
 import ImageViewer from "@/components/ui/ImageViewer";
 import { Book } from "@/types/book";
 import { Review } from "@/types/review";
@@ -106,9 +107,13 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
             </div>
 
             {book.gallery && book.gallery.length > 0 && (
-              <div className="grid grid-cols-3 gap-3">
-                {book.gallery.slice(0, 3).map((url, index) => (
-                  <div key={url} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <Carousel ariaLabel={`${book.title} gallery`} className="-mx-1 px-1">
+                {book.gallery.map((url, index) => (
+                  <div
+                    key={url}
+                    className="min-w-30 max-w-45 overflow-hidden rounded-2xl border border-slate-200 bg-white"
+                  >
+
                     <div className="aspect-3/4">
                       <ImageViewer
                         src={url}
@@ -119,7 +124,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                     </div>
                   </div>
                 ))}
-              </div>
+              </Carousel>
             )}
           </div>
           <div className="flex flex-col gap-6">

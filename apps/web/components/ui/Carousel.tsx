@@ -56,7 +56,7 @@ export function Carousel({ children, className, ariaLabel }: CarouselProps) {
   return (
     <div className={clsx("relative", className)}>
       <div
-        className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth pr-10"
+        className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth pr-10 py-6"
         ref={scrollContainerRef}
         role="region"
         aria-label={ariaLabel}
@@ -64,14 +64,14 @@ export function Carousel({ children, className, ariaLabel }: CarouselProps) {
         {children}
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-linear-to-r from-[#0c0f15] to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-linear-to-l from-[#0c0f15] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-linear-to-r from-slate-50 via-slate-50/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-slate-50 via-slate-50/70 to-transparent" />
 
       <div className="absolute inset-y-0 left-2 flex items-center">
         <Button
           type="button"
           variant="secondary"
-          className="pointer-events-auto rounded-full bg-white/5 px-2 py-2 text-white shadow-lg ring-1 ring-white/20 hover:bg-white/10"
+          className="pointer-events-auto rounded-full bg-white/5 px-2 py-2 shadow-lg ring-1 ring-white/20 hover:bg-white/10"
           aria-label="Scroll left"
           onClick={() => scrollBy("left")}
         >
@@ -83,7 +83,7 @@ export function Carousel({ children, className, ariaLabel }: CarouselProps) {
         <Button
           type="button"
           variant="secondary"
-          className="pointer-events-auto rounded-full bg-white/5 px-2 py-2 text-white shadow-lg ring-1 ring-white/20 hover:bg-white/10"
+          className="pointer-events-auto rounded-full bg-white/5 px-2 py-2 shadow-lg ring-1 ring-white/20 hover:bg-white/10"
           aria-label="Scroll right"
           onClick={() => scrollBy("right")}
         >

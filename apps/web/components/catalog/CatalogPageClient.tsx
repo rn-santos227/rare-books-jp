@@ -28,7 +28,7 @@ export function CatalogPageClient({ books, categories, genres }: CatalogPageClie
         <p className="text-sm font-semibold text-indigo-600">Full catalog</p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Browse rare books</h1>
+            <h1 className="text-3xl font-bold text-slate-900">Browse Rare Books</h1>
           </div>
           <div className="rounded-full bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700">
             {books.length} total titles
