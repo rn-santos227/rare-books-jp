@@ -15,3 +15,17 @@ type CatalogGridProps = {
   genres: Genre[];
 };
 
+export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
+  const {
+    filters,
+    filteredBooks,
+    displayedBooks,
+    priceBounds,
+    hasMoreToShow,
+    loadMore,
+    updateFilter,
+    resetFilters,
+    loadMoreRef,
+  } = useCatalog(books);
+
+}
