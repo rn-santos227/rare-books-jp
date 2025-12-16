@@ -11,8 +11,9 @@ export const BOOKS_QUERY = groq`
     description,
     inventory,
     "slug": slug.current,
-    "imageUrl": images[0].asset->url,
-    "gallery": images[].asset->url,
+    "imageUrl": coverImage.asset->url,
+    "coverAlt": coverImage.alt,
+    "gallery": gallery[].asset->url,
     "category": category->{
       _id,
       name,
