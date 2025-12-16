@@ -30,6 +30,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     loadMoreRef,
   } = useCatalog(books);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const filtersPanelId = "catalog-filters-panel";
 
   const activeCategory = useMemo(
     () =>
@@ -66,6 +67,8 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
             variant="secondary"
             className="font-semibold"
             onClick={() => setIsFiltersOpen((prev) => !prev)}
+            aria-expanded={isFiltersOpen}
+            aria-controls={filtersPanelId}
           >
             {isFiltersOpen ? "Hide filters" : "Show filters"}
           </Button>

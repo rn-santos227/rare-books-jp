@@ -39,6 +39,7 @@ export function Button(props: ButtonProps) {
     variant = "primary",
     fullwidth,
     className,
+    ...rest
   } = props;
 
   const classes = [
@@ -51,7 +52,7 @@ export function Button(props: ButtonProps) {
     .join(" ");
 
   if ("href" in props) {
-    const anchorProps = props as AnchorButtonProps;
+    const anchorProps = rest as AnchorButtonProps;
     return (
       <a
         className={classes}
@@ -60,9 +61,10 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const buttonProps = props as NativeButtonProps;
+  const { type = "button", ...buttonProps } = rest as NativeButtonProps;
   return (
     <button
+      type={type}
       className={classes}
       {...buttonProps}
     />

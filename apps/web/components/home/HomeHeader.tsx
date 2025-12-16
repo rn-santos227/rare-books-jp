@@ -24,10 +24,13 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
           />
         </div>
         <div className="flex items-center gap-2 text-sm font-semibold">
-          <Button variant="ghost" className="bg-white/5 text-white ring-1 ring-white/10 hover:bg-white/10">
+          <Button
+            variant="ghost"
+            className="rounded-full bg-white/5 px-5 py-2.5 text-white ring-1 ring-white/10 hover:bg-white/10"
+          >
             Favorites
           </Button>
-          <Button className="bg-linear-to-r from-[#ff5f6d] to-[#ffb347] text-slate-900 shadow">
+          <Button className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow">
             Start selling
           </Button>
         </div>
