@@ -76,13 +76,15 @@ export function useFilters(books: Book[]) {
             .includes(filters.searchQuery.toLowerCase())
         : true;
 
-      const matchesCategory = filters.categoryId
-        ? book.category?._id === filters.categoryId
-        : true;
+      const matchesCategory = matchesGroup(
+        book.category?._id ? [book.category._id] : [],
+        filters.categories,
+      );
 
-      const matchesGenre = filters.genreId
-        ? book.genres?.some((genre) => genre._id === filters.genreId)
-        : true;
+      const matchesGenre = matchesGroup(
+        book.genres?.map((genre) => genre._id) ?? [],
+        filters.genres,
+      );
 
       const matchesCondition = filters.condition
         ? book.condition === filters.condition
