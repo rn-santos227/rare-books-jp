@@ -6,6 +6,8 @@ import BookCard from "@/components/home/BookCard";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { useLanguage, useTranslations } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/lib/localization";
 import { useCatalog } from "./hooks/useCatalog";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
@@ -18,6 +20,8 @@ type CatalogGridProps = {
 };
 
 export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
+  const { language } = useLanguage();
+  const t = useTranslations();
   const {
     filters,
     filteredBooks,
@@ -37,7 +41,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
       filters.categoryId
         ? categories.find((category) => category._id === filters.categoryId)
         : null,
-    [categories, filters.categoryId],
+  [categories, filters.categoryId],
   );
 
   const activeGenre = useMemo(
@@ -52,16 +56,13 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-indigo-600">Book catalog</p>
-          <h2 className="text-2xl font-bold text-slate-900">Explore every title</h2>
-          <p className="text-sm text-slate-600">
-            Use the filters to refine your shelf. New items load automatically as
-            you browse.
-          </p>
+          <p className="text-sm font-semibold text-indigo-600">{t.catalog.bookCatalog}</p>
+          <h2 className="text-2xl font-bold text-slate-900">{t.catalog.exploreEveryTitle}</h2>
+          <p className="text-sm text-slate-600">{t.catalog.exploreHelper}</p>
         </div>
         <div className="flex items-center gap-2">
           <Badge tone="info" className="text-sm">
-            {filteredBooks.length} matches
+            {filteredBooks.length} {t.catalog.matches}
           </Badge>
           <Button
             variant="secondary"
@@ -70,17 +71,17 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
             aria-expanded={isFiltersOpen}
             aria-controls={filtersPanelId}
           >
-            {isFiltersOpen ? "Hide filters" : "Show filters"}
+            {isFiltersOpen ? t.catalog.hideFilters : t.catalog.showFilters}
           </Button>
         </div>
       </div>
 
       {(activeCategory || activeGenre || filters.searchQuery) && (
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
-          <span className="uppercase tracking-wide text-slate-400">Active</span>
+          <span className="uppercase tracking-wide text-slate-400">{t.catalog.activeLabel}</span>
           {activeCategory && (
             <Badge tone="info" className="flex items-center gap-2 bg-sky-50 text-sky-700">
-              {activeCategory.name}
+              {getLocalizedText(language, activeCategory.name, activeCategory.nameJa)}
               <button
                 className="text-slate-500 hover:text-slate-700"
                 onClick={() => updateFilter("categoryId", null)}
@@ -91,7 +92,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
           )}
           {activeGenre && (
             <Badge tone="neutral" className="flex items-center gap-2 bg-slate-100 text-slate-700">
-              {activeGenre.name}
+              {getLocalizedText(language, activeGenre.name, activeGenre.nameJa)}
               <button
                 className="text-slate-500 hover:text-slate-700"
                 onClick={() => updateFilter("genreId", null)}
@@ -119,15 +120,15 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
           <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-indigo-600">Filters</p>
-                <p className="text-xs text-slate-500">Craft the perfect shelf.</p>
+                <p className="text-sm font-semibold text-indigo-600">{t.filters.title}</p>
+                <p className="text-xs text-slate-500">{t.filters.subtitle}.</p>
               </div>
               <Button
                 variant="ghost"
                 className="text-sm font-semibold text-indigo-700"
                 onClick={resetFilters}
               >
-                Reset
+                {t.filters.reset}
               </Button>
             </div>
           </div>
@@ -160,12 +161,10 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
           {filteredBooks.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-gray-200">
               <span className="text-2xl">📚</span>
-              <p className="text-lg font-semibold text-slate-800">No books found</p>
-              <p className="text-sm text-slate-600">
-                Try clearing the filters or expanding your price range.
-              </p>
+              <p className="text-lg font-semibold text-slate-800">{t.catalog.noBooksTitle}</p>
+              <p className="text-sm text-slate-600">{t.catalog.noBooksBody}</p>
               <Button variant="secondary" onClick={resetFilters}>
-                Reset filters
+                {t.filters.reset}
               </Button>
             </div>
           )}
@@ -173,7 +172,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
           {hasMoreToShow && (
             <div className="flex items-center justify-center">
               <Button variant="secondary" onClick={loadMore}>
-                Load more books
+                {t.catalog.loadMore}
               </Button>
             </div>
           )}
