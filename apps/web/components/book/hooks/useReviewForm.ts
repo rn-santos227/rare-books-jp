@@ -12,7 +12,7 @@ export type ReviewFormErrors = Partial<Record<keyof ReviewFormState, string>>;
 
 type UseReviewFormParams = {
   bookId: string;
-  onSuccess?: () => void;
+  onSuccess?: (message?: string) => void;
   onError?: (message: string) => void;
 };
 
@@ -61,7 +61,7 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
 
     setIsSubmitting(true);
     try {
-      await submitReview({
+      const message = await submitReview({
         bookId,
         reviewerName: formState.reviewerName || "Anonymous reader",
         rating: ratingNumber,
@@ -70,7 +70,7 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
 
       setFormState({ reviewerName: "", rating: "5", bodyText: "" });
       setErrors({});
-      onSuccess?.();
+      onSuccess?.(message);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Please try again shortly.";
       onError?.(message);

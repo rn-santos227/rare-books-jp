@@ -22,16 +22,16 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
   const { toasts, show, dismiss, toneStyles } = useToast();
   const { formState, setFormState, errors, isSubmitting, handleSubmit } = useReviewForm({
     bookId,
-    onSuccess: () =>
+    onSuccess: (message) =>
       show({
         title: t.reviews.toastSuccessTitle,
-        description: t.reviews.toastSuccessBody,
+        description: message || t.reviews.toastSuccessBody,
         tone: "success",
       }),
-    onError: () =>
+    onError: (message) =>
       show({
         title: t.reviews.toastErrorTitle,
-        description: t.reviews.toastErrorBody,
+        description: message || t.reviews.toastErrorBody,
         tone: "warning",
       }),
   });
