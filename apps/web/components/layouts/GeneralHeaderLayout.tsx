@@ -22,7 +22,7 @@ export function GeneralHeaderLayout({
   return (
     <header
       className={composeClassName([
-        "border-b border-white/5 bg-[#121420]/95 shadow-[0_12px_40px_rgba(0,0,0,0.45)]",
+        "sticky top-0 z-50 border-b border-white/5 bg-[#121420]/95 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur",
         className,
       ])}
     >

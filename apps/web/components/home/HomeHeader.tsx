@@ -22,9 +22,7 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
   return (
     <>
       <div className="flex flex-wrap items-center gap-4">
-        <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold tracking-wide text-white shadow ring-1 ring-white/10">
-          {t.common.siteName}
-        </span>
+        <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
         <BookSearchField />
         <div className="flex items-center gap-2 text-sm font-semibold">
           <Button
