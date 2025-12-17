@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
 import { MetadataUpdater } from "@/components/layouts/MetadataUpdater";
-import { translations } from "@/constants/translations";
+import { SupportedLanguage, translations } from "@/constants/translations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,27 +17,38 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const defaultTranslations = translations.en.common;
-export const metadata: Metadata = {
-  title: defaultTranslations.metaTitle,
-  description: defaultTranslations.metaDescription,
-  alternates: {
-    languages: {
-      en: "/",
-      ja: "/?lang=ja",
-    },
-  },
-};
+async function getInitialLanguage(): Promise<SupportedLanguage> {
+  const languageCookie = (await cookies()).get("preferredLanguage")?.value;
+  return languageCookie === "ja" ? "ja" : "en";
+}
 
-export default function RootLayout({
+export async function generateMetadata(): Promise<Metadata> {
+  const initialLanguage = await getInitialLanguage();
+  const defaultTranslations = translations[initialLanguage].common;
+
+  return {
+    title: defaultTranslations.metaTitle,
+    description: defaultTranslations.metaDescription,
+    alternates: {
+      languages: {
+        en: "/",
+        ja: "/?lang=ja",
+      },
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ const initialLanguage = await getInitialLanguage();
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LanguageProvider>
+        <LanguageProvider defaultLanguage={initialLanguage}>
           <MetadataUpdater />
           {children}
         </LanguageProvider>
