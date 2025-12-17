@@ -3,6 +3,14 @@
 import { useMemo, useState } from "react";
 import { Book } from "@/types/book";
 
+type LogicalOperator = "any" | "all";
+
+type GroupFilters = {
+  include: string[];
+  exclude: string[];
+  mode: LogicalOperator;
+};
+
 export type FiltersState = {
   searchQuery: string;
   categoryId: string | null;
