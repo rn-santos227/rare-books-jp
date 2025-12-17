@@ -10,19 +10,29 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Carousel } from "@/components/ui/Carousel";
 import ImageViewer from "@/components/ui/ImageViewer";
+import { LanguageToggle, useLanguage, useTranslations } from "@/context/LanguageContext";
+import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { Book } from "@/types/book";
 import { Review } from "@/types/review";
 
-function formatPrice(price?: number | null) {
-  if (!price && price !== 0) return "Contact for price";
+function formatPrice(price: number | null | undefined, fallback: string) {
+  if (!price && price !== 0) return fallback;
   return `¥${price.toLocaleString()}`;
 }
 
-function InventoryBadge({ inventory }: { inventory?: number | null }) {
+function InventoryBadge({
+  inventory,
+  inStockLabel,
+  outOfStockLabel,
+}: {
+  inventory?: number | null;
+  inStockLabel: (count: number) => string;
+  outOfStockLabel: string;
+}) {
   if (inventory === undefined || inventory === null) return null;
 
   const tone = inventory > 5 ? "success" : "warning";
-  const label = inventory > 0 ? `${inventory} in stock` : "Out of stock";
+  const label = inventory > 0 ? inStockLabel(inventory) : outOfStockLabel;
 
   return (
     <Badge tone={tone} className="rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide">
@@ -59,8 +69,21 @@ type BookPageClientProps = {
 };
 
 export function BookPageClient({ book, reviews }: BookPageClientProps) {
+  const { language } = useLanguage();
+  const t = useTranslations();
+  const localizedTitle = getLocalizedText(language, book.title, book.titleJa);
+  const localizedAuthor = getLocalizedText(language, book.author, book.authorJa);
+  const localizedDescription = getLocalizedText(
+    language,
+    book.description,
+    book.descriptionJa,
+  ) || t.book.descriptionFallback;
+  const localizedCategory = getLocalizedText(language, book.category?.name, book.category?.nameJa);
+  const localizedGenres = book.genres?.map((genre) =>
+    getLocalizedText(language, genre.name, genre.nameJa),
+  );
   const heroImage = book.imageUrl ?? book.gallery?.[0];
-  const heroAlt = book.coverAlt ?? book.title;
+  const heroAlt = book.coverAlt ?? localizedTitle;
 
   return (
     <PageLayout
@@ -68,10 +91,13 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
       header={
         <GeneralHeaderLayout>
           <div className="flex items-center justify-between gap-4">
-            <div className="text-lg font-semibold text-white">The Rare Books JP</div>
-            <Link href="/catalog" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
-              Back to Catalog
-            </Link>
+            <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
+            <div className="flex items-center gap-3">
+              <Link href="/catalog" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
+                {t.book.backToCatalog}
+              </Link>
+              <LanguageToggle />
+            </div>
           </div>
         </GeneralHeaderLayout>
       }
@@ -82,14 +108,14 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
       <div className="flex flex-col gap-8">
         <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
           <Link href="/" className="font-semibold text-indigo-700 hover:text-indigo-800">
-            Home
+            {t.book.breadcrumbHome}
           </Link>
           <span className="text-slate-400">/</span>
           <Link href="/catalog" className="font-semibold text-indigo-700 hover:text-indigo-800">
-            Books
+            {t.book.breadcrumbBooks}
           </Link>
           <span className="text-slate-400">/</span>
-          <span className="text-slate-500">{book.title}</span>
+          <span className="text-slate-500">{localizedTitle}</span>
         </nav>
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(360px,420px)_minmax(0,1fr)]">
@@ -99,7 +125,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                 <ImageViewer
                   src={heroImage}
                   alt={heroAlt}
-                  fallbackLabel="Cover coming soon"
+                  fallbackLabel={t.common.coverFallback}
                   className="h-full"
                   imgClassName="object-contain"
                 />
@@ -107,7 +133,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
             </div>
 
             {book.gallery && book.gallery.length > 0 && (
-              <Carousel ariaLabel={`${book.title} gallery`} className="-mx-1 px-1">
+              <Carousel ariaLabel={`${localizedTitle} gallery`} className="-mx-1 px-1">
                 {book.gallery.map((url, index) => (
                   <div
                     key={url}
@@ -117,7 +143,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                     <div className="aspect-3/4">
                       <ImageViewer
                         src={url}
-                        alt={`${book.title} preview ${index + 1}`}
+                        alt={`${localizedTitle} preview ${index + 1}`}
                         className="h-full"
                         imgClassName="object-cover"
                       />
@@ -130,40 +156,44 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
           <div className="flex flex-col gap-6">
             <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
               <div className="flex flex-wrap items-center gap-3">
-                {book.condition && <Badge tone="info">{book.condition.replace("_", " ")}</Badge>}
-                <InventoryBadge inventory={book.inventory} />
+                {book.condition && <Badge tone="info">{getConditionLabel(language, book.condition)}</Badge>}
+                <InventoryBadge
+                  inventory={book.inventory}
+                  inStockLabel={t.book.inventoryInStock}
+                  outOfStockLabel={t.book.inventoryOutOfStock}
+                />
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-3xl font-semibold text-slate-900">{book.title}</h1>
-                <p className="text-lg text-slate-600">{book.author ?? "Unknown author"}</p>
+                <h1 className="text-3xl font-semibold text-slate-900">{localizedTitle}</h1>
+                <p className="text-lg text-slate-600">{localizedAuthor || t.common.unknownAuthor}</p>
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3">
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500">Price</p>
-                  <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price)}</p>
+                  <p className="text-sm uppercase tracking-wide text-slate-500">{t.book.price}</p>
+                  <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price, t.book.contactForPrice)}</p>
                 </div>
-                <Button className="px-6">Add to cart</Button>
+                <Button className="px-6">{t.book.addToCart}</Button>
               </div>
 
               <p className="text-base leading-relaxed text-slate-700">
-                {book.description || "A detailed description from the curator will be added soon."}
+                {localizedDescription}
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
-                <DetailsList className="sm:col-span-2" label="Category" value={book.category?.name} />
+                <DetailsList className="sm:col-span-2" label={t.book.category} value={localizedCategory} />
                 <DetailsList
-                  label="Genre"
-                  value={book.genres?.map((genre) => genre.name).join(", ")}
+                  label={t.book.genre}
+                  value={localizedGenres?.join(", ")}
                   className="sm:col-span-2"
                 />
-                <DetailsList label="Condition" value={book.condition?.replace("_", " ")} />
-                <DetailsList label="Inventory" value={book.inventory ?? "N/A"} />
+                <DetailsList label={t.book.condition} value={getConditionLabel(language, book.condition)} />
+                <DetailsList label={t.book.inventory} value={book.inventory ?? t.book.inventoryUnknown} />
               </div>
 
               {book.featured && (
                 <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 ring-1 ring-amber-100">
-                  Featured pick from our collection
+                  {t.book.featured}
                 </div>
               )}
             </div>
@@ -172,5 +202,5 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
       </div>
       <BookReviewSection bookId={book._id} reviews={reviews} />
     </PageLayout>
-  )
+  );
 }
