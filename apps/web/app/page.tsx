@@ -1,9 +1,4 @@
-import { DiscoverySections } from "@/components/home/DiscoverySections";
-import { HomeHeader, QuickFilterItem } from "@/components/home/HomeHeader";
-import { PromotionHero } from "@/components/home/PromotionHero";
-import { HomePageLayout } from "@/components/home/layouts/HomePageLayout";
-import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
-import { SiteFooter } from "@/components/layouts/SiteFooter";
+import { HomePageClient } from "@/components/home/HomePageClient";
 import {
   BOOKS_QUERY,
   CATEGORIES_QUERY,
@@ -24,43 +19,13 @@ export default async function Home() {
     sanityClient.fetch<Promotion[]>(PROMOTIONS_QUERY),
   ]);
 
-  const quickFilters: QuickFilterItem[] = genres.length
-    ? genres.map((genre) => ({ key: genre._id, label: genre.name }))
-    : categories.slice(0, 7).map((category) => ({
-        key: category._id,
-        label: category.name,
-      }));
-
-  const latestBooks = [...books]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt ?? 0).getTime() -
-        new Date(a.createdAt ?? 0).getTime(),
-    )
-    .slice(0, 6);
-
   return (
-    <HomePageLayout
-      header={
-        <GeneralHeaderLayout>
-          <HomeHeader quickFilters={quickFilters} />
-        </GeneralHeaderLayout>
-      }
-      banner={
-        <PromotionHero
-          categoriesCount={categories.length}
-          genresCount={genres.length}
-          promotions={promotions ?? []}
-        />
-      }
-      footer={<SiteFooter />}
-    >
-      <DiscoverySections
-        books={latestBooks}
-        categories={categories}
-        genres={genres}
-      />
-    </HomePageLayout>
+    <HomePageClient
+      books={books}
+      categories={categories}
+      genres={genres}
+      promotions={promotions}
+    />
   );
 }
 
