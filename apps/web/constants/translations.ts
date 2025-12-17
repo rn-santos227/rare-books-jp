@@ -12,6 +12,7 @@ type Translations = {
     startSelling: string;
     languageEnglish: string;
     languageJapanese: string;
+    loading: string;
     viewDetails: string;
     askPrice: string;
     coverFallback: string;
@@ -132,6 +133,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
       startSelling: "Start selling",
       languageEnglish: "English",
       languageJapanese: "日本語",
+      loading: "Loading",
       viewDetails: "View details",
       askPrice: "Ask",
       coverFallback: "Cover coming soon",
@@ -271,6 +273,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
       startSelling: "出品する",
       languageEnglish: "English",
       languageJapanese: "日本語",
+      loading: "読み込み中",
       viewDetails: "詳細を見る",
       askPrice: "要問い合わせ",
       coverFallback: "カバー画像は準備中です",

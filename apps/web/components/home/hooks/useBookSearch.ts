@@ -1,34 +1,65 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Book } from "@/types/book";
 
-export function useBookSearch(books: Book[]) {
+const MIN_QUERY_LENGTH = 2;
+const DEBOUNCE_MS = 200;
+
+export function useBookSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [suggestions, setSuggestions] = useState<Book[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const suggestions = useMemo(() => {
+  const fetchSuggestions = useCallback(async (term: string, signal: AbortSignal) => {
+    try {
+      const response = await fetch(`/api/books/search?q=${encodeURIComponent(term)}`, {
+        signal,
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to fetch search suggestions.");
+      }
+
+      const data = (await response.json()) as { results?: Book[] };
+      setSuggestions(data.results ?? []);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      setSuggestions([]);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    if (!normalizedQuery) {
-      return [] as Book[];
+    if (normalizedQuery.length < MIN_QUERY_LENGTH) {
+      setSuggestions([]);
+      setIsLoading(false);
+      return undefined;
     }
 
-    return books
-      .filter((book) => Boolean(book.slug))
-      .filter((book) => {
-        const englishTitle = book.title?.toLowerCase() ?? "";
-        const japaneseTitle = book.titleJa?.toLowerCase() ?? "";
-        return (
-          englishTitle.includes(normalizedQuery) ||
-          japaneseTitle.includes(normalizedQuery)
-        );
-      })
-      .slice(0, 8);
-  }, [books, query]);
+    const controller = new AbortController();
+    setIsLoading(true);
+
+    const timeoutId = window.setTimeout(() => {
+      void fetchSuggestions(normalizedQuery, controller.signal);
+    }, DEBOUNCE_MS);
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(timeoutId);
+    };
+  }, [fetchSuggestions, query]);
 
   const handleSelect = useCallback(
     (book: Book) => {
@@ -55,6 +86,7 @@ export function useBookSearch(books: Book[]) {
     setQuery,
     isFocused,
     setIsFocused,
+    isLoading,
     suggestions,
     handleSelect,
     handleSubmit,

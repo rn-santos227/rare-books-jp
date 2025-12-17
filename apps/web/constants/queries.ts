@@ -33,6 +33,39 @@ export const BOOKS_QUERY = groq`
   }
 `;
 
+export const HOME_BOOKS_QUERY = groq`
+  *[_type == "book" && status == "published"]|order(featured desc, _createdAt desc)[0...18]{
+    _id,
+    title,
+    titleJa,
+    author,
+    authorJa,
+    price,
+    "createdAt": _createdAt,
+    condition,
+    featured,
+    description,
+    descriptionJa,
+    inventory,
+    "slug": slug.current,
+    "imageUrl": coverImage.asset->url,
+    "coverAlt": coverImage.alt,
+    "gallery": gallery[].asset->url,
+    "category": category->{
+      _id,
+      name,
+      nameJa,
+      "slug": slug.current
+    },
+    "genres": genres[]->{
+      _id,
+      name,
+      nameJa,
+      "slug": slug.current
+    }
+  }
+`;
+
 export const CATEGORIES_QUERY = groq`
   *[_type == "category"]|order(name asc){
     _id,
@@ -101,6 +134,17 @@ export const BOOK_BY_SLUG_QUERY = groq`
       nameJa,
       "slug": slug.current
     }
+  }
+`;
+
+export const BOOK_SEARCH_QUERY = groq`
+  *[_type == "book" && status == "published" && (lower(title) match $term || lower(titleJa) match $term)][0...8]{
+    _id,
+    title,
+    titleJa,
+    author,
+    authorJa,
+    "slug": slug.current
   }
 `;
 
