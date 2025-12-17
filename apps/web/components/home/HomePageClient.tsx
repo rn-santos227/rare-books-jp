@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import BookCard from "@/components/home/BookCard";
-import { FiltersPanel } from "@/components/catalog/FiltersPanel";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { useFilters } from "@/hooks/useFilters";
-import { Book } from "@/types/book";
-import { Category } from "@/types/category";
-import { Genre } from "@/types/genre";
+import { useMemo } from "react";
+
+import { DiscoverySections } from "@/components/home/DiscoverySections";
+import { HomeHeader, QuickFilterItem } from "@/components/home/HomeHeader";
+import { PromotionHero } from "@/components/home/PromotionHero";
+import { HomePageLayout } from "@/components/home/layouts/HomePageLayout";
+import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
+import { SiteFooter } from "@/components/layouts/SiteFooter";
+import { useLanguage } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/lib/localization";
+import { Promotion } from "@/types/promotion";
 
 type Props = {
   books: Book[];
