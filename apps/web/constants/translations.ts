@@ -64,6 +64,11 @@ type Translations = {
     subtitle: string;
     reset: string;
     searchPlaceholder: string;
+    selectionHint: string;
+    matchAny: string;
+    matchAll: string;
+    includeLabel: string;
+    excludeLabel: string;
     categories: string;
     genres: string;
     condition: string;
@@ -187,6 +192,11 @@ export const translations: Record<SupportedLanguage, Translations> = {
       subtitle: "Craft the perfect shelf",
       reset: "Reset",
       searchPlaceholder: "Search by title or author",
+      selectionHint: "Tap once to include, again to exclude",
+      matchAny: "Match any",
+      matchAll: "Match all",
+      includeLabel: "Include",
+      excludeLabel: "Exclude",
       categories: "Categories",
       genres: "Genres",
       condition: "Condition",
@@ -326,6 +336,11 @@ export const translations: Record<SupportedLanguage, Translations> = {
       subtitle: "理想の棚を作る",
       reset: "リセット",
       searchPlaceholder: "タイトルまたは著者で検索",
+      selectionHint: "タップで含め、もう一度で除外します",
+      matchAny: "いずれかに一致",
+      matchAll: "すべてに一致",
+      includeLabel: "含める",
+      excludeLabel: "除外",
       categories: "カテゴリ",
       genres: "ジャンル",
       condition: "コンディション",
