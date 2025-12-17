@@ -48,8 +48,26 @@ export function useFilters(books: Book[]) {
     priceRange: computePriceBounds(books),
   }));
 
-  const priceBounds = useMemo(() => computePriceBounds(books), [books]);
+  const matchesGroup = (
+    values: string[],
+    group: GroupFilters,
+  ) => {
+    const passesInclude =
+      group.include.length === 0
+        ? true
+        : group.mode === "all"
+          ? group.include.every((id) => values.includes(id))
+          : group.include.some((id) => values.includes(id));
 
+    const passesExclude =
+      group.exclude.length === 0
+        ? true
+        : !group.exclude.some((id) => values.includes(id));
+
+    return passesInclude && passesExclude;
+  };
+
+  const priceBounds = useMemo(() => computePriceBounds(books), [books]);
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
       const matchesSearch = filters.searchQuery
