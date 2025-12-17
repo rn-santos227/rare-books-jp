@@ -3,7 +3,9 @@
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { TextField } from "@/components/ui/TextField";
+import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { FiltersState } from "@/hooks/useFilters";
+import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
 import { FilterPill } from "./FilterPill";
@@ -35,12 +37,15 @@ export function FiltersPanel({
   updateFilter,
   resetFilters,
 }: FiltersPanelProps) {
+  const { language } = useLanguage();
+  const t = useTranslations();
+
   return (
     <aside className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
       <div className="flex items-center justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-indigo-600">Filters</p>
-          <p className="text-xs text-slate-500">Craft the perfect shelf</p>
+          <p className="text-sm font-semibold text-indigo-600">{t.filters.title}</p>
+          <p className="text-xs text-slate-500">{t.filters.subtitle}</p>
         </div>
         <div className="flex gap-2">
           <Button
@@ -48,7 +53,7 @@ export function FiltersPanel({
             className="text-sm font-semibold text-indigo-700"
             onClick={resetFilters}
           >
-            Reset
+            {t.filters.reset}
           </Button>
         </div>
       </div>
@@ -61,14 +66,14 @@ export function FiltersPanel({
 
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-800">Categories</h3>
+          <h3 className="text-sm font-semibold text-slate-800">{t.filters.categories}</h3>
           <Badge tone="info">{categories.length}</Badge>
         </div>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <FilterPill
               key={category._id}
-              label={category.name}
+              label={getLocalizedText(language, category.name, category.nameJa)}
               active={filters.categoryId === category._id}
               onClick={() =>
                 updateFilter(
@@ -83,14 +88,14 @@ export function FiltersPanel({
 
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-800">Genres</h3>
+          <h3 className="text-sm font-semibold text-slate-800">{t.filters.genres}</h3>
           <Badge tone="neutral">{genres.length}</Badge>
         </div>
         <div className="flex flex-wrap gap-2">
           {genres.map((genre) => (
             <FilterPill
               key={genre._id}
-              label={genre.name}
+              label={getLocalizedText(language, genre.name, genre.nameJa)}
               active={filters.genreId === genre._id}
               onClick={() =>
                 updateFilter(
@@ -105,14 +110,14 @@ export function FiltersPanel({
 
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-800">Condition</h3>
+          <h3 className="text-sm font-semibold text-slate-800">{t.filters.condition}</h3>
           <Badge tone="warning">{conditions.length}</Badge>
         </div>
         <div className="flex flex-wrap gap-2">
           {conditions.map((condition) => (
             <FilterPill
               key={condition.value}
-              label={condition.label}
+              label={getConditionLabel(language, condition.value)}
               active={filters.condition === condition.value}
               onClick={() =>
                 updateFilter(
@@ -129,15 +134,14 @@ export function FiltersPanel({
 
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-slate-800">Price</h3>
+          <h3 className="text-sm font-semibold text-slate-800">{t.filters.price}</h3>
           <Badge tone="neutral">
-            ¥{filters.priceRange[0].toLocaleString()} - ¥
-            {filters.priceRange[1].toLocaleString()}
+            {t.filters.priceHelper(filters.priceRange[0], filters.priceRange[1])}
           </Badge>
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm">
           <label className="flex flex-col gap-1 text-slate-600">
-            <span>Min</span>
+            <span>{t.filters.min}</span>
             <input
               type="number"
               min={priceBounds[0]}
@@ -153,7 +157,7 @@ export function FiltersPanel({
             />
           </label>
           <label className="flex flex-col gap-1 text-slate-600">
-            <span>Max</span>
+            <span>{t.filters.max}</span>
             <input
               type="number"
               min={filters.priceRange[0]}
