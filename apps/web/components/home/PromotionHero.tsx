@@ -24,7 +24,6 @@ export function PromotionHero({
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/80">{t.home.bannerLabel}</p>
             <h1 className="text-2xl font-bold leading-tight md:text-3xl">{t.home.bannerTitle}</h1>
           </div>
           <div className="flex items-center gap-2 text-sm font-semibold">

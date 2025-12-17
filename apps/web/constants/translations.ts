@@ -19,7 +19,6 @@ type Translations = {
     liveLabel: string;
   };
   home: {
-    bannerLabel: string;
     bannerTitle: string;
     categoriesLabel: string;
     genresLabel: string;
@@ -140,7 +139,6 @@ export const translations: Record<SupportedLanguage, Translations> = {
       liveLabel: "Live",
     },
     home: {
-      bannerLabel: "Mercari style banner",
       bannerTitle: "Our international purchase and shipping parallel is live",
       categoriesLabel: "categories",
       genresLabel: "genres",
@@ -280,7 +278,6 @@ export const translations: Record<SupportedLanguage, Translations> = {
       liveLabel: "公開中",
     },
     home: {
-      bannerLabel: "メルカリ風バナー",
       bannerTitle: "越境購入と発送サポートを開始しました",
       categoriesLabel: "カテゴリ",
       genresLabel: "ジャンル",
