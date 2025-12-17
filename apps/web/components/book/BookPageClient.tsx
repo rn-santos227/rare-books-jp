@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 
+import { BookHeader } from "@/components/book/BookHeader";
 import { BookReviewSection } from "@/components/book/BookReviewSection";
-import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Carousel } from "@/components/ui/Carousel";
 import ImageViewer from "@/components/ui/ImageViewer";
-import { LanguageToggle, useLanguage, useTranslations } from "@/context/LanguageContext";
+import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { Book } from "@/types/book";
 import { Review } from "@/types/review";
@@ -88,19 +88,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
   return (
     <PageLayout
       backgroundTone="plain"
-      header={
-        <GeneralHeaderLayout>
-          <div className="flex items-center justify-between gap-4">
-            <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
-            <div className="flex items-center gap-3">
-              <Link href="/catalog" className="text-sm font-semibold text-indigo-100 transition hover:text-white">
-                {t.book.backToCatalog}
-              </Link>
-              <LanguageToggle />
-            </div>
-          </div>
-        </GeneralHeaderLayout>
-      }
+      header={<BookHeader />}
       footer={<SiteFooter />}
       contentPadding="px-6 py-12"
       contentGap="gap-12"
