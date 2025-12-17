@@ -118,8 +118,8 @@ export function useFilters(books: Book[]) {
     setFilters((prev) => ({
       ...prev,
       searchQuery: "",
-      categoryId: null,
-      genreId: null,
+      categories: { ...initialGroup },
+      genres: { ...initialGroup },
       condition: null,
       priceRange: priceBounds,
     }));
