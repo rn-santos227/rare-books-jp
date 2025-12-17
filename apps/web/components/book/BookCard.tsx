@@ -1,8 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import ImageViewer from "@/components/ui/ImageViewer";
+import { Badge, Button, ImageViewer } from "@/components/ui";
 import { Book } from "@/types/book";
 
 function formatPrice(price?: number | null) {

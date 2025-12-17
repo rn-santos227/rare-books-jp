@@ -1,8 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { TextField } from "@/components/ui/TextField";
+import { Badge, Button, TextField } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { FiltersState } from "@/hooks/useFilters";
 import { getConditionLabel, getLocalizedText } from "@/lib/localization";

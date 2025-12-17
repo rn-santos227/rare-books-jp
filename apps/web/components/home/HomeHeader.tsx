@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui";
 import { LanguageToggle, useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 

@@ -1,9 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Carousel } from "@/components/ui/Carousel";
-import ImageViewer from "@/components/ui/ImageViewer";
+import { Badge, Button, Carousel, ImageViewer } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 import { Promotion } from "@/types/promotion";

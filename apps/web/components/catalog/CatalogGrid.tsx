@@ -2,10 +2,9 @@
 
 import { useMemo, useState } from "react";
 
-import BookCard from "@/components/home/BookCard";
+import BookCard from "@/components/book/BookCard";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { Badge, Button } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 import { useCatalog } from "./hooks/useCatalog";

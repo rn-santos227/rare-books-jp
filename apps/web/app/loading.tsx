@@ -1,7 +1,7 @@
 import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
-import { Spinner } from "@/components/ui/Spinner";
+import { Spinner } from "@/components/ui";
 
 export default function Loading() {
   return (

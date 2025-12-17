@@ -1,9 +1,7 @@
 "use client";
 
-import BookCard from "@/components/home/BookCard";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Carousel } from "@/components/ui/Carousel";
+import BookCard from "@/components/book/BookCard";
+import { Badge, Button, Carousel } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 import { Book } from "@/types/book";
