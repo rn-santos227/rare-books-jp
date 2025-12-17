@@ -5,6 +5,8 @@ type ConditionKey = "new" | "like_new" | "used" | "damaged";
 type Translations = {
   common: {
     siteName: string;
+    metaTitle: string;
+    metaDescription: string;
     searchPlaceholder: string;
     favorites: string;
     startSelling: string;
@@ -123,17 +125,20 @@ export const translations: Record<SupportedLanguage, Translations> = {
   en: {
     common: {
       siteName: "The Rare Books JP",
+      metaTitle: "The Rare Books JP | Rare book marketplace",
+      metaDescription:
+        "Marketplace UI kit for rare books and collectibles inspired by Mercari.",
       searchPlaceholder: "Looking for something?",
-    favorites: "Favorites",
-    startSelling: "Start selling",
-    languageEnglish: "English",
-    languageJapanese: "日本語",
-    viewDetails: "View details",
-    askPrice: "Ask",
-    coverFallback: "Cover coming soon",
-    unknownAuthor: "Unknown author",
-    liveLabel: "Live",
-  },
+      favorites: "Favorites",
+      startSelling: "Start selling",
+      languageEnglish: "English",
+      languageJapanese: "日本語",
+      viewDetails: "View details",
+      askPrice: "Ask",
+      coverFallback: "Cover coming soon",
+      unknownAuthor: "Unknown author",
+      liveLabel: "Live",
+    },
     home: {
       bannerLabel: "Mercari style banner",
       bannerTitle: "Our international purchase and shipping parallel is live",
@@ -261,17 +266,19 @@ export const translations: Record<SupportedLanguage, Translations> = {
   ja: {
     common: {
       siteName: "ザ・レアブックスJP",
+      metaTitle: "ザ・レアブックスJP | 希少本のマーケットプレイス",
+      metaDescription: "Mercari から着想を得た希少本とコレクティブルのマーケット UI キット。",
       searchPlaceholder: "お探しのものはありますか？",
-    favorites: "お気に入り",
-    startSelling: "出品する",
-    languageEnglish: "English",
-    languageJapanese: "日本語",
-    viewDetails: "詳細を見る",
-    askPrice: "要問い合わせ",
-    coverFallback: "カバー画像は準備中です",
-    unknownAuthor: "著者情報なし",
-    liveLabel: "公開中",
-  },
+      favorites: "お気に入り",
+      startSelling: "出品する",
+      languageEnglish: "English",
+      languageJapanese: "日本語",
+      viewDetails: "詳細を見る",
+      askPrice: "要問い合わせ",
+      coverFallback: "カバー画像は準備中です",
+      unknownAuthor: "著者情報なし",
+      liveLabel: "公開中",
+    },
     home: {
       bannerLabel: "メルカリ風バナー",
       bannerTitle: "越境購入と発送サポートを開始しました",
