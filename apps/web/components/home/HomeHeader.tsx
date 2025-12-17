@@ -1,8 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
+import { LanguageToggle, useLanguage, useTranslations } from "@/context/LanguageContext";
+import { getLocalizedText } from "@/lib/localization";
 
 export interface QuickFilterItem {
   key: string;
   label: string;
+  labelJa?: string | null;
 }
 
 interface HomeHeaderProps {
@@ -10,17 +15,20 @@ interface HomeHeaderProps {
 }
 
 export function HomeHeader({ quickFilters }: HomeHeaderProps) {
+  const { language } = useLanguage();
+  const t = useTranslations();
+
   return (
     <>
       <div className="flex flex-wrap items-center gap-4">
         <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold tracking-wide text-white shadow ring-1 ring-white/10">
-          The Rare Books JP
+          {t.common.siteName}
         </span>
         <div className="flex flex-1 items-center gap-3 rounded-full bg-white/5 px-4 py-3 text-sm text-slate-300 ring-1 ring-white/10">
           <span className="text-slate-500">🔍</span>
           <input
             className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none"
-            placeholder="Looking for something?"
+            placeholder={t.common.searchPlaceholder}
           />
         </div>
         <div className="flex items-center gap-2 text-sm font-semibold">
@@ -28,11 +36,12 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
             variant="ghost"
             className="rounded-full bg-white/5 px-5 py-2.5 text-white ring-1 ring-white/10 hover:bg-white/10"
           >
-            Favorites
+            {t.common.favorites}
           </Button>
           <Button className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow">
-            Start selling
+            {t.common.startSelling}
           </Button>
+          <LanguageToggle />
         </div>
       </div>
 
@@ -42,7 +51,7 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
             key={filter.key}
             className="rounded-full bg-white/5 px-4 py-2 text-[11px] text-slate-200 ring-1 ring-white/5"
           >
-            {filter.label}
+            {getLocalizedText(language, filter.label, filter.labelJa)}
           </span>
         ))}
       </div>
