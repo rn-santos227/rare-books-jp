@@ -10,6 +10,7 @@ import { RatingInput } from "@/components/ui/RatingInput";
 import { TextArea } from "@/components/ui/TextArea";
 import { TextField } from "@/components/ui/TextField";
 import { useReviewForm } from "./hooks/useReviewForm";
+import { useTranslations } from "@/context/LanguageContext";
 import { Review } from "@/types/review";
 
 type BookReviewSectionProps = {
@@ -18,8 +19,10 @@ type BookReviewSectionProps = {
 };
 
 function ReviewCard({ review }: { review: Review }) {
-  const reviewer = review.reviewerName || "Anonymous reader";
-  const body = review.bodyText || "No written feedback.";
+  const t = useTranslations();
+  const reviewer = review.reviewerName || t.reviews.anonymous;
+  const body = review.bodyText || t.reviews.noBody;
+
   const date = review.createdAt ? new Date(review.createdAt).toLocaleDateString() : "";
 
   return (
@@ -28,7 +31,7 @@ function ReviewCard({ review }: { review: Review }) {
         <div>
           <p className="text-sm font-semibold text-slate-900">{review.title || reviewer}</p>
           <p className="text-xs uppercase tracking-wide text-slate-500">
-            {review.reviewType === "editorial" ? "Editorial" : "Reader review"}
+            {review.reviewType === "editorial" ? t.reviews.editorial : t.reviews.reader}
           </p>
         </div>
         <RatingDisplay rating={review.rating} showValue={false} ariaLabel={`Rating: ${review.rating ?? "no"} out of 5`} />
@@ -41,23 +44,23 @@ function ReviewCard({ review }: { review: Review }) {
 
 
 export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
+  const t = useTranslations();
   const { toasts, show, dismiss, toneStyles } = useToast();
   const { formState, setFormState, errors, isSubmitting, handleSubmit } = useReviewForm({
     bookId,
     onSuccess: () =>
       show({
-        title: "Review submitted",
-        description: "Thanks! New reviews appear after they are approved.",
+        title: t.reviews.toastSuccessTitle,
+        description: t.reviews.toastSuccessBody,
         tone: "success",
       }),
     onError: (message) =>
       show({
-        title: "Could not submit review",
-        description: message,
+        title: t.reviews.toastErrorTitle,
+        description: message || t.reviews.toastErrorBody,
         tone: "warning",
       }),
   });
-
 
   const averageRating = useMemo(() => {
     if (!reviews.length) return null;
@@ -66,13 +69,16 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
   }, [reviews]);
 
   const ratingValue = Number(formState.rating) || 0;
-  const reviewCountLabel = reviews.length === 1 ? "1 review" : `${reviews.length} reviews`;
+  const reviewCountLabel =
+    reviews.length === 1
+      ? t.reviews.singleReview
+      : t.reviews.multipleReviews(reviews.length);
 
   return (
     <section className="space-y-6 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Reviews</h2>
+          <h2 className="text-xl font-semibold text-slate-900">{t.reviews.heading}</h2>
           <p className="text-sm text-slate-600">{reviewCountLabel}</p>
         </div>
         <RatingDisplay rating={averageRating} />
@@ -81,8 +87,8 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
       <form onSubmit={handleSubmit} className="grid gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-100">
         <div className="grid gap-4 sm:grid-cols-[1fr,140px] sm:items-end">
           <TextField
-            label="Your name"
-            placeholder="How should we credit you?"
+            label={t.reviews.nameLabel}
+            placeholder={t.reviews.namePlaceholder}
             value={formState.reviewerName}
             onChange={(event) => setFormState((prev) => ({ ...prev, reviewerName: event.target.value }))}
           />
@@ -93,17 +99,17 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
           />
         </div>
         <TextArea
-          label="Your review"
-          placeholder="What did you enjoy, notice, or wish was different about this book?"
+          label={t.reviews.reviewLabel}
+          placeholder={t.reviews.reviewPlaceholder}
           value={formState.bodyText}
           onChange={(event) => setFormState((prev) => ({ ...prev, bodyText: event.target.value }))}
           rows={5}
           error={errors.bodyText}
         />
         <div className="flex items-center justify-end gap-3">
-          <p className="text-xs text-slate-500">Reviews are published after a quick moderation check.</p>
+          <p className="text-xs text-slate-500">{t.reviews.moderationNote}</p>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit review"}
+            {isSubmitting ? t.reviews.submitting : t.reviews.submit}
           </Button>
         </div>
       </form>
