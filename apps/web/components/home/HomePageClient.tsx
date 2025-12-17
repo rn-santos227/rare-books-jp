@@ -51,4 +51,24 @@ export function HomePageClient({ books, categories, genres, promotions }: HomePa
         .slice(0, 6),
     [books],
   );
+
+  return (
+    <HomePageLayout
+      header={
+        <GeneralHeaderLayout>
+          <HomeHeader quickFilters={quickFilters} />
+        </GeneralHeaderLayout>
+      }
+      banner={
+        <PromotionHero
+          categoriesCount={categories.length}
+          genresCount={genres.length}
+          promotions={promotions ?? []}
+        />
+      }
+      footer={<SiteFooter />}
+    >
+      <DiscoverySections books={latestBooks} categories={categories} genres={genres} />
+    </HomePageLayout>
+  );
 }
