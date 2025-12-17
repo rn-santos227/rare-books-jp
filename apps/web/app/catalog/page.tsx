@@ -1,5 +1,5 @@
+import { CatalogHeader } from "@/components/catalog/CatalogHeader";
 import { CatalogPageClient } from "@/components/catalog/CatalogPageClient";
-import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
 import { BOOKS_QUERY, CATEGORIES_QUERY, GENRES_QUERY } from "@/constants/queries";
@@ -17,14 +17,7 @@ export default async function CatalogPage() {
 
   return (
     <PageLayout
-      header={
-        <GeneralHeaderLayout>
-          <div className="flex items-center justify-between gap-4">
-            <div className="text-lg font-semibold text-white">The Rare Books JP</div>
-            <div className="text-sm font-semibold text-indigo-100">Browse the Catalog</div>
-          </div>
-        </GeneralHeaderLayout>
-      }
+      header={<CatalogHeader />}
       footer={<SiteFooter />}
       contentGap="gap-12"
       contentPadding="px-6 py-12"
