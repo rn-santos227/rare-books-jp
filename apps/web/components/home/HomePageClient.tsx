@@ -25,4 +25,30 @@ type HomePageClientProps = {
 export function HomePageClient({ books, categories, genres, promotions }: HomePageClientProps) {
   const { language } = useLanguage();
 
+  const quickFilters: QuickFilterItem[] = useMemo(() => {
+    if (genres.length) {
+      return genres.map((genre) => ({
+        key: genre._id,
+        label: getLocalizedText(language, genre.name, genre.nameJa),
+        labelJa: genre.nameJa,
+      }));
+    }
+
+    return categories.slice(0, 7).map((category) => ({
+      key: category._id,
+      label: getLocalizedText(language, category.name, category.nameJa),
+      labelJa: category.nameJa,
+    }));
+  }, [categories, genres, language]);
+
+  const latestBooks = useMemo(
+    () =>
+      [...books]
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime(),
+        )
+        .slice(0, 6),
+    [books],
+  );
 }
