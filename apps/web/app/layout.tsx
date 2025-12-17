@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
+import { MetadataUpdater } from "@/components/layouts/MetadataUpdater";
+import { translations } from "@/constants/translations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,9 +16,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const defaultTranslations = translations.en.common;
 export const metadata: Metadata = {
-  title: "The Rare Book JP",
-  description: "Marketplace UI kit for rare books and collectibles inspired by Mercari.",
+  title: defaultTranslations.metaTitle,
+  description: defaultTranslations.metaDescription,
+  alternates: {
+    languages: {
+      en: "/",
+      ja: "/?lang=ja",
+    },
+  },
 };
 
 export default function RootLayout({
