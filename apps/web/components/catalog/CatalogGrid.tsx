@@ -6,7 +6,7 @@ import BookCard from "@/components/book/BookCard";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
 import { Badge, Button } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
-import { getLocalizedText } from "@/lib/localization";
+import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { useCatalog } from "./hooks/useCatalog";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
@@ -35,21 +35,52 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const filtersPanelId = "catalog-filters-panel";
 
-  const activeCategory = useMemo(
+  const includedCategories = useMemo(
     () =>
-      filters.categoryId
-        ? categories.find((category) => category._id === filters.categoryId)
-        : null,
-  [categories, filters.categoryId],
+       categories.filter((category) =>
+        filters.categories.include.includes(category._id),
+      ),
+    [categories, filters.categories.include],
   );
 
-  const activeGenre = useMemo(
+  const excludedCategories = useMemo(
     () =>
-      filters.genreId
-        ? genres.find((genre) => genre._id === filters.genreId)
-        : null,
-    [filters.genreId, genres],
+      categories.filter((category) =>
+        filters.categories.exclude.includes(category._id),
+      ),
+    [categories, filters.categories.exclude],
   );
+
+  const includedGenres = useMemo(
+    () =>
+      genres.filter((genre) => filters.genres.include.includes(genre._id)),
+    [filters.genres.include, genres],
+  );
+
+  const excludedGenres = useMemo(
+    () =>
+      genres.filter((genre) => filters.genres.exclude.includes(genre._id)),
+    [filters.genres.exclude, genres],
+  );
+
+  const selectedCondition = useMemo(
+    () =>
+      filters.condition ? getConditionLabel(language, filters.condition) : null,
+    [filters.condition, language],
+  );
+
+  const formatNames = (items: { name: string; nameJa?: string | null }[]) =>
+    items
+      .map((item) => getLocalizedText(language, item.name, item.nameJa))
+      .join(", ");
+
+  const hasActiveFilters =
+    filters.searchQuery ||
+    includedCategories.length > 0 ||
+    excludedCategories.length > 0 ||
+    includedGenres.length > 0 ||
+    excludedGenres.length > 0 ||
+    Boolean(selectedCondition);
 
   return (
     <div className="space-y-6">
@@ -75,26 +106,92 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
         </div>
       </div>
 
-      {(activeCategory || activeGenre || filters.searchQuery) && (
+      {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
           <span className="uppercase tracking-wide text-slate-400">{t.catalog.activeLabel}</span>
-          {activeCategory && (
+          {includedCategories.length > 0 && (
             <Badge tone="info" className="flex items-center gap-2 bg-sky-50 text-sky-700">
-              {getLocalizedText(language, activeCategory.name, activeCategory.nameJa)}
+              <span>
+                {t.filters.includeLabel}: {formatNames(includedCategories)}
+                {includedCategories.length > 1 &&
+                  ` (${filters.categories.mode === "all" ? t.filters.matchAll : t.filters.matchAny})`}
+              </span>
               <button
                 className="text-slate-500 hover:text-slate-700"
-                onClick={() => updateFilter("categoryId", null)}
+                onClick={() =>
+                  updateFilter("categories", {
+                    ...filters.categories,
+                    include: [],
+                  })
+                }
               >
                 ×
               </button>
             </Badge>
           )}
-          {activeGenre && (
-            <Badge tone="neutral" className="flex items-center gap-2 bg-slate-100 text-slate-700">
-              {getLocalizedText(language, activeGenre.name, activeGenre.nameJa)}
+          {excludedCategories.length > 0 && (
+            <Badge tone="warning" className="flex items-center gap-2 bg-amber-50 text-amber-800">
+              <span>
+                {t.filters.excludeLabel}: {formatNames(excludedCategories)}
+              </span>
+
               <button
                 className="text-slate-500 hover:text-slate-700"
-                onClick={() => updateFilter("genreId", null)}
+                onClick={() =>
+                  updateFilter("categories", {
+                    ...filters.categories,
+                    exclude: [],
+                  })
+                }
+              >
+                ×
+              </button>
+            </Badge>
+          )}
+          {includedGenres.length > 0 && (
+            <Badge tone="neutral" className="flex items-center gap-2 bg-slate-100 text-slate-700">
+              <span>
+                {t.filters.includeLabel}: {formatNames(includedGenres)}
+                {includedGenres.length > 1 &&
+                  ` (${filters.genres.mode === "all" ? t.filters.matchAll : t.filters.matchAny})`}
+              </span>
+              <button
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() =>
+                  updateFilter("genres", {
+                    ...filters.genres,
+                    include: [],
+                  })
+                }
+              >
+                ×
+              </button>
+            </Badge>
+          )}
+          {excludedGenres.length > 0 && (
+            <Badge tone="warning" className="flex items-center gap-2 bg-amber-50 text-amber-800">
+              <span>
+                {t.filters.excludeLabel}: {formatNames(excludedGenres)}
+              </span>
+              <button
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() =>
+                  updateFilter("genres", {
+                    ...filters.genres,
+                    exclude: [],
+                  })
+                }
+              >
+                ×
+              </button>
+            </Badge>
+          )}
+          {selectedCondition && (
+            <Badge tone="warning" className="flex items-center gap-2 bg-amber-50 text-amber-800">
+              {selectedCondition}
+              <button
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() => updateFilter("condition", null)}
               >
                 ×
               </button>
