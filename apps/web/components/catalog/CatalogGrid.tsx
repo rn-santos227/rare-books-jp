@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import BookCard from "@/components/home/BookCard";
-import { FiltersPanel } from "@/components/home/FiltersPanel";
+import { FiltersPanel } from "@/components/catalog/FiltersPanel";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { useCatalog } from "./hooks/useCatalog";
