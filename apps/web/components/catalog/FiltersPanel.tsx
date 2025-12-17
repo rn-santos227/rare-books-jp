@@ -38,6 +38,69 @@ export function FiltersPanel({
   const { language } = useLanguage();
   const t = useTranslations();
 
+  const resolvePillState = (
+    ids: string[],
+    excluded: string[],
+    id: string,
+  ) => {
+    if (ids.includes(id)) return "include" as const;
+    if (excluded.includes(id)) return "exclude" as const;
+    return "inactive" as const;
+  };
+
+  const cycleSelection = (
+    key: "categories" | "genres",
+    id: string,
+  ) => {
+    const group = filters[key];
+    const state = resolvePillState(group.include, group.exclude, id);
+
+    if (state === "include") {
+      updateFilter(key, {
+        ...group,
+        include: group.include.filter((value) => value !== id),
+        exclude: [...group.exclude, id],
+      });
+      return;
+    }
+
+    if (state === "exclude") {
+      updateFilter(key, {
+        ...group,
+        exclude: group.exclude.filter((value) => value !== id),
+      });
+      return;
+    }
+
+    updateFilter(key, { ...group, include: [...group.include, id] });
+  };
+
+  const updateMode = (
+    key: "categories" | "genres",
+    mode: FiltersState["categories"]["mode"],
+  ) => updateFilter(key, { ...filters[key], mode });
+
+  const renderModeToggle = (
+    key: "categories" | "genres",
+    currentMode: FiltersState["categories"]["mode"],
+  ) => (
+    <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1 text-xs font-semibold text-slate-600">
+      {(["any", "all"] as const).map((mode) => (
+        <button
+          key={mode}
+          onClick={() => updateMode(key, mode)}
+          className={`rounded-full px-3 py-1 transition ${
+            currentMode === mode
+              ? "bg-white text-slate-900 shadow"
+              : "text-slate-600 hover:text-slate-800"
+          }`}
+        >
+          {mode === "any" ? t.filters.matchAny : t.filters.matchAll}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <aside className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
       <div className="flex items-center justify-between gap-2">
@@ -57,7 +120,7 @@ export function FiltersPanel({
       </div>
 
       <TextField
-        placeholder="Search by title or author"
+        placeholder={t.filters.searchPlaceholder}
         value={filters.searchQuery}
         onChange={(event) => updateFilter("searchQuery", event.target.value)}
       />
@@ -67,18 +130,21 @@ export function FiltersPanel({
           <h3 className="text-sm font-semibold text-slate-800">{t.filters.categories}</h3>
           <Badge tone="info">{categories.length}</Badge>
         </div>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+          <p>{t.filters.selectionHint}</p>
+          {renderModeToggle("categories", filters.categories.mode)}
+        </div>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <FilterPill
               key={category._id}
               label={getLocalizedText(language, category.name, category.nameJa)}
-              active={filters.categoryId === category._id}
-              onClick={() =>
-                updateFilter(
-                  "categoryId",
-                  filters.categoryId === category._id ? null : category._id,
-                )
-              }
+              state={resolvePillState(
+                filters.categories.include,
+                filters.categories.exclude,
+                category._id,
+              )}
+              onClick={() => cycleSelection("categories", category._id)}
             />
           ))}
         </div>
@@ -89,18 +155,21 @@ export function FiltersPanel({
           <h3 className="text-sm font-semibold text-slate-800">{t.filters.genres}</h3>
           <Badge tone="neutral">{genres.length}</Badge>
         </div>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+          <p>{t.filters.selectionHint}</p>
+          {renderModeToggle("genres", filters.genres.mode)}
+        </div>
         <div className="flex flex-wrap gap-2">
           {genres.map((genre) => (
             <FilterPill
               key={genre._id}
               label={getLocalizedText(language, genre.name, genre.nameJa)}
-              active={filters.genreId === genre._id}
-              onClick={() =>
-                updateFilter(
-                  "genreId",
-                  filters.genreId === genre._id ? null : genre._id,
-                )
-              }
+              state={resolvePillState(
+                filters.genres.include,
+                filters.genres.exclude,
+                genre._id,
+              )}
+              onClick={() => cycleSelection("genres", genre._id)}
             />
           ))}
         </div>
@@ -116,7 +185,9 @@ export function FiltersPanel({
             <FilterPill
               key={condition.value}
               label={getConditionLabel(language, condition.value)}
-              active={filters.condition === condition.value}
+              state={
+                filters.condition === condition.value ? "include" : "inactive"
+              }
               onClick={() =>
                 updateFilter(
                   "condition",
@@ -172,6 +243,6 @@ export function FiltersPanel({
           </label>
         </div>
       </div>
-   </aside>
-  )
+    </aside>
+  );
 }
