@@ -4,44 +4,18 @@ import { useMemo } from "react";
 
 import { ToastStack } from "@/components/toast/ToastStack";
 import { useToast } from "@/components/toast/hooks/useToast";
-import { Button } from "@/components/ui/Button";
-import { RatingDisplay } from "@/components/ui/RatingDisplay";
-import { RatingInput } from "@/components/ui/RatingInput";
-import { TextArea } from "@/components/ui/TextArea";
-import { TextField } from "@/components/ui/TextField";
-import { useReviewForm } from "./hooks/useReviewForm";
+import { Button, RatingDisplay, RatingInput, TextArea, TextField } from "@/components/ui";
 import { useTranslations } from "@/context/LanguageContext";
 import { Review } from "@/types/review";
+
+import { ReviewCard } from "./ReviewCard";
+import { useReviewForm } from "./hooks/useReviewForm";
+
 
 type BookReviewSectionProps = {
   bookId: string;
   reviews: Review[];
 };
-
-function ReviewCard({ review }: { review: Review }) {
-  const t = useTranslations();
-  const reviewer = review.reviewerName || t.reviews.anonymous;
-  const body = review.bodyText || t.reviews.noBody;
-
-  const date = review.createdAt ? new Date(review.createdAt).toLocaleDateString() : "";
-
-  return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-sm font-semibold text-slate-900">{review.title || reviewer}</p>
-          <p className="text-xs uppercase tracking-wide text-slate-500">
-            {review.reviewType === "editorial" ? t.reviews.editorial : t.reviews.reader}
-          </p>
-        </div>
-        <RatingDisplay rating={review.rating} showValue={false} ariaLabel={`Rating: ${review.rating ?? "no"} out of 5`} />
-      </div>
-      <p className="mt-3 text-sm leading-relaxed text-slate-700">{body}</p>
-      {date && <p className="mt-3 text-xs text-slate-400">{date}</p>}
-    </article>
-  );
-}
-
 
 export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
   const t = useTranslations();
@@ -54,10 +28,10 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
         description: t.reviews.toastSuccessBody,
         tone: "success",
       }),
-    onError: (message) =>
+    onError: () =>
       show({
         title: t.reviews.toastErrorTitle,
-        description: message || t.reviews.toastErrorBody,
+        description: t.reviews.toastErrorBody,
         tone: "warning",
       }),
   });
@@ -116,7 +90,7 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
 
       <div className="space-y-4">
         {reviews.length === 0 ? (
-          <p className="text-sm text-slate-600">No reviews yet. Be the first to share your thoughts.</p>
+          <p className="text-sm text-slate-600">{t.reviews.emptyState}</p>
         ) : (
           reviews.map((review) => <ReviewCard key={review._id} review={review} />)
         )}
