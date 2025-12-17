@@ -39,7 +39,7 @@ export function useFilters(books: Book[]) {
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
       const matchesSearch = filters.searchQuery
-        ? `${book.title} ${book.author}`
+        ? `${book.title} ${book.titleJa ?? ""} ${book.author ?? ""} ${book.description ?? ""} ${book.descriptionJa ?? ""}`
             .toLowerCase()
             .includes(filters.searchQuery.toLowerCase())
         : true;
