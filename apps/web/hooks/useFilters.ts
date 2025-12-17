@@ -13,8 +13,8 @@ type GroupFilters = {
 
 export type FiltersState = {
   searchQuery: string;
-  categoryId: string | null;
-  genreId: string | null;
+  categories: GroupFilters;
+  genres: GroupFilters;
   condition: string | null;
   priceRange: [number, number];
 };
@@ -34,10 +34,16 @@ function computePriceBounds(books: Book[]): [number, number] {
 }
 
 export function useFilters(books: Book[]) {
+  const initialGroup: GroupFilters = {
+    include: [],
+    exclude: [],
+    mode: "any",
+  };
+
   const [filters, setFilters] = useState<FiltersState>(() => ({
     searchQuery: "",
-    categoryId: null,
-    genreId: null,
+    categories: { ...initialGroup },
+    genres: { ...initialGroup },
     condition: null,
     priceRange: computePriceBounds(books),
   }));
