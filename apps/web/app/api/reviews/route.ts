@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sanityWriteClient } from "@/lib/sanity.client";
 
-const MODERATION_MESSAGE = "New reviews are published after approval.";
+const MODERATION_MESSAGE = "Thank you! Your review will appear after moderation.";
 
 function buildBodyBlock(text: string) {
   return [
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       body: buildBodyBlock(bodyText),
     });
 
-    return NextResponse.json({ message: MODERATION_MESSAGE });
+    return NextResponse.json({ message: MODERATION_MESSAGE, status: "pending" }, { status: 202 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to submit review.";
     return NextResponse.json({ message }, { status: 500 });

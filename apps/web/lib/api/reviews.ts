@@ -17,8 +17,11 @@ export async function submitReview({ bookId, reviewerName, rating, bodyText }: R
     }),
   });
 
+  const payload = await response.json().catch(() => ({ message: "Failed to submit" }));
+
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Failed to submit" }));
-    throw new Error(error.message || "Unable to send review");
+    throw new Error(payload.message || "Unable to send review");
   }
+
+  return typeof payload.message === "string" ? payload.message : undefined;
 }
