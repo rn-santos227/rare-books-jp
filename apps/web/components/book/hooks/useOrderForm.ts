@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 
 import { submitOrder } from "@/lib/api/orders";
+import { Order } from "@/types/order";
 
 export type OrderFormState = {
   buyerName: string;
@@ -57,12 +58,14 @@ export function useOrderForm({ bookId, onSuccess, onError }: UseOrderFormParams)
 
     setIsSubmitting(true);
     try {
-      const message = await submitOrder({
+      const payload: Order = {
         bookId,
         buyerName: formState.buyerName.trim(),
         buyerEmail: formState.buyerEmail.trim(),
         message: formState.message.trim(),
-      });
+      };
+
+      const message = await submitOrder(payload);
 
       setFormState({ buyerName: "", buyerEmail: "", message: "" });
       setErrors({});
