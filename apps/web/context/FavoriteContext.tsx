@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+
 import { Book } from "@/types/book";
 
 export type FavoriteItem = {
@@ -19,5 +20,29 @@ type FavoritesContextValue = {
   removeFavorite: (id: string) => void;
   isFavorite: (id?: string) => boolean;
 };
+
+const COOKIE_KEY = "favoriteBooks";
+const FavoritesContext = createContext<FavoritesContextValue | undefined>(undefined);
+
+function parseFavoritesFromCookie(): FavoriteItem[] {
+  if (typeof document === "undefined") return [];
+  const cookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${COOKIE_KEY}=`));
+
+  if (!cookie) return [];
+
+  try {
+    const value = decodeURIComponent(cookie.split("=")[1] ?? "");
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+  } catch (error) {
+    console.error("Unable to parse favorites cookie", error);
+  }
+
+  return [];
+}
 
 
