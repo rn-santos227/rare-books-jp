@@ -51,3 +51,50 @@ function persistFavorites(favorites: FavoriteItem[]) {
   document.cookie = `${COOKIE_KEY}=${encoded}; path=/; max-age=${maxAge}`;
 }
 
+
+export function FavoritesProvider({ children }: { children: ReactNode }) {
+  const [favorites, setFavorites] = useState<FavoriteItem[]>(() => parseFavoritesFromCookie());
+
+  useEffect(() => {
+    persistFavorites(favorites);
+  }, [favorites]);
+
+  const toggleFavorite = (book: Book) => {
+    if (!book?._id) return;
+
+    setFavorites((prev) => {
+      const exists = prev.some((fav) => fav.id === book._id);
+      if (exists) {
+        return prev.filter((fav) => fav.id !== book._id);
+      }
+
+      const next: FavoriteItem = {
+        id: book._id,
+        slug: book.slug,
+        title: book.title,
+        author: book.author,
+        imageUrl: book.imageUrl,
+        price: book.price,
+        marketplaceUrl: book.marketplaceUrl,
+      };
+
+      return [...prev, next];
+    });
+  };
+
+  const removeFavorite = (id: string) => {
+    setFavorites((prev) => prev.filter((fav) => fav.id !== id));
+  };
+
+  const isFavorite = (id?: string) => {
+    if (!id) return false;
+    return favorites.some((fav) => fav.id === id);
+  };
+
+  return (
+    <FavoritesContext.Provider value={{ favorites, toggleFavorite, removeFavorite, isFavorite }}>
+      {children}
+    </FavoritesContext.Provider>
+  );
+}
+
