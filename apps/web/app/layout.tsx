@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 import { MetadataUpdater } from "@/components/layouts/MetadataUpdater";
 import { SupportedLanguage, translations } from "@/constants/translations";
 
@@ -49,8 +50,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LanguageProvider defaultLanguage={initialLanguage}>
-          <MetadataUpdater />
-          {children}
+          <FavoritesProvider>
+            <MetadataUpdater />
+            {children}
+          </FavoritesProvider>
         </LanguageProvider>
       </body>
     </html>
