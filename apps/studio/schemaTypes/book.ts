@@ -82,6 +82,14 @@ export default defineType({
     }),
 
     defineField({
+      name: 'marketplaceUrl',
+      title: 'Marketplace URL',
+      type: 'url',
+      description: 'Link to the marketplace listing where payment is completed.',
+      validation: Rule => Rule.uri({ allowRelative: false, scheme: ['http', 'https'] }),
+    }),
+
+    defineField({
       name: 'inventory',
       title: 'In Stock',
       type: 'number',
