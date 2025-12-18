@@ -8,7 +8,7 @@ type Props = {
   alt: string;
   className?: string;
   imgClassName?: string;
-  fallbackLabel?: string;
+  fallbackLabel?: string | null;
   icon?: ReactNode;
 };
 
@@ -51,9 +51,11 @@ export default function ImageViewer({
             <span className="flex h-12 w-10 items-center justify-center rounded-lg border border-dashed border-slate-300 bg-white shadow-inner">
               {iconNode}
             </span>
-            <p className="text-xs font-semibold uppercase tracking-wide">
-              {fallbackLabel}
-            </p>
+            {fallbackLabel && (
+              <p className="text-xs font-semibold uppercase tracking-wide">
+                {fallbackLabel}
+              </p>
+            )}
           </div>
         </div>
       )}

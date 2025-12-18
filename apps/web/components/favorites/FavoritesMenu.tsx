@@ -50,13 +50,15 @@ export function FavoritesMenu() {
                   className="flex gap-3 rounded-xl border border-slate-100 bg-slate-50/70 p-3"
                 >
                   <div className="h-16 w-12 overflow-hidden rounded-lg bg-slate-100">
+                  <div className="h-16 w-12 overflow-hidden rounded-lg bg-slate-100">
                     <ImageViewer
                       src={favorite.imageUrl}
                       alt={favorite.title ?? t.common.coverFallback}
-                      fallbackLabel={t.common.coverFallback}
+                      fallbackLabel={null}
                       className="h-full"
                       imgClassName="h-full w-full object-cover"
                     />
+                  </div>
                   </div>
                   <div className="flex flex-1 flex-col gap-1 text-sm">
                     <p className="line-clamp-2 font-semibold text-slate-900">
