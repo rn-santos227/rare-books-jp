@@ -45,4 +45,9 @@ function parseFavoritesFromCookie(): FavoriteItem[] {
   return [];
 }
 
+function persistFavorites(favorites: FavoriteItem[]) {
+  const encoded = encodeURIComponent(JSON.stringify(favorites));
+  const maxAge = 60 * 60 * 24 * 30; // 30 days
+  document.cookie = `${COOKIE_KEY}=${encoded}; path=/; max-age=${maxAge}`;
+}
 
