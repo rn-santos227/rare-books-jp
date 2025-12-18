@@ -2,6 +2,7 @@
 
 import { BookSearchField } from "@/components/home/BookSearchField";
 import { Button } from "@/components/ui";
+import { FavoritesMenu } from "@/components/favorites/FavoritesMenu";
 import { LanguageToggle, useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 
@@ -25,12 +26,7 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
         <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
         <BookSearchField />
         <div className="flex items-center gap-2 text-sm font-semibold">
-          <Button
-            variant="ghost"
-            className="rounded-full bg-white/5 px-5 py-2.5 text-white ring-1 ring-white/10 hover:bg-white/10"
-          >
-            {t.common.favorites}
-          </Button>
+          <FavoritesMenu />
           <Button className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow">
             {t.common.startSelling}
           </Button>

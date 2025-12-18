@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge, Button, ImageViewer } from "@/components/ui";
+import { FavoriteToggle } from "@/components/favorites/FavoriteToggle";
 import { Book } from "@/types/book";
 
 function formatPrice(price?: number | null) {
@@ -24,6 +25,9 @@ export default function BookCard({ book }: Props) {
             className="h-full w-full"
             imgClassName="transition duration-700 group-hover:scale-105"
           />
+        </div>
+        <div className="absolute right-3 top-3">
+          <FavoriteToggle book={book} size="sm" />
         </div>
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 text-xs font-semibold text-white">
           {book.condition && (
