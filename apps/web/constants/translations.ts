@@ -95,6 +95,28 @@ type Translations = {
     inventoryUnknown: string;
     featured: string;
   };
+  order: {
+    heading: string;
+    intro: string;
+    buyerNameLabel: string;
+    buyerEmailLabel: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submit: string;
+    submitting: string;
+    successTitle: string;
+    successBody: string;
+    errorTitle: string;
+    errorBody: string;
+    marketplaceCta: string;
+    marketplaceHelper: string;
+  };
+  favoritesMenu: {
+    title: string;
+    empty: string;
+    goToBook: string;
+    remove: string;
+  };
   reviews: {
     heading: string;
     singleReview: string;
@@ -227,6 +249,28 @@ export const translations: Record<SupportedLanguage, Translations> = {
       inventory: "Inventory",
       inventoryUnknown: "N/A",
       featured: "Featured pick from our collection",
+    },
+    order: {
+      heading: "Order request",
+      intro: "Share your details and we'll confirm availability.",
+      buyerNameLabel: "Your name",
+      buyerEmailLabel: "Email",
+      messageLabel: "Message",
+      messagePlaceholder: "Add questions or delivery preferences.",
+      submit: "Send request",
+      submitting: "Sending...",
+      successTitle: "Order received",
+      successBody: "We'll contact you soon to finalize the purchase.",
+      errorTitle: "Unable to send order",
+      errorBody: "Please try again or contact us directly.",
+      marketplaceCta: "Pay on marketplace",
+      marketplaceHelper: "Secure checkout happens on our partner marketplace.",
+    },
+    favoritesMenu: {
+      title: "Favorites",
+      empty: "Save books to your favorites to keep them handy.",
+      goToBook: "View details",
+      remove: "Remove",
     },
     reviews: {
       heading: "Reviews",
@@ -371,6 +415,28 @@ export const translations: Record<SupportedLanguage, Translations> = {
       inventory: "在庫",
       inventoryUnknown: "不明",
       featured: "コレクションのおすすめ",
+    },
+    order: {
+      heading: "注文リクエスト",
+      intro: "在庫確認のため、ご連絡先をお知らせください。",
+      buyerNameLabel: "お名前",
+      buyerEmailLabel: "メールアドレス",
+      messageLabel: "メッセージ",
+      messagePlaceholder: "質問やご希望があればご記入ください。",
+      submit: "送信する",
+      submitting: "送信中...",
+      successTitle: "注文を受け付けました",
+      successBody: "担当者より追ってご連絡いたします。",
+      errorTitle: "送信できませんでした",
+      errorBody: "時間をおいて再度お試しください。",
+      marketplaceCta: "マーケットで決済",
+      marketplaceHelper: "決済は提携マーケットサイトで行われます。",
+    },
+    favoritesMenu: {
+      title: "お気に入り",
+      empty: "気になる本をお気に入りに追加すると確認しやすくなります。",
+      goToBook: "詳細を見る",
+      remove: "削除",
     },
     reviews: {
       heading: "レビュー",
