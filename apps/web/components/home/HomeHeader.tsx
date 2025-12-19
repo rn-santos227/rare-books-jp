@@ -27,8 +27,11 @@ export function HomeHeader({ quickFilters }: HomeHeaderProps) {
         <BookSearchField />
         <div className="flex items-center gap-2 text-sm font-semibold">
           <FavoritesMenu />
-          <Button className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow">
-            {t.common.startSelling}
+          <Button
+            className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow" 
+            href="/orders/track"
+          >
+            {t.common.trackOrder}
           </Button>
           <LanguageToggle />
         </div>

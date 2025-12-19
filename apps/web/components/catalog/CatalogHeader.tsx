@@ -1,7 +1,8 @@
 "use client";
 
-import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
 import { BookSearchField } from "@/components/home/BookSearchField";
+import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
+import { Button } from "@/components/ui";
 import { LanguageToggle, useTranslations } from "@/context/LanguageContext";
 
 export function CatalogHeader() {
@@ -15,6 +16,12 @@ export function CatalogHeader() {
           <BookSearchField />
           <div className="flex items-center gap-3 text-sm font-semibold text-indigo-100">
             <span className="hidden sm:inline">{t.catalog.browseCatalog}</span>
+            <Button
+              className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow" 
+              href="/orders/track"
+            >
+              {t.common.trackOrder}
+            </Button>
             <LanguageToggle />
           </div>
         </div>
