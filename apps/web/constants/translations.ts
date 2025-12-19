@@ -1,6 +1,7 @@
 export type SupportedLanguage = "en" | "ja";
 
 type ConditionKey = "new" | "like_new" | "used" | "damaged";
+type OrderStatusKey = "new" | "contacted" | "discussion" | "completed" | "cancelled";
 
 type Translations = {
   common: {
@@ -9,6 +10,7 @@ type Translations = {
     metaDescription: string;
     searchPlaceholder: string;
     favorites: string;
+    trackOrder: string;
     startSelling: string;
     languageEnglish: string;
     languageJapanese: string;
@@ -107,10 +109,25 @@ type Translations = {
     submitting: string;
     successTitle: string;
     successBody: string;
+    successTrackingCode: (code: string) => string;
     errorTitle: string;
     errorBody: string;
     marketplaceCta: string;
     marketplaceHelper: string;
+    trackerHeading: string;
+    trackerIntro: string;
+    trackingCodeLabel: string;
+    trackingCodeHelper: string;
+    trackerSubmit: string;
+    trackerResultTitle: string;
+    trackerStatusLabel: string;
+    trackerSubmittedLabel: string;
+    trackerHasMessage: string;
+    trackerNoMessage: string;
+    trackerMissingTitle: string;
+    trackerMissingBody: string;
+    trackerProtectNote: string;
+    statusLabels: Record<OrderStatusKey, string>;
   };
   favoritesMenu: {
     title: string;
@@ -158,6 +175,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
         "Marketplace UI kit for rare books and collectibles inspired by Mercari.",
       searchPlaceholder: "Looking for something?",
       favorites: "Favorites",
+      trackOrder: "Track Order",
       startSelling: "Start selling",
       languageEnglish: "English",
       languageJapanese: "日本語",
@@ -263,10 +281,32 @@ export const translations: Record<SupportedLanguage, Translations> = {
       submitting: "Sending...",
       successTitle: "Order received",
       successBody: "We'll contact you soon to finalize the purchase.",
+      successTrackingCode: (code: string) => `Save this tracking code: ${code}`,
       errorTitle: "Unable to send order",
       errorBody: "Please try again or contact us directly.",
       marketplaceCta: "Pay on marketplace",
       marketplaceHelper: "Secure checkout happens on our partner marketplace.",
+      trackerHeading: "Order Tracker",
+      trackerIntro:
+        "Check the status of your request with the tracking code we generated for you. No account required.",
+      trackingCodeLabel: "Tracking code",
+      trackingCodeHelper: "You received this after sending your request.",
+      trackerSubmit: "Check status",
+      trackerResultTitle: "Latest status",
+      trackerStatusLabel: "Status",
+      trackerSubmittedLabel: "Submitted on",
+      trackerHasMessage: "Message included",
+      trackerNoMessage: "No additional message",
+      trackerMissingTitle: "No matching order",
+      trackerMissingBody: "Double-check your tracking code and email, then try again.",
+      trackerProtectNote: "For your privacy, results only appear when both your code and email match.",
+      statusLabels: {
+        new: "Received",
+        contacted: "Contacted",
+        discussion: "In discussion",
+        completed: "Completed",
+        cancelled: "Cancelled",
+      },
     },
     favoritesMenu: {
       title: "Favorites",
@@ -326,6 +366,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
       metaDescription: "Mercari から着想を得た希少本とコレクティブルのマーケット UI キット。",
       searchPlaceholder: "お探しのものはありますか？",
       favorites: "お気に入り",
+      trackOrder: "注文を確認",
       startSelling: "出品する",
       languageEnglish: "English",
       languageJapanese: "日本語",
@@ -429,11 +470,32 @@ export const translations: Record<SupportedLanguage, Translations> = {
       submit: "送信する",
       submitting: "送信中...",
       successTitle: "注文を受け付けました",
+      successTrackingCode: (code: string) => `控えコード「${code}」を保存してください。`,
       successBody: "担当者より追ってご連絡いたします。",
       errorTitle: "送信できませんでした",
       errorBody: "時間をおいて再度お試しください。",
       marketplaceCta: "マーケットで決済",
       marketplaceHelper: "決済は提携マーケットサイトで行われます。",
+      trackerHeading: "注文トラッカー",
+      trackerIntro: "発行された追跡コードとメールアドレスで進捗を確認できます。アカウントは不要です。",
+      trackingCodeLabel: "追跡コード",
+      trackingCodeHelper: "注文送信時に表示されたコードです。",
+      trackerSubmit: "状況を確認",
+      trackerResultTitle: "最新の状況",
+      trackerStatusLabel: "ステータス",
+      trackerSubmittedLabel: "受付日時",
+      trackerHasMessage: "メッセージあり",
+      trackerNoMessage: "メッセージなし",
+      trackerMissingTitle: "該当する注文が見つかりません",
+      trackerMissingBody: "追跡コードとメールアドレスをご確認のうえ、もう一度お試しください。",
+      trackerProtectNote: "プライバシー保護のため、コードとメールが一致した場合のみ情報を表示します。",
+      statusLabels: {
+        new: "受付済み",
+        contacted: "連絡済み",
+        discussion: "やり取り中",
+        completed: "完了",
+        cancelled: "キャンセル",
+      },
     },
     favoritesMenu: {
       title: "お気に入り",
