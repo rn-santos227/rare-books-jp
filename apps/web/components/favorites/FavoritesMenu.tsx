@@ -6,11 +6,13 @@ import { useState } from "react";
 import { ImageViewer, Button } from "@/components/ui";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useTranslations } from "@/context/LanguageContext";
+import { useMounted } from "@/hooks/useMounted";
 
 export function FavoritesMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { favorites, removeFavorite } = useFavorites();
   const t = useTranslations();
+  const mounted = useMounted();
 
   return (
     <div className="relative">
@@ -20,7 +22,7 @@ export function FavoritesMenu() {
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span className="mr-1">{t.common.favorites}</span>
-        {favorites.length > 0 && (
+        {mounted && favorites.length > 0 && (
           <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-white/20 px-2 text-xs font-bold">
             {favorites.length}
           </span>

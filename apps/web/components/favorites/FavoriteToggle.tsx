@@ -2,6 +2,7 @@
 
 import { Book } from "@/types/book";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useMounted } from "@/hooks/useMounted";
 
 const sizeClasses: Record<"sm" | "md", string> = {
   sm: "h-9 px-3 text-xs",
@@ -26,7 +27,9 @@ export function FavoriteToggle({
   inactiveLabel,
 }: FavoriteToggleProps) {
   const { isFavorite, toggleFavorite } = useFavorites();
-  const active = isFavorite(book._id);
+  const mounted = useMounted();
+
+  const active = mounted ? isFavorite(book._id) : false;
 
   return (
     <button
