@@ -6,7 +6,7 @@ import { BookHeader } from "@/components/book/BookHeader";
 import { BookReviewSection } from "@/components/book/BookReviewSection";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
-import { Badge, Button, Carousel, ImageViewer} from "@/components/ui";
+import { Badge, Carousel, ImageViewer} from "@/components/ui";
 import { FavoriteToggle } from "@/components/favorites/FavoriteToggle";
 import { OrderInquiryForm } from "@/components/book/OrderInquiryForm";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
@@ -161,18 +161,7 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                   <p className="text-sm uppercase tracking-wide text-slate-500">{t.book.price}</p>
                   <p className="text-2xl font-bold text-slate-900">{formatPrice(book.price, t.book.contactForPrice)}</p>
                 </div>
-                <Button className="px-6">{t.book.addToCart}</Button>
                 <div className="flex flex-wrap items-center justify-end gap-2">
-                  {book.marketplaceUrl && (
-                    <Button
-                      variant="secondary"
-                      href={book.marketplaceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {t.order.marketplaceCta}
-                    </Button>
-                  )}
                   <FavoriteToggle
                     book={book}
                     size="sm"

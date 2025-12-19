@@ -44,19 +44,22 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
             <h2 className="text-xl font-semibold text-slate-900">{t.order.heading}</h2>
             <p className="text-sm text-slate-600">{t.order.intro}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-3">
             {marketplaceUrl && (
               <Button
                 variant="secondary"
                 href={marketplaceUrl}
-                className="bg-white"
+                className="min-w-50 bg-white text-center"
                 target="_blank"
                 rel="noreferrer"
               >
                 {t.order.marketplaceCta}
               </Button>
             )}
-            <Button className="px-6 shadow-md shadow-indigo-200 hover:shadow-lg" onClick={() => setIsOpen(true)}>
+            <Button 
+              className="min-w-50 px-6 text-center shadow-md shadow-indigo-200 hover:shadow-lg"
+              onClick={() => setIsOpen(true)}
+            >
               {t.order.openFormLabel}
             </Button>
           </div>

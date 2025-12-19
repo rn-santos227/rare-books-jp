@@ -87,7 +87,6 @@ type Translations = {
     inventoryInStock: (count: number) => string;
     inventoryOutOfStock: string;
     price: string;
-    addToCart: string;
     descriptionFallback: string;
     category: string;
     genre: string;
@@ -244,7 +243,6 @@ export const translations: Record<SupportedLanguage, Translations> = {
       inventoryInStock: (count) => `${count} in stock`,
       inventoryOutOfStock: "Out of stock",
       price: "Price",
-      addToCart: "Add to cart",
       descriptionFallback: "A detailed description from the curator will be added soon.",
       category: "Category",
       genre: "Genre",
@@ -412,7 +410,6 @@ export const translations: Record<SupportedLanguage, Translations> = {
       inventoryInStock: (count) => `${count} 点在庫あり`,
       inventoryOutOfStock: "在庫切れ",
       price: "価格",
-      addToCart: "カートに追加",
       descriptionFallback: "キュレーターからの詳細な説明は後日追加されます。",
       category: "カテゴリ",
       genre: "ジャンル",
