@@ -62,6 +62,24 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
           </div>
         </div>
       </div>
+
+
+      <Modal open={isOpen} onClose={() => setIsOpen(false)} title={t.order.heading} description={t.order.intro}>
+        {marketplaceUrl && (
+          <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-indigo-50 px-4 py-3 text-indigo-800 ring-1 ring-indigo-100">
+            <div className="flex-1 text-sm font-medium">{t.order.marketplaceHelper}</div>
+            <Button
+              href={marketplaceUrl}
+              variant="secondary"
+              className="bg-white"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t.order.marketplaceCta}
+            </Button>
+          </div>
+        )}
+      </Modal>
     </>
   );
 }
