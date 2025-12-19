@@ -37,58 +37,31 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
   });
 
   return (
-    <div className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold text-slate-900">{t.order.heading}</h2>
-        <p className="text-sm text-slate-600">{t.order.intro}</p>
-        {marketplaceUrl && (
-          <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-indigo-50 px-4 py-3 text-indigo-800 ring-1 ring-indigo-100">
-            <div className="flex-1 text-sm font-medium">{t.order.marketplaceHelper}</div>
-            <Button
-              href={marketplaceUrl}
-              variant="secondary"
-              className="bg-white"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t.order.marketplaceCta}
+    <>
+     <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
+            <h2 className="text-xl font-semibold text-slate-900">{t.order.heading}</h2>
+            <p className="text-sm text-slate-600">{t.order.intro}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            {marketplaceUrl && (
+              <Button
+                variant="secondary"
+                href={marketplaceUrl}
+                className="bg-white"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.order.marketplaceCta}
+              </Button>
+            )}
+            <Button className="px-6 shadow-md shadow-indigo-200 hover:shadow-lg" onClick={() => setIsOpen(true)}>
+              {t.order.openFormLabel}
             </Button>
           </div>
-        )}
-      </div>
-
-      <form onSubmit={handleSubmit} className="grid gap-4">
-        <TextField
-          label={t.order.buyerNameLabel}
-          placeholder="Tanaka Hiro"
-          value={formState.buyerName}
-          onChange={(event) => setFormState((prev) => ({ ...prev, buyerName: event.target.value }))}
-          error={errors.buyerName}
-        />
-        <TextField
-          label={t.order.buyerEmailLabel}
-          placeholder="name@email.com"
-          type="email"
-          value={formState.buyerEmail}
-          onChange={(event) => setFormState((prev) => ({ ...prev, buyerEmail: event.target.value }))}
-          error={errors.buyerEmail}
-        />
-        <TextArea
-          label={t.order.messageLabel}
-          placeholder={t.order.messagePlaceholder}
-          rows={4}
-          value={formState.message}
-          onChange={(event) => setFormState((prev) => ({ ...prev, message: event.target.value }))}
-          error={errors.message}
-        />
-        <div className="flex items-center justify-end">
-          <Button type="submit" disabled={isSubmitting} className="px-6">
-            {isSubmitting ? t.order.submitting : t.order.submit}
-          </Button>
         </div>
-      </form>
-
-      <ToastStack toasts={toasts} dismiss={dismiss} toneStyles={toneStyles} />
-    </div>
+      </div>
+    </>
   );
 }
