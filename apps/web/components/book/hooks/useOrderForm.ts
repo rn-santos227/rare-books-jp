@@ -13,7 +13,7 @@ export type OrderFormErrors = Partial<Record<keyof OrderFormState, string>>;
 
 type UseOrderFormParams = {
   bookId: string;
-  onSuccess?: (message?: string) => void;
+  onSuccess?: (message?: string, trackingCode?: string) => void;
   onError?: (message: string) => void;
 };
 
@@ -65,11 +65,11 @@ export function useOrderForm({ bookId, onSuccess, onError }: UseOrderFormParams)
         message: formState.message.trim(),
       };
 
-      const message = await submitOrder(payload);
+      const { message, trackingCode } = await submitOrder(payload);
 
       setFormState({ buyerName: "", buyerEmail: "", message: "" });
       setErrors({});
-      onSuccess?.(message);
+      onSuccess?.(message, trackingCode);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Please try again shortly.";
       onError?.(message);
