@@ -119,6 +119,7 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
           </div>
         </form>
       </Modal>
+      <ToastStack toasts={toasts} dismiss={dismiss} toneStyles={toneStyles} />
     </>
   );
 }
