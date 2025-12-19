@@ -20,10 +20,13 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
   const { toasts, show, dismiss, toneStyles } = useToast();
   const { formState, setFormState, errors, isSubmitting, handleSubmit } = useOrderForm({
     bookId,
-    onSuccess: (message) => {
+    onSuccess: (message, trackingCode) => {
+      const description = trackingCode
+        ? `${t.order.successBody} ${t.order.successTrackingCode(trackingCode)}`
+        : message || t.order.successBody;
       show({
         title: t.order.successTitle,
-        description: message || t.order.successBody,
+        description,
         tone: "success",
       });
       setIsOpen(false);
