@@ -161,3 +161,14 @@ export const REVIEWS_BY_BOOK_QUERY = groq`
     "bodyText": coalesce(pt::text(body), "")
   }
 `;
+
+export const ORDER_BY_TRACKING_QUERY = groq`
+  *[_type == "order" && trackingCode == $trackingCode && buyerEmailNormalized == $buyerEmailNormalized][0]{
+    "trackingCode": trackingCode,
+    "status": coalesce(status, "new"),
+    "submittedAt": _createdAt,
+    "bookTitle": book->title,
+    "bookSlug": book->slug.current,
+    "hasMessage": defined(message) && message != "",
+  }
+`;
