@@ -79,6 +79,45 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
             </Button>
           </div>
         )}
+
+        <form onSubmit={handleSubmit} className="grid gap-4">
+          <TextField
+            label={t.order.buyerNameLabel}
+            placeholder="Tanaka Hiro"
+            value={formState.buyerName}
+            onChange={(event) => setFormState((prev) => ({ ...prev, buyerName: event.target.value }))}
+            error={errors.buyerName}
+          />
+          <TextField
+            label={t.order.buyerEmailLabel}
+            placeholder="name@email.com"
+            type="email"
+            value={formState.buyerEmail}
+            onChange={(event) => setFormState((prev) => ({ ...prev, buyerEmail: event.target.value }))}
+            error={errors.buyerEmail}
+          />
+          <TextArea
+            label={t.order.messageLabel}
+            placeholder={t.order.messagePlaceholder}
+            rows={4}
+            value={formState.message}
+            onChange={(event) => setFormState((prev) => ({ ...prev, message: event.target.value }))}
+            error={errors.message}
+          />
+          <div className="flex items-center justify-end gap-3">
+            <Button
+              type="button"
+              variant="ghost"
+              className="px-4 text-slate-600 hover:text-slate-800"
+              onClick={() => setIsOpen(false)}
+            >
+              {t.common.close}
+            </Button>
+            <Button type="submit" disabled={isSubmitting} className="px-6">
+              {isSubmitting ? t.order.submitting : t.order.submit}
+            </Button>
+          </div>
+        </form>
       </Modal>
     </>
   );
