@@ -11,4 +11,8 @@ type ModalProps = {
   children: ReactNode;
 };
 
+export function Modal({ open, onClose, title, description, children }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(open);
 
+}
