@@ -15,15 +15,32 @@ export default defineType({
     }),
 
     defineField({
-      name: 'buyerName',
-      title: 'Buyer Name',
-      type: 'string',
-      validation: Rule => Rule.required(),
+      name: 'message',
+      title: 'Message',
+      type: 'text',
+      description: 'Buyer message or inquiry',
     }),
 
     defineField({
-      name: 'buyerEmail',
-      title: 'Buyer Email',
+      name: 'trackingCode',
+      title: 'Tracking Code',
+      type: 'string',
+      description: 'Generated tracking code shared with the buyer',
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'buyerEmailNormalized',
+      title: 'Buyer Email (normalized)',
+      type: 'string',
+      description: 'Lowercased email used for secure lookups',
+      hidden: true,
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'status',
+      title: 'Status',
       type: 'string',
       validation: Rule =>
         Rule.required().email(),
