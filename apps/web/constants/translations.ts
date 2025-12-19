@@ -18,6 +18,7 @@ type Translations = {
     coverFallback: string;
     unknownAuthor: string;
     liveLabel: string;
+    close: string;
   };
   home: {
     bannerTitle: string;
@@ -167,6 +168,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
       coverFallback: "Cover coming soon",
       unknownAuthor: "Unknown author",
       liveLabel: "Live",
+      close: "Close",
     },
     home: {
       bannerTitle: "Our international purchase and shipping parallel is live",
@@ -335,6 +337,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
       coverFallback: "カバー画像は準備中です",
       unknownAuthor: "著者情報なし",
       liveLabel: "公開中",
+      close: "閉じる",
     },
     home: {
       bannerTitle: "越境購入と発送サポートを開始しました",
