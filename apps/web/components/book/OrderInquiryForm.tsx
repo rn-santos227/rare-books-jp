@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import { ToastStack } from "@/components/toast/ToastStack";
 import { useToast } from "@/components/toast/hooks/useToast";
-import { Button, TextArea, TextField } from "@/components/ui";
+import { Button, Modal, TextArea, TextField } from "@/components/ui";
 import { useTranslations } from "@/context/LanguageContext";
 
 import { useOrderForm } from "./hooks/useOrderForm";
@@ -14,15 +16,18 @@ type OrderInquiryFormProps = {
 
 export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormProps) {
   const t = useTranslations();
+  const [isOpen, setIsOpen] = useState(false);
   const { toasts, show, dismiss, toneStyles } = useToast();
   const { formState, setFormState, errors, isSubmitting, handleSubmit } = useOrderForm({
     bookId,
-    onSuccess: (message) =>
+    onSuccess: (message) => {
       show({
         title: t.order.successTitle,
         description: message || t.order.successBody,
         tone: "success",
-      }),
+      });
+      setIsOpen(false);
+    },
     onError: (message) =>
       show({
         title: t.order.errorTitle,
