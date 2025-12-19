@@ -98,6 +98,7 @@ type Translations = {
   order: {
     heading: string;
     intro: string;
+    openFormLabel: string;
     buyerNameLabel: string;
     buyerEmailLabel: string;
     messageLabel: string;
@@ -253,6 +254,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
     order: {
       heading: "Order request",
       intro: "Share your details and we'll confirm availability.",
+      openFormLabel: "Request this book",
       buyerNameLabel: "Your name",
       buyerEmailLabel: "Email",
       messageLabel: "Message",
@@ -419,6 +421,7 @@ export const translations: Record<SupportedLanguage, Translations> = {
     order: {
       heading: "注文リクエスト",
       intro: "在庫確認のため、ご連絡先をお知らせください。",
+      openFormLabel: "この本を問い合わせる",
       buyerNameLabel: "お名前",
       buyerEmailLabel: "メールアドレス",
       messageLabel: "メッセージ",
