@@ -35,7 +35,6 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
   const [errors, setErrors] = useState<SupportFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   const validationRules = useMemo(
     () => ({
       name: (value: string) => value.trim().length > 0 || "Please enter your name.",
@@ -48,5 +47,18 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
     }),
     [],
   );
+
+  const validate = (): SupportFormErrors => {
+    const validationErrors: SupportFormErrors = {};
+
+    (Object.keys(validationRules) as Array<keyof typeof validationRules>).forEach((key) => {
+      const result = validationRules[key](formState[key]);
+      if (result !== true) {
+        validationErrors[key] = result as string;
+      }
+    });
+
+    return validationErrors;
+  };
 
 }
