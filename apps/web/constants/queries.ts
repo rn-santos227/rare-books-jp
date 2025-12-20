@@ -107,6 +107,21 @@ export const PROMOTIONS_QUERY = groq`
   }
 `;
 
+export const CAREERS_QUERY = groq`
+  *[_type == "career" && status == "open"]|order(priority asc, _createdAt desc){
+    _id,
+    title,
+    titleJa,
+    location,
+    locationJa,
+    type,
+    typeJa,
+    description,
+    descriptionJa,
+    priority
+  }
+`;
+
 export const BOOK_BY_SLUG_QUERY = groq`
   *[_type == "book" && slug.current == $slug && status == "published"][0]{
     _id,
