@@ -11,7 +11,7 @@ type SupportRequestBody = {
   orderTrackingCode?: string;
 };
 
-const ALLOWED_TOPICS: SupportTopic[] = ["order", "catalog", "shipping", "account", "other"];
+const ALLOWED_TOPICS: SupportTopic[] = ["order", "catalog", "tracking", "account", "other"];
 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();

@@ -1,4 +1,4 @@
-export type SupportTopic = "order" | "catalog" | "shipping" | "account" | "other";
+export type SupportTopic = "order" | "catalog" | "tracking" | "account" | "other";
 
 export type SupportInquiry = {
   name: string;

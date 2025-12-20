@@ -42,7 +42,7 @@ export function SupportPageClient() {
     () => [
       { value: "order", label: t.support.topicOptions.order },
       { value: "catalog", label: t.support.topicOptions.catalog },
-      { value: "shipping", label: t.support.topicOptions.shipping },
+      { value: "tracking", label: t.support.topicOptions.tracking },
       { value: "account", label: t.support.topicOptions.account },
       { value: "other", label: t.support.topicOptions.other },
     ],
