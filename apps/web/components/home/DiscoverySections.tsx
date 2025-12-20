@@ -47,7 +47,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
                   ⭐
                 </span>
               </div>
-              <p className="text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-white transition-colors group-hover:text-black">
                 {getLocalizedText(language, genre.name, genre.nameJa)}
               </p>
             </div>
@@ -75,12 +75,12 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
           {categories.slice(0, 12).map((category) => (
             <div
               key={category._id}
-              className="flex min-w-37.5 max-w-45 flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
+              className="group flex min-w-37.5 max-w-45 flex-col items-center gap-2 rounded-2xl bg-[#161922]/70 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/5 hover:bg-white/5"
             >
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-lg text-white">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-lg text-white transition-colors group-hover:text-black">
                 {getLocalizedText(language, category.name, category.nameJa).slice(0, 2).toUpperCase()}
               </div>
-              <p className="text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-white transition-colors group-hover:text-black">
                 {getLocalizedText(language, category.name, category.nameJa)}
               </p>
             </div>

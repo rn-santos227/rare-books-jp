@@ -50,7 +50,7 @@ export default function BookCard({ book }: Props) {
         </div>
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 text-xs font-semibold text-white">
           {book.condition && (
-            <Badge tone="info" className="bg-black/60 text-white shadow-sm ring-1 ring-white/30">
+            <Badge tone="info" className="bg-black/60 text-slate-800 shadow-sm ring-1 ring-white/30">
               {conditionLabel}
             </Badge>
           )}

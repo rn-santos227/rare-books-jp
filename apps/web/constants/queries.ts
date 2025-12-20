@@ -137,8 +137,9 @@ export const BOOK_BY_SLUG_QUERY = groq`
     inventory,
     marketplaceUrl,
     "slug": slug.current,
-    "imageUrl": images[0].asset->url,
-    "gallery": images[].asset->url,
+    "imageUrl": coverImage.asset->url,
+    "coverAlt": coverImage.alt,
+    "gallery": gallery[].asset->url,
     "category": category->{
       _id,
       name,
