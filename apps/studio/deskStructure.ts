@@ -7,6 +7,7 @@ import {
   CommentIcon,
   DocumentIcon,
   BellIcon,
+  UsersIcon,
 } from '@sanity/icons'
 import type {StructureResolver} from 'sanity/structure'
 
@@ -43,6 +44,20 @@ export const deskStructure: StructureResolver = S =>
           S.documentTypeList('promotion')
             .title('Promotions')
             .defaultOrdering([{field: 'priority', direction: 'asc'}])
+        ),
+
+      S.listItem()
+        .title('Careers')
+        .icon(UsersIcon)
+        .child(
+          S.documentTypeList('career')
+            .title('Career Postings')
+            .filter('_type == "career" && status == $status')
+            .params({status: 'open'})
+            .defaultOrdering([
+              {field: 'priority', direction: 'asc'},
+              {field: '_createdAt', direction: 'desc'},
+            ])
         ),
 
       S.divider(),
