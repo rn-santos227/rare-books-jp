@@ -37,4 +37,16 @@ export function SupportPageClient() {
       });
     },
   });
+
+  const topicOptions = useMemo(
+    () => [
+      { value: "order", label: t.support.topicOptions.order },
+      { value: "catalog", label: t.support.topicOptions.catalog },
+      { value: "shipping", label: t.support.topicOptions.shipping },
+      { value: "account", label: t.support.topicOptions.account },
+      { value: "other", label: t.support.topicOptions.other },
+    ],
+    [t.support.topicOptions],
+  );
+
 }
