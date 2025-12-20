@@ -61,4 +61,13 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
     return validationErrors;
   };
 
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+
+  }
 }
