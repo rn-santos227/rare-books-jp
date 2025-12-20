@@ -20,8 +20,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ results });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unable to search for books.";
+    const message = error instanceof Error ? error.message : "Unable to search for books.";
 
     return NextResponse.json({ message }, { status: 500 });
   }
