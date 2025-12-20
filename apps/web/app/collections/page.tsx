@@ -9,7 +9,7 @@ import { Category } from "@/types/category";
 export const dynamic = "force-dynamic";
 
 export default async function CollectionsPage() {
-  const categories = await sanityClient.fetch<Category[]>(CATEGORIES_QUERY);
+  const categories = (await sanityClient.fetch<Category[]>(CATEGORIES_QUERY)) ?? [];
 
   return (
     <PageLayout
