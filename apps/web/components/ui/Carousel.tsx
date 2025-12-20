@@ -37,9 +37,10 @@ type CarouselProps = {
   children: ReactNode;
   className?: string;
   ariaLabel?: string;
+  alignment?: "start" | "center" | "end";
 };
 
-export function Carousel({ children, className, ariaLabel }: CarouselProps) {
+export function Carousel({ children, className, ariaLabel, alignment = "start" }: CarouselProps) {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const scrollBy = (direction: "left" | "right") => {
@@ -53,10 +54,18 @@ export function Carousel({ children, className, ariaLabel }: CarouselProps) {
     });
   };
 
+
   return (
     <div className={clsx("relative", className)}>
       <div
-        className="no-scrollbar flex gap-3 overflow-x-auto scroll-smooth pr-10 py-6"
+        className={clsx(
+          "no-scrollbar flex gap-3 overflow-x-auto scroll-smooth pr-10 py-6",
+          {
+            "justify-start": alignment === "start",
+            "justify-center": alignment === "center",
+            "justify-end": alignment === "end",
+          },
+        )}
         ref={scrollContainerRef}
         role="region"
         aria-label={ariaLabel}
