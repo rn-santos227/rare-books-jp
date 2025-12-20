@@ -44,10 +44,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- const initialLanguage = await getInitialLanguage();
+  const initialLanguage = await getInitialLanguage();
 
   return (
-    <html lang="en">
+    <html lang={initialLanguage}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LanguageProvider defaultLanguage={initialLanguage}>
           <FavoritesProvider>
