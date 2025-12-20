@@ -15,7 +15,7 @@ export function InfoPageHeader({ badge }: InfoPageHeaderProps) {
   const t = useTranslations();
 
   return (
-    <GeneralHeaderLayout>
+    <GeneralHeaderLayout maxWidthClassName="max-w-screen-2xl" padding="px-8 py-6">
       <div className="flex flex-wrap items-center gap-4">
         <Link
           href="/"

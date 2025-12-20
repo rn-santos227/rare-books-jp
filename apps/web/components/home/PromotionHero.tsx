@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Button, Carousel, ImageViewer } from "@/components/ui";
+import { Badge, Button, ImageViewer, SlideShow } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getLocalizedText } from "@/lib/localization";
 import { Promotion } from "@/types/promotion";
@@ -37,7 +37,11 @@ export function PromotionHero({
         </div>
         <div className="rounded-2xl bg-white/10 p-4 shadow-sm ring-1 ring-white/20 backdrop-blur">
           {promotions.length > 0 ? (
-            <Carousel ariaLabel={t.home.promotionHeading} className="-mx-2 px-2">
+            <SlideShow
+              ariaLabel={t.home.promotionHeading}
+              autoAdvanceMs={9000}
+              className="rounded-2xl"
+            >
               {promotions.map((promotion) => {
                 const localizedTitle = getLocalizedText(language, promotion.title, promotion.titleJa);
                 const localizedTagline = getLocalizedText(
@@ -57,47 +61,50 @@ export function PromotionHero({
                 return (
                   <div
                     key={promotion._id}
-                    className="min-w-70 max-w-85 rounded-2xl bg-white/10 p-4 shadow-[0_12px_32px_rgba(0,0,0,0.25)] ring-1 ring-white/25"
+                    className="grid min-h-55 items-center gap-5 bg-white/10 p-4 shadow-[0_12px_32px_rgba(0,0,0,0.25)] ring-1 ring-white/20 md:grid-cols-[1.2fr_1fr]"
                   >
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="space-y-2">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-white/70">{t.home.promotionLabel}</p>
-                        <h2 className="text-xl font-bold text-white">
-                          {localizedTitle || t.home.promotionLead}
-                        </h2>
-                        {(promotion.tagline || promotion.taglineJa) && (
-                          <p className="text-sm font-semibold text-white/90 line-clamp-2">
-                            {localizedTagline}
+                    <div className="flex flex-col gap-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-2">
+                          <p className="text-xs font-semibold uppercase tracking-wide text-white/70">
+                            {t.home.promotionLabel}
                           </p>
-                        )}
-                        {(promotion.description || promotion.descriptionJa) && (
-                          <p className="text-sm leading-relaxed text-white/80 line-clamp-3">
-                            {localizedDescription}
-                          </p>
-                        )}
-                        <div className="flex flex-wrap gap-3">
-                          {hasCta ? (
-                            <Button href={promotion.ctaHref} className="bg-white text-[#ff5f6d] shadow-sm">
-                              {localizedCta || t.home.explorePromotion}
-                            </Button>
-                          ) : (
-                            <Button className="bg-white text-[#ff5f6d] shadow-sm">{t.home.explorePromotion}</Button>
+                          <h2 className="text-2xl font-bold text-white">
+                            {localizedTitle || t.home.promotionLead}
+                          </h2>
+                          {(promotion.tagline || promotion.taglineJa) && (
+                            <p className="text-sm font-semibold text-white/90 line-clamp-2">
+                              {localizedTagline}
+                            </p>
                           )}
-                          <Button variant="secondary" className="bg-white/10 text-white ring-1 ring-white/30">
-                            {t.home.studioDashboard}
-                          </Button>
+                          {(promotion.description || promotion.descriptionJa) && (
+                            <p className="text-sm leading-relaxed text-white/80 line-clamp-3">
+                              {localizedDescription}
+                            </p>
+                          )}
+                          <div className="flex flex-wrap gap-3">
+                            {hasCta ? (
+                              <Button href={promotion.ctaHref} className="bg-white text-[#ff5f6d] shadow-sm">
+                                {localizedCta || t.home.explorePromotion}
+                              </Button>
+                            ) : (
+                              <Button className="bg-white text-[#ff5f6d] shadow-sm">{t.home.explorePromotion}</Button>
+                            )}
+                            <Button variant="secondary" className="bg-white/10 text-white ring-1 ring-white/30">
+                              {t.home.studioDashboard}
+                            </Button>
+                          </div>
                         </div>
+                        {(promotion.badge || promotion.badgeJa) && (
+                          <Badge tone="info" className="bg-white/20 text-white ring-white/40">
+                            {localizedBadge}
+                          </Badge>
+                        )}
                       </div>
-                      {(promotion.badge || promotion.badgeJa) && (
-                        <Badge tone="info" className="bg-white/20 text-white ring-white/40">
-                          {localizedBadge}
-                        </Badge>
-                      )}
                     </div>
 
                     {promotion.imageUrl ? (
-                      <div className="relative h-32 w-full overflow-hidden rounded-xl bg-white/15 shadow-sm ring-1 ring-white/30 md:h-36">
+                      <div className="relative h-32 w-full overflow-hidden rounded-xl bg-white/15 shadow-sm ring-1 ring-white/30 md:h-40">
                         <ImageViewer
                           src={promotion.imageUrl}
                           alt={promotion.imageAlt ?? promotion.title ?? "Promotion image"}
@@ -107,16 +114,15 @@ export function PromotionHero({
                         <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                       </div>
                     ) : (
-                      <div className="flex h-32 w-full items-center justify-center rounded-xl border border-dashed border-white/40 bg-white/10 text-sm text-white/80 md:h-36">
+                      <div className="flex h-32 w-full items-center justify-center rounded-xl border border-dashed border-white/40 bg-white/10 text-sm text-white/80 md:h-40">
                         {t.home.addHeroImage}
                       </div>
                     )}
                   </div>
-                </div>
                 );
               })}
 
-            </Carousel>
+            </SlideShow>
           ) : (
             <div className="grid gap-4 md:grid-cols-[1.2fr_1fr]">
               <div className="space-y-2 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
