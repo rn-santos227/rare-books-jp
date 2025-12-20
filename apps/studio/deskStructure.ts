@@ -100,4 +100,13 @@ export const deskStructure: StructureResolver = S =>
             .title('All Orders')
             .defaultOrdering([{field: '_createdAt', direction: 'desc'}])
         ),
+
+      S.listItem()
+        .title('Support Inquiries')
+        .icon(DocumentIcon)
+        .child(
+          S.documentTypeList('support')
+            .title('Support Inquiries')
+            .defaultOrdering([{field: '_createdAt', direction: 'desc'}])
+        ),
     ])
