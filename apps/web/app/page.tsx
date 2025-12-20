@@ -1,5 +1,5 @@
 import { HomePageClient } from "@/components/home/HomePageClient";
-import { HomePageHeader } from "@/components/home/HomePageHeader";
+import { HomeHeader } from "@/components/home/HomeHeader";
 import { PromotionHero } from "@/components/home/PromotionHero";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <PageLayout
-      header={<HomePageHeader categories={categories} genres={genres} />}
+      header={<HomeHeader categories={categories} genres={genres} />}
       hero={
         <PromotionHero
           categoriesCount={categories.length}
