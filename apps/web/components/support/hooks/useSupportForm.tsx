@@ -74,6 +74,34 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
     }
 
     setIsSubmitting(true);
+    try {
+      const payload: SupportInquiry = {
+        name: formState.name.trim(),
+        email: formState.email.trim(),
+        topic: formState.topic,
+        message: formState.message.trim(),
+        orderTrackingCode: formState.orderTrackingCode.trim() || undefined,
+      };
 
-  }
+      const { message } = await submitSupportInquiry(payload);
+
+      setFormState({
+        name: "",
+        email: "",
+        topic: DEFAULT_TOPIC,
+        orderTrackingCode: "",
+        message: "",
+      });
+      setErrors({});
+      onSuccess?.(message);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unable to send your inquiry right now.";
+      onError?.(message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return { formState, setFormState, errors, isSubmitting, handleSubmit } as const;
 }
