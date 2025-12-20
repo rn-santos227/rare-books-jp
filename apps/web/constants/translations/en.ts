@@ -287,6 +287,7 @@ export const en: Translations = {
             "Polish our marketplace UI, improve accessibility, and keep our multilingual experience consistent.",
         },
       ],
+      emptyState: "No openings are available right now. Please check back soon.",
       valuesTitle: "What we value",
       values: [
         {
@@ -335,6 +336,7 @@ export const en: Translations = {
       description: "Browse the literary traditions and themes we collect most.",
       helper: "Choose any genre to see related titles in the catalog.",
       callout: "Looking for something specific? Mention the genre in your order request.",
+      emptyState: "No genres are available right now. Please check back soon.",
     },
     collections: {
       eyebrow: "Collections",
@@ -344,6 +346,7 @@ export const en: Translations = {
       spotlightTitle: "Spotlight: Modernist Japan",
       spotlightBody:
         "A rotating selection of early Shōwa design catalogs, first-run translations, and small-press art books.",
+      emptyState: "No collections are available right now. Please check back soon.",
     },
     returns: {
       eyebrow: "Returns",

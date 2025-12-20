@@ -233,6 +233,7 @@ export type Translations = {
       description: string;
       openingsTitle: string;
       openings: JobOpening[];
+      emptyState: string;
       valuesTitle: string;
       values: InfoSection[];
     };
@@ -251,6 +252,7 @@ export type Translations = {
       description: string;
       helper: string;
       callout: string;
+      emptyState: string;
     };
     collections: {
       eyebrow: string;
@@ -259,6 +261,7 @@ export type Translations = {
       helper: string;
       spotlightTitle: string;
       spotlightBody: string;
+      emptyState: string;
     };
     returns: {
       eyebrow: string;

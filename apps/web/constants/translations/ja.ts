@@ -282,6 +282,7 @@ export const ja: Translations = {
           description: "UIの磨き込みやアクセシビリティ改善、多言語体験の維持を担当します。",
         },
       ],
+      emptyState: "現在募集中のポジションはありません。後ほどご確認ください。",
       valuesTitle: "大切にしていること",
       values: [
         {
@@ -330,6 +331,7 @@ export const ja: Translations = {
       description: "収集・取り扱いの多いジャンルを中心にご紹介します。",
       helper: "気になるジャンルを選ぶと関連タイトルのカタログへ移動します。",
       callout: "特定のジャンルをお探しの場合は、注文リクエストに記載してください。",
+      emptyState: "現在表示できるジャンルがありません。後ほどご確認ください。",
     },
     collections: {
       eyebrow: "コレクション",
@@ -338,6 +340,7 @@ export const ja: Translations = {
       helper: "気になるテーマがあれば、おすすめの書籍もご提案します。",
       spotlightTitle: "注目: モダニズムの日本",
       spotlightBody: "昭和初期のデザインカタログや初期翻訳、インディー美術書などを中心に揃えています。",
+      emptyState: "現在表示できるコレクションはありません。しばらくお待ちください。",
     },
     returns: {
       eyebrow: "返品について",
