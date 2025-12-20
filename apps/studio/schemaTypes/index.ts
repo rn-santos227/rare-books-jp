@@ -4,6 +4,7 @@ import genre from './genre'
 import order from './order'
 import promotion from './promotion'
 import review from './review'
+import support from './support'
 
 export const schemaTypes = [
   book,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   order,
   promotion,
   review,
+  support,
 ]
