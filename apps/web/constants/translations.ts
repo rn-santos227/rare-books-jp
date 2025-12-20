@@ -2,6 +2,7 @@ export type SupportedLanguage = "en" | "ja";
 
 type ConditionKey = "new" | "like_new" | "used" | "damaged";
 type OrderStatusKey = "new" | "contacted" | "discussion" | "completed" | "cancelled";
+type SupportTopicKey = "order" | "catalog" | "shipping" | "account" | "other";
 
 type Translations = {
   common: {
@@ -128,6 +129,31 @@ type Translations = {
     trackerMissingBody: string;
     trackerProtectNote: string;
     statusLabels: Record<OrderStatusKey, string>;
+  };
+  support: {
+    badge: string;
+    heading: string;
+    intro: string;
+    responseTimeTitle: string;
+    responseTimeBody: string;
+    commitments: string[];
+    secondaryTitle: string;
+    secondaryBody: string;
+    nameLabel: string;
+    emailLabel: string;
+    topicLabel: string;
+    topicHelper: string;
+    topicOptions: Record<SupportTopicKey, string>;
+    trackingLabel: string;
+    trackingHelper: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submit: string;
+    submitting: string;
+    successTitle: string;
+    successBody: string;
+    errorTitle: string;
+    errorBody: string;
   };
   favoritesMenu: {
     title: string;
@@ -307,6 +333,43 @@ export const translations: Record<SupportedLanguage, Translations> = {
         completed: "Completed",
         cancelled: "Cancelled",
       },
+    },
+    support: {
+      badge: "Customer support",
+      heading: "Customer support",
+      intro: "Tell us how we can help. We respond within one business day.",
+      responseTimeTitle: "Fast, human replies",
+      responseTimeBody: "We route your message to the right specialist and reply by email.",
+      commitments: [
+        "Detailed follow-up with links to the exact books or orders you reference.",
+        "Status updates for any tracking codes you share.",
+        "Thoughtful recommendations from our Tokyo-based team.",
+      ],
+      secondaryTitle: "Prefer email?",
+      secondaryBody:
+        "You can also reach us directly at support@rarebooks.jp and we'll reply from this inbox.",
+      nameLabel: "Full name",
+      emailLabel: "Email",
+      topicLabel: "Topic",
+      topicHelper: "Choose what best matches your question.",
+      topicOptions: {
+        order: "Order help",
+        catalog: "Book or catalog question",
+        shipping: "Shipping & delivery",
+        account: "Account or billing",
+        other: "Something else",
+      },
+      trackingLabel: "Tracking code (optional)",
+      trackingHelper: "If you have a code from an order request, include it here.",
+      messageLabel: "How can we help?",
+      messagePlaceholder:
+        "Share details about your question, links to books, or anything that will help our team.",
+      submit: "Send to support",
+      submitting: "Sending...",
+      successTitle: "Message sent",
+      successBody: "Thanks for reaching out—our support team will follow up soon.",
+      errorTitle: "Unable to send",
+      errorBody: "Please try again shortly or email support@rarebooks.jp.",
     },
     favoritesMenu: {
       title: "Favorites",
@@ -496,6 +559,41 @@ export const translations: Record<SupportedLanguage, Translations> = {
         completed: "完了",
         cancelled: "キャンセル",
       },
+    },
+    support: {
+      badge: "カスタマーサポート",
+      heading: "カスタマーサポート",
+      intro: "お困りごとをお知らせください。1営業日以内に返信します。",
+      responseTimeTitle: "迅速で丁寧な返信",
+      responseTimeBody: "内容に合わせて担当が確認し、メールでご案内します。",
+      commitments: [
+        "ご記載いただいた書籍や注文内容に沿って丁寧に確認します。",
+        "お持ちの追跡コードがあれば最新状況をお知らせします。",
+        "東京のサポートチームが代替案やおすすめもご提案します。",
+      ],
+      secondaryTitle: "メールで直接連絡しますか？",
+      secondaryBody: "support@rarebooks.jp でも受け付けています。こちらから折り返します。",
+      nameLabel: "お名前",
+      emailLabel: "メールアドレス",
+      topicLabel: "お問い合わせ種別",
+      topicHelper: "内容に近いものをお選びください。",
+      topicOptions: {
+        order: "注文のサポート",
+        catalog: "商品・在庫について",
+        shipping: "配送・発送について",
+        account: "アカウント / 請求について",
+        other: "その他",
+      },
+      trackingLabel: "追跡コード（任意）",
+      trackingHelper: "注文フォームで取得したコードがあれば入力してください。",
+      messageLabel: "お問い合わせ内容",
+      messagePlaceholder: "ご希望の書籍や状況、分かる範囲の情報をお知らせください。",
+      submit: "送信する",
+      submitting: "送信中...",
+      successTitle: "送信しました",
+      successBody: "お問い合わせありがとうございます。担当より追ってご連絡します。",
+      errorTitle: "送信に失敗しました",
+      errorBody: "時間をおいて再度お試しください。support@rarebooks.jp でも受け付けています。",
     },
     favoritesMenu: {
       title: "お気に入り",
