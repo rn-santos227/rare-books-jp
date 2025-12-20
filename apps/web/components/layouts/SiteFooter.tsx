@@ -2,6 +2,7 @@
 
 import { GeneralFooterLayout } from "@/components/layouts/GeneralFooterLayout";
 import { useTranslations } from "@/context/LanguageContext";
+import Link from "next/link";
 
 export function SiteFooter() {
   const t = useTranslations();
@@ -14,21 +15,17 @@ export function SiteFooter() {
           <p className="text-sm text-slate-400">{t.footer.description}</p>
         </div>
 
-        {t.footer.sections.map((section) => (
+          {t.footer.sections.map((section) => (
           <div key={section.heading} className="space-y-3 text-sm">
             <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               {section.heading}
             </div>
             <ul className="space-y-2 text-slate-300">
               {section.links.map((link) => (
-                <li key={link}>
-                  {link === "Help center" || link === "ヘルプセンター" ? (
-                    <a href="/support" className="transition hover:text-white">
-                      {link}
-                    </a>
-                  ) : (
-                    link
-                  )}
+                <li key={link.href}>
+                  <Link href={link.href} className="transition hover:text-white">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -41,9 +38,15 @@ export function SiteFooter() {
           © {new Date().getFullYear()} {t.common.siteName}. {t.footer.rights}
         </span>
         <div className="flex flex-wrap gap-4">
-          <span>{t.footer.privacy}</span>
-          <span>{t.footer.terms}</span>
-          <span>{t.footer.cookies}</span>
+          <Link href={t.footer.privacy.href} className="transition hover:text-white">
+            {t.footer.privacy.label}
+          </Link>
+          <Link href={t.footer.terms.href} className="transition hover:text-white">
+            {t.footer.terms.label}
+          </Link>
+          <Link href={t.footer.cookies.href} className="transition hover:text-white">
+            {t.footer.cookies.label}
+          </Link>
         </div>
       </div>
     </GeneralFooterLayout>
