@@ -106,7 +106,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
           </div>
         </div>
 
-        <Carousel ariaLabel={t.home.latestArrivals} className="-mx-2 px-2">
+        <Carousel ariaLabel={t.home.latestArrivals} className="-mx-2 px-2" alignment="center">
           {books.slice(0, 6).map((book) => (
            <div key={book._id} className="min-w-70 max-w-[320px] flex-1">
               <BookCard book={book} />
@@ -117,4 +117,3 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
     </>
   );
 }
-
