@@ -7,7 +7,7 @@ export function SiteFooter() {
   const t = useTranslations();
 
   return (
-    <GeneralFooterLayout>
+    <GeneralFooterLayout maxWidthClassName="max-w-screen-2xl" padding="px-8 py-6">
       <div className="grid gap-10 md:grid-cols-4">
         <div className="space-y-3">
           <div className="text-lg font-semibold text-white">{t.common.siteName}</div>

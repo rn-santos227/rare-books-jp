@@ -8,7 +8,7 @@ export default function Loading() {
     <PageLayout
       backgroundTone="plain"
       header={
-        <GeneralHeaderLayout>
+        <GeneralHeaderLayout maxWidthClassName="max-w-screen-2xl" padding="px-8 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="text-lg font-semibold text-white">The Rare Books JP</div>
             <div className="text-sm font-semibold text-indigo-100">Loading experience</div>

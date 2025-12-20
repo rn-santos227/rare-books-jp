@@ -1,4 +1,8 @@
 import { HomePageClient } from "@/components/home/HomePageClient";
+import { HomePageHeader } from "@/components/home/HomePageHeader";
+import { PromotionHero } from "@/components/home/PromotionHero";
+import { PageLayout } from "@/components/layouts/PageLayout";
+import { SiteFooter } from "@/components/layouts/SiteFooter";
 import {
   CATEGORIES_QUERY,
   GENRES_QUERY,
@@ -20,12 +24,23 @@ export default async function Home() {
   ]);
 
   return (
-    <HomePageClient
-      books={books}
-      categories={categories}
-      genres={genres}
-      promotions={promotions}
-    />
+    <PageLayout
+      header={<HomePageHeader categories={categories} genres={genres} />}
+      hero={
+        <PromotionHero
+          categoriesCount={categories.length}
+          genresCount={genres.length}
+          promotions={promotions ?? []}
+        />
+      }
+      footer={<SiteFooter />}
+      maxWidthClassName="max-w-[1200px] w-full"
+      contentPadding="px-10 sm:px-16 py-16"
+      contentGap="gap-16"
+      contentClassName="w-full"
+    >
+      <HomePageClient books={books} categories={categories} genres={genres} />
+    </PageLayout>
   );
 }
 

@@ -23,8 +23,8 @@ export function PageLayout({
   hero,
   children,
   footer,
-  maxWidthClassName = "max-w-6xl",
-  contentPadding = "px-6 py-10",
+  maxWidthClassName = "max-w-7xl",
+  contentPadding = "px-8 py-12",
   contentGap = "gap-10",
   contentClassName,
   backgroundTone = "muted",
@@ -38,7 +38,7 @@ export function PageLayout({
   return (
     <main
       className={composeClassName([
-        "min-h-screen transition-colors",
+        "flex min-h-screen flex-col transition-colors",
         backgroundClasses,
         mainClassName,
       ])}
@@ -47,7 +47,7 @@ export function PageLayout({
       {hero}
       <div
         className={composeClassName([
-          "mx-auto flex flex-col",
+          "mx-auto flex flex-1 flex-col",
           maxWidthClassName,
           contentPadding,
           contentGap,

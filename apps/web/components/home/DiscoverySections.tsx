@@ -31,7 +31,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
           <Button
             variant="ghost"
             href="/catalog"
-            className="text-sm text-slate-200 hover:bg-white/10"
+            className="text-sm text-slate-800 hover:bg-white/10"
           >
             {t.home.seeAll}
           </Button>
@@ -66,7 +66,7 @@ export function DiscoverySections({ books, categories, genres }: DiscoverySectio
           <Button
             variant="ghost"
             href="/catalog"
-            className="text-sm text-slate-200 hover:bg-white/10"
+            className="text-sm text-slate-800 hover:bg-white/10"
           >
             {t.home.seeAll}
           </Button>
