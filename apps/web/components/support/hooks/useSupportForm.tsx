@@ -35,4 +35,18 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
   const [errors, setErrors] = useState<SupportFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+
+  const validationRules = useMemo(
+    () => ({
+      name: (value: string) => value.trim().length > 0 || "Please enter your name.",
+      email: (value: string) => {
+        if (!value.trim()) return "Please enter an email.";
+        return EMAIL_REGEX.test(value.trim()) || "Enter a valid email address.";
+      },
+      message: (value: string) => value.trim().length > 0 || "Please add a short message.",
+      topic: (value: string) => value.trim().length > 0 || "Please choose a topic.",
+    }),
+    [],
+  );
+
 }
