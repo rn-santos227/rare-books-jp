@@ -4,6 +4,7 @@ export { Carousel } from "./Carousel";
 export { default as ImageViewer } from "./ImageViewer";
 export { RatingDisplay } from "./RatingDisplay";
 export { RatingInput } from "./RatingInput";
+export { SlideShow } from "./SlideShow";
 export { Spinner } from "./Spinner";
 export { TextArea } from "./TextArea";
 export { TextField } from "./TextField";
