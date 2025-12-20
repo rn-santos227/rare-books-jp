@@ -18,6 +18,23 @@ type CatalogGridProps = {
   genres: Genre[];
 };
 
+type LocalizedEntity = {
+  _id: string;
+  name: string;
+  nameJa?: string | null;
+};
+
+function selectMatches<T extends LocalizedEntity>(
+  items: T[],
+  include: string[],
+  exclude: string[],
+) {
+  return {
+    include: items.filter((item) => include.includes(item._id)),
+    exclude: items.filter((item) => exclude.includes(item._id)),
+  };
+}
+
 export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
   const { language } = useLanguage();
   const t = useTranslations();
@@ -35,52 +52,44 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const filtersPanelId = "catalog-filters-panel";
 
-  const includedCategories = useMemo(
+  const { include: includedCategories, exclude: excludedCategories } = useMemo(
     () =>
-       categories.filter((category) =>
-        filters.categories.include.includes(category._id),
-      ),
-    [categories, filters.categories.include],
+      selectMatches(categories, filters.categories.include, filters.categories.exclude),
+    [categories, filters.categories.exclude, filters.categories.include],
   );
 
-  const excludedCategories = useMemo(
-    () =>
-      categories.filter((category) =>
-        filters.categories.exclude.includes(category._id),
-      ),
-    [categories, filters.categories.exclude],
-  );
-
-  const includedGenres = useMemo(
-    () =>
-      genres.filter((genre) => filters.genres.include.includes(genre._id)),
-    [filters.genres.include, genres],
-  );
-
-  const excludedGenres = useMemo(
-    () =>
-      genres.filter((genre) => filters.genres.exclude.includes(genre._id)),
-    [filters.genres.exclude, genres],
+  const { include: includedGenres, exclude: excludedGenres } = useMemo(
+    () => selectMatches(genres, filters.genres.include, filters.genres.exclude),
+    [filters.genres.exclude, filters.genres.include, genres],
   );
 
   const selectedCondition = useMemo(
-    () =>
-      filters.condition ? getConditionLabel(language, filters.condition) : null,
+    () => (filters.condition ? getConditionLabel(language, filters.condition) : null),
     [filters.condition, language],
   );
 
-  const formatNames = (items: { name: string; nameJa?: string | null }[]) =>
-    items
-      .map((item) => getLocalizedText(language, item.name, item.nameJa))
-      .join(", ");
+  const formatNames = (items: LocalizedEntity[]) =>
+    items.map((item) => getLocalizedText(language, item.name, item.nameJa)).join(", ");
 
-  const hasActiveFilters =
-    filters.searchQuery ||
-    includedCategories.length > 0 ||
-    excludedCategories.length > 0 ||
-    includedGenres.length > 0 ||
-    excludedGenres.length > 0 ||
-    Boolean(selectedCondition);
+  const hasActiveFilters = useMemo(
+    () =>
+      Boolean(
+        filters.searchQuery ||
+          includedCategories.length > 0 ||
+          excludedCategories.length > 0 ||
+          includedGenres.length > 0 ||
+          excludedGenres.length > 0 ||
+          selectedCondition,
+      ),
+    [
+      excludedCategories.length,
+      excludedGenres.length,
+      filters.searchQuery,
+      includedCategories.length,
+      includedGenres.length,
+      selectedCondition,
+    ],
+  );
 
   return (
     <div className="space-y-6">
