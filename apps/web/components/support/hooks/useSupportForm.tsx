@@ -68,6 +68,12 @@ export function useSupportForm({ onSuccess, onError }: UseSupportFormParams = {}
     const validationErrors = validate();
     setErrors(validationErrors);
 
+    if (Object.keys(validationErrors).length > 0) {
+      onError?.(Object.values(validationErrors)[0] ?? "Please double-check your details.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
   }
 }
