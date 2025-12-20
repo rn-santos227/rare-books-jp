@@ -2,57 +2,46 @@
 
 import Link from "next/link";
 
-import { useLanguage, useTranslations } from "@/context/LanguageContext";
-import { getLocalizedText } from "@/lib/localization";
-import { Category } from "@/types/category";
+import { Button } from "@/components/ui";
+import { useTranslations } from "@/context/LanguageContext";
 
-type CollectionsPageClientProps = {
-  categories: Category[];
-};
-
-export function CollectionsPageClient({ categories }: CollectionsPageClientProps) {
-  const { language } = useLanguage();
+export function ContactPageClient() {
   const t = useTranslations();
-  const content = t.pages.collections;
+  const contact = t.pages.contact;
 
   return (
     <div className="space-y-8">
       <section className="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 sm:p-10">
         <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
-          {content.eyebrow}
+          {contact.eyebrow}
         </p>
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="mt-2 text-3xl font-bold text-slate-900">{content.title}</h1>
-            <p className="mt-3 max-w-3xl text-slate-600">{content.description}</p>
-          </div>
-          <span className="text-sm font-semibold text-indigo-600">{content.helper}</span>
-        </div>
+        <h1 className="mt-2 text-3xl font-bold text-slate-900">{contact.title}</h1>
+        <p className="mt-3 max-w-3xl text-slate-600">{contact.description}</p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => (
-            <Link
-              key={category._id}
-              href={`/catalog?category=${category.slug}`}
-              className="group rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-white hover:shadow-md"
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {contact.channels.map((channel) => (
+            <div
+              key={channel.title}
+              className="flex h-full flex-col gap-2 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-5"
             >
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="text-base font-semibold text-slate-900">
-                  {getLocalizedText(language, category.name, category.nameJa)}
-                </h2>
-                <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-indigo-100">
-                  {t.home.promotionLabel}
-                </span>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-indigo-600">{channel.title}</p>
+                <p className="text-base font-semibold text-slate-900">{channel.detail}</p>
               </div>
-              <p className="mt-2 text-sm text-slate-600">{t.home.browseCatalog}</p>
-            </Link>
+              <p className="text-sm text-slate-600">{channel.helper}</p>
+            </div>
           ))}
         </div>
-      </section>
 
-      <section className="rounded-3xl bg-linear-to-r from-amber-100 via-amber-50 to-white p-8 shadow-md ring-1 ring-amber-200 sm:p-10">
-        <h2 className="text-2xl font-semibold text-slate-900">{content.spotlightTitle}</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">{content.spotlightBody}</p>
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <span className="text-sm text-slate-600">{contact.responseTime}</span>
+          <Button href="/support" variant="secondary" className="font-semibold">
+            {contact.supportCta}
+          </Button>
+          <Link href="/orders/track" className="text-sm font-semibold text-indigo-600">
+            {contact.supportHelper}
+          </Link>
+        </div>
       </section>
     </div>
   );
