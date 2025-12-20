@@ -23,7 +23,7 @@ export function SupportHeader() {
             {t.catalog.browseCatalog}
           </Link>
           <Button
-            className="rounded-full bg-white px-4 py-2 text-slate-900 shadow hover:translate-y-0.5"
+            className="rounded-full bg-linear-to-r from-[#ff5f6d] to-[#ffb347] px-5 py-2.5 text-slate-900 shadow" 
             href="/orders/track"
           >
             {t.common.trackOrder}

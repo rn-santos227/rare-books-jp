@@ -73,12 +73,9 @@ export function SupportPageClient() {
               </div>
             </div>
 
-            <ul className="space-y-2 text-sm text-indigo-100">
+            <ul className="list-disc list-inside space-y-2 text-sm text-indigo-100">
               {t.support.commitments.map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <span className="mt-1 text-base">•</span>
-                  <span>{item}</span>
-                </li>
+                <li key={item}>{item}</li>
               ))}
             </ul>
 

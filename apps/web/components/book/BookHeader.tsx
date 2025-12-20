@@ -15,7 +15,9 @@ export function BookHeader() {
     <GeneralHeaderLayout maxWidthClassName="max-w-screen-2xl" padding="px-8 py-6">
       <div className="flex flex-col gap-3">
        <div className="flex flex-wrap items-center gap-4">
-          <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
+        <Link href="/" className="text-lg font-semibold text-white transition hover:text-white/90">
+          {t.common.siteName}
+        </Link>
           <BookSearchField />
           <div className="flex items-center gap-3">
             <Link

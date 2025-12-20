@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { BookSearchField } from "@/components/home/BookSearchField";
 import { GeneralHeaderLayout } from "@/components/layouts/GeneralHeaderLayout";
 import { Button } from "@/components/ui";
@@ -12,7 +14,9 @@ export function CatalogHeader() {
     <GeneralHeaderLayout maxWidthClassName="max-w-screen-2xl" padding="px-8 py-6">
        <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-4">
-          <div className="text-lg font-semibold text-white">{t.common.siteName}</div>
+        <Link href="/" className="text-lg font-semibold text-white transition hover:text-white/90">
+          {t.common.siteName}
+        </Link>
           <BookSearchField />
           <div className="flex items-center gap-3 text-sm font-semibold text-indigo-100">
             <span className="hidden sm:inline">{t.catalog.browseCatalog}</span>

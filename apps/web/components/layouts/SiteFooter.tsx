@@ -21,7 +21,15 @@ export function SiteFooter() {
             </div>
             <ul className="space-y-2 text-slate-300">
               {section.links.map((link) => (
-                <li key={link}>{link}</li>
+                <li key={link}>
+                  {link === "Help center" || link === "ヘルプセンター" ? (
+                    <a href="/support" className="transition hover:text-white">
+                      {link}
+                    </a>
+                  ) : (
+                    link
+                  )}
+                </li>
               ))}
             </ul>
           </div>
