@@ -42,21 +42,6 @@ export default defineType({
       name: 'status',
       title: 'Status',
       type: 'string',
-      validation: Rule =>
-        Rule.required().email(),
-    }),
-
-    defineField({
-      name: 'message',
-      title: 'Message',
-      type: 'text',
-      description: 'Buyer message or inquiry',
-    }),
-
-    defineField({
-      name: 'status',
-      title: 'Status',
-      type: 'string',
       options: {
         list: [
           { title: 'New', value: 'new' },
