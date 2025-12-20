@@ -1,15 +1,15 @@
-import { GENRES_QUERY } from "@/constants/queries";
 import { GenresPageClient } from "@/components/info/GenresPageClient";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
 import { TranslatedInfoPageHeader } from "@/components/layouts/TranslatedInfoPageHeader";
+import { GENRES_QUERY } from "@/constants/queries";
 import { sanityClient } from "@/lib/sanity.client";
 import { Genre } from "@/types/genre";
 
 export const dynamic = "force-dynamic";
 
 export default async function GenresPage() {
-  const genres = await sanityClient.fetch<Genre[]>(GENRES_QUERY);
+  const genres = (await sanityClient.fetch<Genre[]>(GENRES_QUERY)) ?? [];
 
   return (
     <PageLayout

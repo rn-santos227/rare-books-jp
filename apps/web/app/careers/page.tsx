@@ -1,9 +1,16 @@
 import { CareersPageClient } from "@/components/info/CareersPageClient";
-import { TranslatedInfoPageHeader } from "@/components/layouts/TranslatedInfoPageHeader";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
+import { TranslatedInfoPageHeader } from "@/components/layouts/TranslatedInfoPageHeader";
+import { CAREERS_QUERY } from "@/constants/queries";
+import { sanityClient } from "@/lib/sanity.client";
+import { Career } from "@/types/career";
 
-export default function CareersPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CareersPage() {
+  const openings = (await sanityClient.fetch<Career[]>(CAREERS_QUERY)) ?? [];
+
   return (
     <PageLayout
       header={<TranslatedInfoPageHeader section="careers" />}
@@ -12,7 +19,7 @@ export default function CareersPage() {
       contentPadding="px-6 py-12"
       backgroundTone="muted"
     >
-      <CareersPageClient />
+      <CareersPageClient openings={openings} />
     </PageLayout>
   );
 }
