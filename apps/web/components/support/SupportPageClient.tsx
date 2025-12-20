@@ -9,4 +9,10 @@ import { useTranslations } from "@/context/LanguageContext";
 
 import { useSupportForm } from "./hooks/useSupportForm";
 
+export function SupportPageClient() {
+  const t = useTranslations();
+  const { toasts, show, dismiss, toneStyles } = useToast();
+  const [feedbackTone, setFeedbackTone] = useState<"success" | "warning" | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
+}
