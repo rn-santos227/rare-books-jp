@@ -98,6 +98,13 @@ export const ja: Translations = {
     inventory: "在庫",
     inventoryUnknown: "不明",
     featured: "コレクションのおすすめ",
+    openImage: "画像を拡大表示",
+    imagePreviewTitle: "画像プレビュー",
+    imageHelper: "拡大機能で装丁や細部をじっくりご確認ください。",
+    zoomLabel: "ズーム",
+    zoomIn: "拡大",
+    zoomOut: "縮小",
+    resetZoom: "リセット",
   },
   order: {
     heading: "注文リクエスト",

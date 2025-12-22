@@ -125,6 +125,13 @@ export type Translations = {
     inventory: string;
     inventoryUnknown: string;
     featured: string;
+    openImage: string;
+    imagePreviewTitle: string;
+    imageHelper: string;
+    zoomLabel: string;
+    zoomIn: string;
+    zoomOut: string;
+    resetZoom: string;
   };
   order: {
     heading: string;

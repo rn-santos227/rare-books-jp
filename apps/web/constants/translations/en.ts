@@ -98,6 +98,13 @@ export const en: Translations = {
     inventory: "Inventory",
     inventoryUnknown: "N/A",
     featured: "Featured pick from our collection",
+    openImage: "Open image preview",
+    imagePreviewTitle: "Image preview",
+    imageHelper: "Use the zoom controls to inspect fine details of this book.",
+    zoomLabel: "Zoom",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    resetZoom: "Reset",
   },
   order: {
     heading: "Order request",
