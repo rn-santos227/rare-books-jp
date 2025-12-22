@@ -102,6 +102,13 @@ export function OrderInquiryForm({ bookId, marketplaceUrl }: OrderInquiryFormPro
             onChange={(event) => setFormState((prev) => ({ ...prev, buyerEmail: event.target.value }))}
             error={errors.buyerEmail}
           />
+          <TextField
+            label={t.order.contactNumberLabel}
+            placeholder={t.order.contactNumberPlaceholder}
+            value={formState.contactNumber}
+            onChange={(event) => setFormState((prev) => ({ ...prev, contactNumber: event.target.value }))}
+            error={errors.contactNumber}
+          />
           <TextArea
             label={t.order.messageLabel}
             placeholder={t.order.messagePlaceholder}
