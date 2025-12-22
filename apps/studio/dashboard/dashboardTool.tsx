@@ -128,3 +128,31 @@ function RecentDocumentsCard() {
     </Card>
   );
 }
+
+function QuickActionsCard() {
+  const actions = useMemo(
+    () => [
+      {
+        title: 'Open content desk',
+        description: 'Browse and edit documents in the Desk tool.',
+        href: '/desk',
+        icon: ComposeIcon,
+      },
+      {
+        title: 'Review promotions',
+        description: 'Jump directly to promotion entries.',
+        href: '/desk/promotion',
+        icon: BookIcon,
+      },
+      {
+        title: 'Sanity docs',
+        description: 'Read platform guides and best practices.',
+        href: 'https://www.sanity.io/docs',
+        icon: HelpCircleIcon,
+      },
+    ],
+    []
+  )
+
+
+}
