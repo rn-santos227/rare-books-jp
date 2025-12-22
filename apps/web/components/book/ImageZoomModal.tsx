@@ -34,6 +34,18 @@ export function ImageZoomModal({
   resetLabel,
   onClose,
 }: ImageZoomModalProps) {
+  const [zoom, setZoom] = useState(1.1);
+  const handleZoomChange = (value: number) => {
+    const clamped = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value));
+    setZoom(Number(clamped.toFixed(2)));
+  };
 
+  const zoomControlsDisabled = useMemo(
+    () => ({
+      out: zoom <= MIN_ZOOM,
+      in: zoom >= MAX_ZOOM,
+    }),
+    [zoom],
+  );
 
 }
