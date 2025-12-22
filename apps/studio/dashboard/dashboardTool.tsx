@@ -54,4 +54,28 @@ function RecentDocumentsCard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    setLoading(true)
+    setError(null)
+
+    client
+      .fetch<RecentDocument[]>(RECENT_DOCUMENTS_QUERY, {}, {signal: controller.signal})
+      .then((docs) => setRecentDocuments(docs))
+      .catch((err) => {
+        if (!controller.signal.aborted) {
+          setError(err.message)
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
+      })
+
+    return () => controller.abort()
+  }, [client])
+
 }
