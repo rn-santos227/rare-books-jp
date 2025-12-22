@@ -91,8 +91,28 @@ export function ImageZoomModal({
               {resetLabel}
             </button>
           </div>
+        </div>
 
-
+        <div className="flex h-[70vh] items-center justify-center overflow-auto rounded-2xl bg-slate-50 ring-1 ring-slate-200">
+          {imageUrl ? (
+            <div className="relative">
+              <Image
+                src={imageUrl}
+                alt={alt}
+                width={1200}
+                height={1600}
+                className="max-h-[68vh] rounded-2xl object-contain transition-transform duration-200 ease-out"
+                style={{ transform: `scale(${zoom})` }}
+                sizes="(max-width: 768px) 90vw, 70vw"
+              />
+            </div>
+          ) : (
+            <div className="flex max-w-lg flex-col items-center gap-2 text-center text-slate-600">
+              <span aria-hidden className="text-3xl">📷</span>
+              <p className="text-sm font-semibold">{alt}</p>
+              <p className="text-xs text-slate-500">{helperText}</p>
+            </div>
+          )}
         </div>
       </div>
     </Modal>
