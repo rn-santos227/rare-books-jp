@@ -19,6 +19,14 @@ export default defineType({
       title: 'Message',
       type: 'text',
       description: 'Buyer message or inquiry',
+      readOnly: true,
+    }),
+
+    defineField({
+      name: 'contactNumber',
+      title: 'Contact number',
+      type: 'string',
+      description: 'Phone number provided by the buyer',
     }),
 
     defineField({
