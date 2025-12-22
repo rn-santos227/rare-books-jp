@@ -59,12 +59,19 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
       </div>
 
       <form onSubmit={handleSubmit} className="grid gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-100">
-        <div className="grid gap-4 sm:grid-cols-[1fr,140px] sm:items-end">
+        <div className="grid gap-4 sm:grid-cols-[1fr,1fr,140px] sm:items-end">
           <TextField
             label={t.reviews.nameLabel}
             placeholder={t.reviews.namePlaceholder}
             value={formState.reviewerName}
             onChange={(event) => setFormState((prev) => ({ ...prev, reviewerName: event.target.value }))}
+          />
+          <TextField
+            label={t.reviews.emailLabel}
+            placeholder={t.reviews.emailPlaceholder}
+            value={formState.reviewerEmail}
+            onChange={(event) => setFormState((prev) => ({ ...prev, reviewerEmail: event.target.value }))}
+            error={errors.reviewerEmail}
           />
           <RatingInput
             value={ratingValue}
@@ -72,6 +79,12 @@ export function BookReviewSection({ bookId, reviews }: BookReviewSectionProps) {
             error={errors.rating}
           />
         </div>
+        <TextField
+          label={t.reviews.titleLabel}
+          placeholder={t.reviews.titlePlaceholder}
+          value={formState.title}
+          onChange={(event) => setFormState((prev) => ({ ...prev, title: event.target.value }))}
+        />
         <TextArea
           label={t.reviews.reviewLabel}
           placeholder={t.reviews.reviewPlaceholder}
