@@ -1,12 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 import { BookHeader } from "@/components/book/BookHeader";
 import { BookReviewSection } from "@/components/book/BookReviewSection";
+import { ImageZoomModal } from "@/components/book/ImageZoomModal";
 import { PageLayout } from "@/components/layouts/PageLayout";
 import { SiteFooter } from "@/components/layouts/SiteFooter";
-import { Badge, Carousel, ImageViewer} from "@/components/ui";
+import { Badge, Carousel, ImageViewer } from "@/components/ui";
 import { FavoriteToggle } from "@/components/favorites/FavoriteToggle";
 import { OrderInquiryForm } from "@/components/book/OrderInquiryForm";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
@@ -83,6 +85,16 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
   );
   const heroImage = book.imageUrl ?? book.gallery?.[0];
   const heroAlt = book.coverAlt ?? localizedTitle;
+  const [selectedImage, setSelectedImage] = useState<string | null>(heroImage ?? null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+
+  const openImageModal = (image?: string | null) => {
+    if (!image) return;
+    setSelectedImage(image);
+    setIsImageModalOpen(true);
+  };
+  
+  const closeImageModal = () => setIsImageModalOpen(false);
 
   return (
     <PageLayout
@@ -115,6 +127,9 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                   fallbackLabel={t.common.coverFallback}
                   className="h-full"
                   imgClassName="object-contain"
+                  onClick={() => openImageModal(heroImage)}
+                  actionLabel={t.book.openImage}
+                  ariaLabel={t.book.openImage}
                 />
               </div>
             </div>
@@ -133,6 +148,9 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
                         alt={`${localizedTitle} preview ${index + 1}`}
                         className="h-full"
                         imgClassName="object-cover"
+                        onClick={() => openImageModal(url)}
+                        actionLabel={t.book.openImage}
+                        ariaLabel={t.book.openImage}
                       />
                     </div>
                   </div>
@@ -197,6 +215,21 @@ export function BookPageClient({ book, reviews }: BookPageClientProps) {
         </div>
       </div>
       <BookReviewSection bookId={book._id} reviews={reviews} />
+      {isImageModalOpen && (
+        <ImageZoomModal
+          key={selectedImage ?? "no-image"}
+          open={isImageModalOpen}
+          onClose={closeImageModal}
+          imageUrl={selectedImage}
+          alt={heroAlt}
+          title={t.book.imagePreviewTitle}
+          helperText={t.book.imageHelper}
+          zoomLabel={t.book.zoomLabel}
+          zoomInLabel={t.book.zoomIn}
+          zoomOutLabel={t.book.zoomOut}
+          resetLabel={t.book.resetZoom}
+        />
+      )}
     </PageLayout>
   );
 }
