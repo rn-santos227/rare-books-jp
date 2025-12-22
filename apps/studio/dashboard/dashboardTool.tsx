@@ -237,3 +237,14 @@ function DashboardTool() {
   )
 }
 
+export const dashboardPlugin = definePlugin({
+  name: 'rare-books-dashboard',
+  tools: [
+    {
+      name: 'dashboard',
+      title: 'Dashboard',
+      icon: HomeIcon,
+      component: DashboardTool,
+    },
+  ],
+})
