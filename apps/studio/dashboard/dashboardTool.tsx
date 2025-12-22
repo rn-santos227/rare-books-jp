@@ -186,3 +186,42 @@ function QuickActionsCard() {
     </Card>
   );
 }
+
+
+function ProjectOverviewCard() {
+  const workspace = useWorkspace()
+
+  return (
+    <Card padding={4} radius={3} shadow={1}>
+      <Stack space={3}>
+        <Flex align="center" gap={2}>
+          <HomeIcon />
+          <Heading as="h3" size={2}>
+            Project overview
+          </Heading>
+        </Flex>
+        <Grid columns={[1, 2, 2]} gap={3}>
+          <Card padding={3} radius={2} tone="transparent" border>
+            <Text muted size={1}>
+              Project ID
+            </Text>
+            <Text weight="semibold">{workspace.projectId}</Text>
+          </Card>
+          <Card padding={3} radius={2} tone="transparent" border>
+            <Text muted size={1}>
+              Dataset
+            </Text>
+            <Text weight="semibold">{workspace.dataset}</Text>
+          </Card>
+          <Card padding={3} radius={2} tone="transparent" border>
+            <Text muted size={1}>
+              Workspace
+            </Text>
+            <Text weight="semibold">{workspace.name}</Text>
+          </Card>
+        </Grid>
+      </Stack>
+    </Card>
+  )
+}
+
