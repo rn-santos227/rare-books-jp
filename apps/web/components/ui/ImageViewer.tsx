@@ -33,9 +33,11 @@ export default function ImageViewer({
       </span>
     );
 
-  const isInteractive = Boolean(onClick);
+  const hasImage = Boolean(src);
+  const isInteractive = Boolean(onClick && hasImage);
+
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (!onClick) return;
+    if (!isInteractive || !onClick) return;
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onClick();
@@ -56,7 +58,7 @@ export default function ImageViewer({
       role={isInteractive ? "button" : undefined}
       tabIndex={isInteractive ? 0 : undefined}
       aria-label={isInteractive ? ariaLabel ?? alt : undefined}
-      onClick={onClick}
+      onClick={isInteractive ? onClick : undefined}
       onKeyDown={handleKeyDown}
     >
       {src ? (
