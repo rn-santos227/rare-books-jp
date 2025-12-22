@@ -14,11 +14,19 @@ function generateTrackingCode() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { bookId, buyerName, buyerEmail, message } = (await request.json()) as Order;
+    const { bookId, buyerName, buyerEmail, contactNumber, message } = (await request.json()) as Order;
 
-    if (!bookId || !buyerName?.trim() || !buyerEmail?.trim()) {
+    if (!bookId || !buyerName?.trim() || !buyerEmail?.trim() || !contactNumber?.trim()) {
       return NextResponse.json(
         { message: "Missing required fields for creating an order." },
+        { status: 400 },
+      );
+    }
+
+    const digitsOnly = contactNumber.replace(/\D/g, "");
+    if (digitsOnly.length < 7) {
+      return NextResponse.json(
+        { message: "Enter a valid contact number with at least 7 digits." },
         { status: 400 },
       );
     }
@@ -42,6 +50,7 @@ export async function POST(request: NextRequest) {
       buyerName: buyerName.trim(),
       buyerEmail: buyerEmail.trim(),
       buyerEmailNormalized,
+      contactNumber: contactNumber.trim(),
       message: message?.trim() || undefined,
       trackingCode,
       status: "new",
