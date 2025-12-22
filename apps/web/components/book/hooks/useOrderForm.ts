@@ -6,6 +6,7 @@ import { Order } from "@/types/order";
 export type OrderFormState = {
   buyerName: string;
   buyerEmail: string;
+  contactNumber: string;
   message: string;
 };
 
@@ -23,6 +24,7 @@ export function useOrderForm({ bookId, onSuccess, onError }: UseOrderFormParams)
   const [formState, setFormState] = useState<OrderFormState>({
     buyerName: "",
     buyerEmail: "",
+    contactNumber: "",
     message: "",
   });
   const [errors, setErrors] = useState<OrderFormErrors>({});
@@ -39,6 +41,11 @@ export function useOrderForm({ bookId, onSuccess, onError }: UseOrderFormParams)
       validationErrors.buyerEmail = "Please enter an email.";
     } else if (!EMAIL_REGEX.test(formState.buyerEmail.trim())) {
       validationErrors.buyerEmail = "Enter a valid email address.";
+    }
+
+    const phoneDigits = formState.contactNumber.replace(/\D/g, "");
+    if (!formState.contactNumber.trim() || phoneDigits.length < 7) {
+      validationErrors.contactNumber = "Please enter a valid contact number.";
     }
 
     return validationErrors;
@@ -62,12 +69,13 @@ export function useOrderForm({ bookId, onSuccess, onError }: UseOrderFormParams)
         bookId,
         buyerName: formState.buyerName.trim(),
         buyerEmail: formState.buyerEmail.trim(),
+        contactNumber: formState.contactNumber.trim(),
         message: formState.message.trim(),
       };
 
       const { message, trackingCode } = await submitOrder(payload);
 
-      setFormState({ buyerName: "", buyerEmail: "", message: "" });
+      setFormState({ buyerName: "", buyerEmail: "", contactNumber: "", message: "" });
       setErrors({});
       onSuccess?.(message, trackingCode);
     } catch (error) {
