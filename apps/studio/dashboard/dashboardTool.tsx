@@ -154,5 +154,35 @@ function QuickActionsCard() {
     []
   )
 
+  return (
+    <Card padding={4} radius={3} shadow={1}>
+      <Stack space={3}>
+        <Flex align="center" gap={2}>
+          <HomeIcon />
+          <Heading as="h3" size={2}>
+            Quick actions
+          </Heading>
+        </Flex>
 
+        <Grid columns={[1, 1, 3]} gap={3}>
+          {actions.map((action) => (
+            <Card key={action.title} padding={3} radius={2} border tone="positive">
+              <Stack space={3}>
+                <Flex align="center" gap={2}>
+                  <action.icon />
+                  <Heading as="h4" size={1}>
+                    {action.title}
+                  </Heading>
+                </Flex>
+                <Text muted size={1}>
+                  {action.description}
+                </Text>
+                <Button as="a" href={action.href} text="Open" tone="primary" />
+              </Stack>
+            </Card>
+          ))}
+        </Grid>
+      </Stack>
+    </Card>
+  );
 }
