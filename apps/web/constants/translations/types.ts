@@ -86,6 +86,10 @@ export type Translations = {
     matches: string;
     showFilters: string;
     hideFilters: string;
+    advancedHelper: string;
+    gridView: string;
+    listView: string;
+    splitView: string;
     activeLabel: string;
     noBooksTitle: string;
     noBooksBody: string;
@@ -107,6 +111,11 @@ export type Translations = {
     price: string;
     min: string;
     max: string;
+    dropdownHelper: string;
+    categoriesPlaceholder: string;
+    genresPlaceholder: string;
+    clearSelection: string;
+
     priceHelper: (min: number, max: number) => string;
     conditionLabels: Record<ConditionKey, string>;
   };
