@@ -78,4 +78,13 @@ function RecentDocumentsCard() {
     return () => controller.abort()
   }, [client])
 
+  return (
+    <Card padding={4} radius={3} shadow={1}>
+      <Stack space={3}>
+        <Flex align="center" gap={2}>
+
+        </Flex>
+      </Stack>
+    </Card>
+  );
 }
