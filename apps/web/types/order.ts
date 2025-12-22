@@ -4,6 +4,7 @@ export type Order = {
   bookId: string;
   buyerName: string;
   buyerEmail: string;
+  contactNumber: string;
   message?: string;
   status?: OrderStatus;
   trackingCode?: string;

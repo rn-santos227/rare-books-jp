@@ -4,6 +4,7 @@ export type OrderSubmission = {
   bookId: string;
   buyerName: string;
   buyerEmail: string;
+  contactNumber: string;
   message?: string;
 };
 
@@ -21,6 +22,7 @@ export async function submitOrder({
   bookId,
   buyerName,
   buyerEmail,
+  contactNumber,
   message,
 }: OrderSubmission): Promise<OrderSubmissionResponse> {
   const response = await fetch("/api/orders", {
@@ -30,6 +32,7 @@ export async function submitOrder({
       bookId,
       buyerName,
       buyerEmail,
+      contactNumber,
       message,
     }),
   });
