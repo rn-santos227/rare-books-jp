@@ -21,3 +21,19 @@ type ImageZoomModalProps = {
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
 const ZOOM_STEP = 0.25;
+
+export function ImageZoomModal({
+  open,
+  imageUrl,
+  alt,
+  title,
+  helperText,
+  zoomLabel,
+  zoomInLabel,
+  zoomOutLabel,
+  resetLabel,
+  onClose,
+}: ImageZoomModalProps) {
+
+
+}
