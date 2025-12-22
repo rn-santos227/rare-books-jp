@@ -82,8 +82,29 @@ function RecentDocumentsCard() {
     <Card padding={4} radius={3} shadow={1}>
       <Stack space={3}>
         <Flex align="center" gap={2}>
-
+          <DocumentIcon />
+          <Heading as="h3" size={2}>
+            Recent updates
+          </Heading>
         </Flex>
+
+        {loading && (
+          <Flex align="center" gap={2}>
+            <Spinner muted />
+            <Text muted>Loading recent documents…</Text>
+          </Flex>
+        )}
+
+        {error && (
+          <Card tone="critical" padding={3} radius={2}>
+            <Text>Unable to load recent documents: {error}</Text>
+          </Card>
+        )}
+
+        {!loading && !error && recentDocuments.length === 0 && (
+          <Text muted>No documents have been edited yet.</Text>
+        )}
+
       </Stack>
     </Card>
   );
