@@ -42,4 +42,16 @@ const RECENT_DOCUMENTS_QUERY = `
     slug
   }
 `
+const apiVersion = '2024-12-01'
 
+function formatDocumentTitle(doc: RecentDocument) {
+  return doc.title || doc.name || doc.slug?.current || 'Untitled'
+}
+
+function RecentDocumentsCard() {
+  const client = useClient({apiVersion})
+  const [recentDocuments, setRecentDocuments] = useState<RecentDocument[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+}
