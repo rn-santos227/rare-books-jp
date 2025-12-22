@@ -4,6 +4,8 @@ import { submitReview } from "@/lib/api/reviews";
 
 export type ReviewFormState = {
   reviewerName: string;
+  reviewerEmail: string;
+  title: string;
   rating: string;
   bodyText: string;
 };
@@ -16,12 +18,14 @@ type UseReviewFormParams = {
   onError?: (message: string) => void;
 };
 
-
 const MIN_REVIEW_LENGTH = 10;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParams) {
   const [formState, setFormState] = useState<ReviewFormState>({
     reviewerName: "",
+    reviewerEmail: "",
+    title: "",
     rating: "5",
     bodyText: "",
   });
@@ -36,6 +40,12 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
       validationErrors.bodyText = "Please share a few words about the book.";
     } else if (formState.bodyText.trim().length < MIN_REVIEW_LENGTH) {
       validationErrors.bodyText = `Reviews should be at least ${MIN_REVIEW_LENGTH} characters.`;
+    }
+
+    if (!formState.reviewerEmail.trim()) {
+      validationErrors.reviewerEmail = "Please enter your email.";
+    } else if (!EMAIL_REGEX.test(formState.reviewerEmail.trim())) {
+      validationErrors.reviewerEmail = "Enter a valid email address.";
     }
 
     if (ratingNumber < 1 || ratingNumber > 5) {
@@ -53,8 +63,10 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      if (validationErrors.bodyText) {
-        onError?.(validationErrors.bodyText);
+      const firstError =
+        validationErrors.bodyText || validationErrors.reviewerEmail || validationErrors.rating;
+      if (firstError) {
+        onError?.(firstError);
       }
       return;
     }
@@ -63,12 +75,14 @@ export function useReviewForm({ bookId, onSuccess, onError }: UseReviewFormParam
     try {
       const message = await submitReview({
         bookId,
-        reviewerName: formState.reviewerName || "Anonymous reader",
+        reviewerName: formState.reviewerName || "Anonymous Reader",
+        reviewerEmail: formState.reviewerEmail.trim(),
+        title: formState.title.trim(),
         rating: ratingNumber,
         bodyText: formState.bodyText,
       });
 
-      setFormState({ reviewerName: "", rating: "5", bodyText: "" });
+      setFormState({ reviewerName: "", reviewerEmail: "", title: "", rating: "5", bodyText: "" });
       setErrors({});
       onSuccess?.(message);
     } catch (error) {
