@@ -105,6 +105,25 @@ function RecentDocumentsCard() {
           <Text muted>No documents have been edited yet.</Text>
         )}
 
+        {!loading && !error && recentDocuments.length > 0 && (
+          <Stack space={3}>
+            {recentDocuments.map((doc) => (
+              <Card key={doc._id} padding={3} radius={2} tone="transparent" border>
+                <Flex align="center" justify="space-between" gap={3}>
+                  <Stack space={2}>
+                    <Text weight="semibold">{formatDocumentTitle(doc)}</Text>
+                    <Text muted size={1}>
+                      Type: {doc._type}
+                    </Text>
+                  </Stack>
+                  <Badge tone="primary" mode="outline">
+                    {new Date(doc._updatedAt).toLocaleString()}
+                  </Badge>
+                </Flex>
+              </Card>
+            ))}
+          </Stack>
+        )}
       </Stack>
     </Card>
   );
