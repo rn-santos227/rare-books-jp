@@ -225,3 +225,15 @@ function ProjectOverviewCard() {
   )
 }
 
+function DashboardTool() {
+  return (
+    <Box padding={4}>
+      <Stack space={4}>
+        <ProjectOverviewCard />
+        <QuickActionsCard />
+        <RecentDocumentsCard />
+      </Stack>
+    </Box>
+  )
+}
+
