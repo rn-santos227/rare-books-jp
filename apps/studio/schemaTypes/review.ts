@@ -37,7 +37,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      hidden: ({ parent }) => parent?.reviewType === 'user',
+      description: 'Shown publicly for both editorial and user reviews',
     }),
 
     defineField({
@@ -45,7 +45,7 @@ export default defineType({
       title: 'Review Text',
       type: 'array',
       of: [{ type: 'block' }],
-      hidden: ({ parent }) => parent?.reviewType === 'user',
+      readOnly: ({ document }) => document?.reviewType === 'user',
     }),
 
     defineField({
@@ -69,11 +69,22 @@ export default defineType({
         }),
     }),
 
+
     defineField({
       name: 'reviewerName',
       title: 'Reviewer Name',
       type: 'string',
-      hidden: ({ parent }) => parent?.reviewType === 'editorial',
+      description: 'Shown publicly for user reviews',
+      readOnly: ({ document }) => document?.reviewType === 'user',
+    }),
+
+    defineField({
+      name: 'reviewerEmail',
+      title: 'Reviewer Email',
+      type: 'string',
+      description: 'Not shown publicly; used for moderation follow-up',
+      validation: Rule => Rule.required().email().warning('Enter a valid email address'),
+      readOnly: ({ document }) => document?.reviewType === 'user',
     }),
 
     defineField({
@@ -88,6 +99,22 @@ export default defineType({
         ],
       },
       initialValue: 'pending',
+    }),
+
+    defineField({
+      name: 'buyerName',
+      title: 'Legacy reviewer name',
+      type: 'string',
+      readOnly: true,
+      hidden: ({ document }) => !document?.buyerName,
+    }),
+
+    defineField({
+      name: 'buyerEmail',
+      title: 'Legacy reviewer email',
+      type: 'string',
+      readOnly: true,
+      hidden: ({ document }) => !document?.buyerEmail,
     }),
   ],
 })
