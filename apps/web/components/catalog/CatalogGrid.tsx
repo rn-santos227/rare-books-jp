@@ -220,8 +220,8 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
         </div>
       )}
 
-      <div className={`grid gap-6 ${isFiltersOpen ? "lg:grid-cols-[320px,1fr]" : ""}`}>
-        <div className="space-y-3 lg:top-6">
+      <div className="grid gap-6 lg:grid-cols-[440px,1fr]">
+        <div className="space-y-3">
           <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
             <div className="flex items-center justify-between gap-3">
               <div>
@@ -239,6 +239,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
           </div>
 
           <div
+            id={filtersPanelId}
             data-open={isFiltersOpen}
             aria-hidden={!isFiltersOpen}
             className={`origin-top overflow-hidden rounded-2xl transition-[max-height,opacity,transform] duration-300 ease-in-out data-[open=false]:-translate-y-1 data-[open=false]:pointer-events-none ${

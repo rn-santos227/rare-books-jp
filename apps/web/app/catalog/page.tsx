@@ -19,8 +19,10 @@ export default async function CatalogPage() {
     <PageLayout
       header={<CatalogHeader />}
       footer={<SiteFooter />}
+      maxWidthClassName="max-w-[1200px] w-full"
       contentGap="gap-12"
       contentPadding="px-6 py-12"
+      contentClassName="w-full"
     >
       <CatalogPageClient books={books} categories={categories} genres={genres} />
     </PageLayout>
