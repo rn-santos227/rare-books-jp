@@ -139,6 +139,8 @@ export type Translations = {
     openFormLabel: string;
     buyerNameLabel: string;
     buyerEmailLabel: string;
+    contactNumberLabel: string;
+    contactNumberPlaceholder: string;
     messageLabel: string;
     messagePlaceholder: string;
     submit: string;
@@ -206,6 +208,10 @@ export type Translations = {
     noBody: string;
     nameLabel: string;
     namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    titleLabel: string;
+    titlePlaceholder: string;
     reviewLabel: string;
     reviewPlaceholder: string;
     moderationNote: string;
