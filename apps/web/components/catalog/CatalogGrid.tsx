@@ -344,7 +344,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
 
         <div className="space-y-6">
           {viewMode === "panel" && (
-            <div className="space-y-4">
+            <div className="grid auto-rows-fr gap-4 grid-cols-2">
               {displayedBooks.map((book) => (
                 <BookPanelCard key={book._id} book={book} />
               ))}
