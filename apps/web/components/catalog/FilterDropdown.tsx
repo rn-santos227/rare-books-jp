@@ -110,40 +110,86 @@ export function FilterDropdown({
   }, [excludeLabel, selection.exclude.length, selection.include.length, includeLabel, placeholder]);
 
   return (
-    <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-semibold text-slate-800">{label}</span>
-        <Badge tone={badgeTone} className="text-xs">
-          {selected.length} / {items.length}
-        </Badge>
-      </div>
-      <select
-        multiple
-        value={selected}
-        onChange={(event) =>
-          onChange(Array.from(event.target.selectedOptions).map((option) => option.value))
-        }
-        className="h-24 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-inner focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        className="flex w-full items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow focus-visible:outline focus-visible:outline-indigo-200"
       >
-        <option value="" disabled>
-          {placeholder}
-        </option>
-        {items.map((item) => (
-          <option key={item._id} value={item._id}>
-            {getLocalizedText(language, item.name, item.nameJa)}
-          </option>
-        ))}
-      </select>
-      <div className="flex items-center justify-between text-xs text-slate-500">
-        <span>{helper}</span>
-        <button
-          type="button"
-          onClick={onClear}
-          className="font-semibold text-indigo-600 hover:text-indigo-700"
-        >
-          {selected.length > 0 ? clearLabel : resetLabel}
-        </button>
-      </div>
-    </label>
+        <div className="flex flex-col">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            {label}
+          </span>
+          <span className="text-sm font-semibold text-slate-800">{selectedLabel}</span>
+          <span className="text-[11px] text-slate-500">{helper}</span>
+        </div>
+        <div className="flex flex-col items-end gap-1 text-right text-xs">
+          <Badge tone={badgeTone} className="w-fit bg-slate-50 px-2 py-1 text-[11px]">
+            {selection.include.length} / {items.length}
+          </Badge>
+          {selection.exclude.length > 0 && (
+            <Badge tone="warning" className="w-fit bg-amber-50 px-2 py-1 text-[11px] text-amber-700">
+              -{selection.exclude.length}
+            </Badge>
+          )}
+          <span className="text-slate-400">{isOpen ? "▴" : "▾"}</span>
+        </div>
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 right-0 z-20 mt-2 rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-gray-200">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-slate-800">{label}</span>
+              <Badge tone={badgeTone} className="bg-slate-50 text-xs text-slate-700">
+                +{selection.include.length}
+              </Badge>
+              <Badge tone="warning" className="bg-amber-50 text-xs text-amber-700">
+                -{selection.exclude.length}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1 text-xs font-semibold text-slate-600">
+              {(["any", "all"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => handleModeChange(mode)}
+                  className={`rounded-full px-3 py-1 transition ${
+                    selection.mode === mode
+                      ? "bg-white text-slate-900 shadow"
+                      : "text-slate-600 hover:text-slate-800"
+                  }`}
+                >
+                  {mode === "any" ? matchAnyLabel : matchAllLabel}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {items.map((item) => (
+              <FilterPill
+                key={item._id}
+                label={getLocalizedText(language, item.name, item.nameJa)}
+                state={resolvePillState(item._id)}
+                onClick={() => togglePill(item._id)}
+              />
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+            <span>{helper}</span>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" className="px-3 py-1 text-xs" onClick={clearSelection}>
+                {clearLabel}
+              </Button>
+              <Button variant="secondary" className="px-3 py-1 text-xs" onClick={() => setIsOpen(false)}>
+                {resetLabel}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
