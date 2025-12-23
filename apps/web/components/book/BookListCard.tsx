@@ -15,7 +15,7 @@ export function BookListCard({ book }: BookListCardProps) {
 
 
   return (
-    <article className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-0.5 hover:shadow-md md:flex-row md:items-start">
+    <article className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg md:flex-row md:items-start">
       <div className="relative w-full overflow-hidden rounded-xl bg-slate-50 md:w-35">
         <div className="aspect-3/4">
           <ImageViewer

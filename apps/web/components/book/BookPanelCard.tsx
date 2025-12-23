@@ -14,7 +14,7 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
     useBookCopy(book);
 
   return (
-    <article className="flex gap-4 rounded-lg bg-white p-3 ring-1 ring-slate-100 hover:shadow-sm">
+    <article className="flex gap-4 rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg">
       <div className="relative w-32 shrink-0 overflow-hidden rounded-md bg-slate-50">
         <div className="aspect-3/4">
           <ImageViewer
