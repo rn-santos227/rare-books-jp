@@ -2,12 +2,17 @@
 
 import { useMemo, useState } from "react";
 
-import BookCard from "@/components/book/BookCard";
+import { BookCompactCard } from "@/components/book/BookCompactCard";
+import { BookListCard } from "@/components/book/BookListCard";
+import { BookPanelCard } from "@/components/book/BookPanelCard";
+import { FilterDropdown } from "@/components/catalog/FilterDropdown";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
-import { Badge, Button } from "@/components/ui";
+import { ViewModeToggle } from "@/components/catalog/ViewModeToggle";
+import { Badge, Button, TextField } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { useCatalog } from "./hooks/useCatalog";
+import { useViewToggle } from "./ViewModeToggle";
 import { Book } from "@/types/book";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
@@ -50,6 +55,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     loadMoreRef,
   } = useCatalog(books);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const { viewMode, setViewMode } = useViewToggle("panel");
   const filtersPanelId = "catalog-filters-panel";
 
   const { include: includedCategories, exclude: excludedCategories } = useMemo(
@@ -90,6 +96,24 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
       selectedCondition,
     ],
   );
+
+  const viewLabels = useMemo(
+    () => ({
+      list: t.catalog.listView,
+      panel: t.catalog.panelView,
+      compact: t.catalog.compactView,
+    }),
+    [t.catalog.listView, t.catalog.panelView, t.catalog.compactView],
+  );
+
+  const updateDropdownSelection = (
+    key: "categories" | "genres",
+    nextIds: string[],
+  ) => {
+    const group = filters[key];
+    const cleanedExcludes = group.exclude.filter((id) => !nextIds.includes(id));
+    updateFilter(key, { ...group, include: nextIds, exclude: cleanedExcludes });
+  };
 
   return (
     <div className="space-y-6">
