@@ -100,6 +100,7 @@ export type Translations = {
     subtitle: string;
     reset: string;
     searchPlaceholder: string;
+    authorPlaceholder: string;
     selectionHint: string;
     matchAny: string;
     matchAll: string;

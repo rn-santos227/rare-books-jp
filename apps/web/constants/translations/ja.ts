@@ -68,6 +68,7 @@ export const ja: Translations = {
     subtitle: "理想の棚を作る",
     reset: "リセット",
     searchPlaceholder: "タイトルまたは著者で検索",
+    authorPlaceholder: "著者名で絞り込み",
     selectionHint: "タップで含め、もう一度で除外します",
     matchAny: "いずれかに一致",
     matchAll: "すべてに一致",

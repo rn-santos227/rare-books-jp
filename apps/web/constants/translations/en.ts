@@ -68,6 +68,7 @@ export const en: Translations = {
     subtitle: "Craft the perfect shelf",
     reset: "Reset",
     searchPlaceholder: "Search by title or author",
+    authorPlaceholder: "Filter by author name",
     selectionHint: "Tap once to include, again to exclude",
     matchAny: "Match any",
     matchAll: "Match all",
