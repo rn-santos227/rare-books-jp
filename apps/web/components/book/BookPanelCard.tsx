@@ -67,6 +67,21 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
         </div>
 
         <p className="line-clamp-4 text-sm leading-relaxed text-slate-700">{description}</p>
+
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:items-center">
+          <div className="rounded-xl bg-slate-50 p-3 text-xs font-semibold text-slate-600">
+            <span className="block text-[11px] uppercase tracking-wide text-slate-400">{t.book.category}</span>
+            {categoryLabel || t.common.loading}
+          </div>
+          <div className="rounded-xl bg-slate-50 p-3 text-xs font-semibold text-slate-600">
+            <span className="block text-[11px] uppercase tracking-wide text-slate-400">{t.book.condition}</span>
+            {book.condition ? conditionLabel : t.common.loading}
+          </div>
+          <div className="rounded-xl bg-slate-50 p-3 text-xs font-semibold text-slate-600">
+            <span className="block text-[11px] uppercase tracking-wide text-slate-400">{t.book.inventory}</span>
+            {inventoryLabel ?? t.book.inventoryUnknown}
+          </div>
+        </div>
       </div>
     </article>
   );
