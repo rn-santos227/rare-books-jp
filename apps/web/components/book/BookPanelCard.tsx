@@ -54,7 +54,19 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
               ))}
             </div>
           </div>
+          <div className="flex flex-col items-end gap-2 text-sm font-semibold text-slate-800">
+            {book.condition && (
+              <Badge tone="info" className="bg-slate-900 text-slate-100">
+                {conditionLabel}
+              </Badge>
+            )}
+            <span className="rounded-full bg-indigo-50 px-3 py-1 text-indigo-700">
+              {formatPriceLabel(book.price, t.common.askPrice)}
+            </span>
+          </div>
         </div>
+
+        <p className="line-clamp-4 text-sm leading-relaxed text-slate-700">{description}</p>
       </div>
     </article>
   );
