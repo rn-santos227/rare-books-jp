@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { CatalogGrid } from "@/components/catalog/CatalogGrid";
 import { useTranslations } from "@/context/LanguageContext";
@@ -16,6 +18,38 @@ type CatalogPageClientProps = {
 
 export function CatalogPageClient({ books, categories, genres }: CatalogPageClientProps) {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+
+  const initialFilters = useMemo(() => {
+    const parseValues = (param: string) =>
+      searchParams
+        .getAll(param)
+        .flatMap((value) => value.split(","))
+        .map((value) => value.trim())
+        .filter(Boolean);
+
+    const selectedGenreSlugs = parseValues("genre");
+    const selectedCategorySlugs = parseValues("category");
+
+    const genresBySlug = new Map(genres.map((genre) => [genre.slug, genre._id]));
+    const categoriesBySlug = new Map(categories.map((category) => [category.slug, category._id]));
+
+    const includedGenres = selectedGenreSlugs
+      .map((slug) => genresBySlug.get(slug))
+      .filter((id): id is string => Boolean(id));
+    const includedCategories = selectedCategorySlugs
+      .map((slug) => categoriesBySlug.get(slug))
+      .filter((id): id is string => Boolean(id));
+
+    return {
+      categories: { include: includedCategories, exclude: [], mode: "any" as const },
+      genres: { include: includedGenres, exclude: [], mode: "any" as const },
+    };
+  }, [categories, genres, searchParams]);
+  const initialFiltersKey = useMemo(
+    () => JSON.stringify(initialFilters),
+    [initialFilters],
+  );
 
   return (
     <div className="flex flex-col gap-6 lg:gap-8">
@@ -39,7 +73,13 @@ export function CatalogPageClient({ books, categories, genres }: CatalogPageClie
         </div>
       </div>
 
-      <CatalogGrid books={books} categories={categories} genres={genres} />
+     <CatalogGrid
+        key={initialFiltersKey}
+        books={books}
+        categories={categories}
+        genres={genres}
+        initialFilters={initialFilters}
+      />
     </div>
   );
 }
