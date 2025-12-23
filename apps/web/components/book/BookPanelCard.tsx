@@ -82,6 +82,28 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
             {inventoryLabel ?? t.book.inventoryUnknown}
           </div>
         </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+            {genreLabels?.slice(5, 10).map((genre, index) => (
+              <Badge key={`${book._id}-panel-extra-${index}`} tone="neutral">
+                {genre}
+              </Badge>
+            ))}
+          </div>
+          <Button
+            variant="secondary"
+            href={book.slug ? `/books/${book.slug}` : "#"}
+            aria-disabled={!book.slug}
+            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+              if (!book.slug) {
+                event.preventDefault();
+              }
+            }}
+          >
+            {t.common.viewDetails}
+          </Button>
+        </div>
       </div>
     </article>
   );

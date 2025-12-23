@@ -87,9 +87,9 @@ export type Translations = {
     showFilters: string;
     hideFilters: string;
     advancedHelper: string;
-    gridView: string;
     listView: string;
-    splitView: string;
+    panelView: string;
+    compactView: string;
     activeLabel: string;
     noBooksTitle: string;
     noBooksBody: string;
@@ -115,7 +115,6 @@ export type Translations = {
     categoriesPlaceholder: string;
     genresPlaceholder: string;
     clearSelection: string;
-
     priceHelper: (min: number, max: number) => string;
     conditionLabels: Record<ConditionKey, string>;
   };
