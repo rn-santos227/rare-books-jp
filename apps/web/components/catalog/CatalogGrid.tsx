@@ -343,11 +343,29 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
         </div>
 
         <div className="space-y-6">
-          <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {displayedBooks.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
+          {viewMode === "panel" && (
+            <div className="space-y-4">
+              {displayedBooks.map((book) => (
+                <BookPanelCard key={book._id} book={book} />
+              ))}
+            </div>
+          )}
+
+          {viewMode === "list" && (
+            <div className="space-y-4">
+              {displayedBooks.map((book) => (
+                <BookListCard key={book._id} book={book} />
+              ))}
+            </div>
+          )}
+
+          {viewMode === "compact" && (
+            <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {displayedBooks.map((book) => (
+                <BookCompactCard key={book._id} book={book} />
+              ))}
+            </div>
+          )}
 
           {filteredBooks.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-gray-200">
