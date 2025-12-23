@@ -1,8 +1,12 @@
 "use client";
 
-import { Badge } from "@/components/ui";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import { Badge, Button } from "@/components/ui";
 import { SupportedLanguage } from "@/constants/translations";
+import { FiltersState } from "@/hooks/useFilters";
 import { getLocalizedText } from "@/lib/localization";
+import { FilterPill } from "./FilterPill";
 
 type LocalizedEntity = {
   _id: string;
@@ -14,14 +18,17 @@ type FilterDropdownProps = {
   label: string;
   placeholder: string;
   items: LocalizedEntity[];
-  selected: string[];
+  selection: FiltersState["categories"];
   language: SupportedLanguage;
   helper: string;
   badgeTone: "info" | "neutral";
   clearLabel: string;
   resetLabel: string;
-  onChange: (ids: string[]) => void;
-  onClear: () => void;
+  includeLabel: string;
+  excludeLabel: string;
+  matchAnyLabel: string;
+  matchAllLabel: string;
+  onChange: (selection: FiltersState["categories"]) => void;
 };
 
 
@@ -29,15 +36,21 @@ export function FilterDropdown({
   label,
   placeholder,
   items,
-  selected,
+  selection,
   language,
   helper,
   badgeTone,
   clearLabel,
   resetLabel,
+  includeLabel,
+  excludeLabel,
+  matchAnyLabel,
+  matchAllLabel,
   onChange,
-  onClear,
 }: FilterDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
       <div className="flex items-center justify-between gap-2">
