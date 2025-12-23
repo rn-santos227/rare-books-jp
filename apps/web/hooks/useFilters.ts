@@ -5,6 +5,12 @@ import { Book } from "@/types/book";
 
 type LogicalOperator = "any" | "all";
 
+const INITIAL_GROUP: GroupFilters = {
+  include: [],
+  exclude: [],
+  mode: "any",
+};
+
 type GroupFilters = {
   include: string[];
   exclude: string[];
@@ -34,21 +40,21 @@ function computePriceBounds(books: Book[]): [number, number] {
   return [Math.min(...prices), Math.max(...prices)];
 }
 
-export function useFilters(books: Book[]) {
-  const initialGroup: GroupFilters = {
-    include: [],
-    exclude: [],
-    mode: "any",
-  };
+export function useFilters(books: Book[], initialFilters?: Partial<FiltersState>) {
+  const [filters, setFilters] = useState<FiltersState>(() => {
+    const priceRange = computePriceBounds(books);
 
-  const [filters, setFilters] = useState<FiltersState>(() => ({
-    searchQuery: "",
-    authorQuery: "",
-    categories: { ...initialGroup },
-    genres: { ...initialGroup },
-    condition: null,
-    priceRange: computePriceBounds(books),
-  }));
+    return {
+      searchQuery: "",
+      authorQuery: "",
+      condition: null,
+      ...initialFilters,
+      categories: { ...INITIAL_GROUP, ...initialFilters?.categories },
+      genres: { ...INITIAL_GROUP, ...initialFilters?.genres },
+      priceRange: initialFilters?.priceRange ?? priceRange,
+    };
+  });
+
 
   const matchesGroup = (
     values: string[],
@@ -126,8 +132,8 @@ export function useFilters(books: Book[]) {
       ...prev,
       searchQuery: "",
       authorQuery: "",
-      categories: { ...initialGroup },
-      genres: { ...initialGroup },
+      categories: { ...INITIAL_GROUP },
+      genres: { ...INITIAL_GROUP },
       condition: null,
       priceRange: priceBounds,
     }));

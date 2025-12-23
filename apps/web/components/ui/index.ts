@@ -9,3 +9,4 @@ export { Spinner } from "./Spinner";
 export { TextArea } from "./TextArea";
 export { TextField } from "./TextField";
 export { Modal } from "./Modal";
+export { Tooltip } from "./Tooltip";
