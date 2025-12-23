@@ -13,6 +13,7 @@ type GroupFilters = {
 
 export type FiltersState = {
   searchQuery: string;
+  authorQuery: string;
   categories: GroupFilters;
   genres: GroupFilters;
   condition: string | null;
@@ -42,6 +43,7 @@ export function useFilters(books: Book[]) {
 
   const [filters, setFilters] = useState<FiltersState>(() => ({
     searchQuery: "",
+    authorQuery: "",
     categories: { ...initialGroup },
     genres: { ...initialGroup },
     condition: null,
@@ -76,6 +78,10 @@ export function useFilters(books: Book[]) {
             .includes(filters.searchQuery.toLowerCase())
         : true;
 
+      const matchesAuthor = filters.authorQuery
+        ? `${book.author ?? ""}`.toLowerCase().includes(filters.authorQuery.toLowerCase())
+        : true;
+
       const matchesCategory = matchesGroup(
         book.category?._id ? [book.category._id] : [],
         filters.categories,
@@ -96,6 +102,7 @@ export function useFilters(books: Book[]) {
 
       return (
         matchesSearch &&
+        matchesAuthor &&
         matchesCategory &&
         matchesGenre &&
         matchesCondition &&
@@ -118,6 +125,7 @@ export function useFilters(books: Book[]) {
     setFilters((prev) => ({
       ...prev,
       searchQuery: "",
+      authorQuery: "",
       categories: { ...initialGroup },
       genres: { ...initialGroup },
       condition: null,
