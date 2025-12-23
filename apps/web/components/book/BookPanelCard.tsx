@@ -39,6 +39,23 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
           )}
         </div>
       </div>
+
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-4">
+          <div className="space-y-1">
+            <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{author}</p>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {categoryLabel && <Badge tone="neutral">{categoryLabel}</Badge>}
+              {genreLabels?.slice(0, 5).map((genre, index) => (
+                <Badge key={`${book._id}-panel-genre-${index}`} tone="neutral">
+                  {genre}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </article>
   );
 }
