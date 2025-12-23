@@ -55,7 +55,6 @@ export function useFilters(books: Book[], initialFilters?: Partial<FiltersState>
     };
   });
 
-
   const matchesGroup = (
     values: string[],
     group: GroupFilters,

@@ -23,8 +23,15 @@ type UseCatalogReturn = {
   loadMoreRef: RefObject<HTMLDivElement | null>;
 };
 
-export function useCatalog(books: Book[]): UseCatalogReturn {
-  const { filters, filteredBooks, priceBounds, updateFilter, resetFilters } = useFilters(books);
+export function useCatalog(
+  books: Book[],
+  initialFilters?: Partial<FiltersState>,
+): UseCatalogReturn {
+  const { filters, filteredBooks, priceBounds, updateFilter, resetFilters } = useFilters(
+    books,
+    initialFilters,
+  );
+
   const [visibleCount, setVisibleCount] = useState(Math.min(INITIAL_BATCH, books.length));
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
