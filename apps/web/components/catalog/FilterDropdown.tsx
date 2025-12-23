@@ -91,6 +91,16 @@ export function FilterDropdown({
     onChange({ ...selection, include: [...selection.include, id] });
   };
 
+  const handleModeChange = (mode: FiltersState["categories"]["mode"]) =>
+    onChange({ ...selection, mode });
+
+  const clearSelection = () =>
+    onChange({ ...selection, include: [], exclude: [], mode: "any" });
+
+  const selectedLabel = useMemo(() => {
+    const hasAny = selection.include.length > 0 || selection.exclude.length > 0;
+    if (!hasAny) return placeholder;
+
   return (
     <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
       <div className="flex items-center justify-between gap-2">
