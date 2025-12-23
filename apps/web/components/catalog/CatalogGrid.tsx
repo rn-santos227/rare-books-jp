@@ -7,7 +7,7 @@ import { BookListCard } from "@/components/book/BookListCard";
 import { BookPanelCard } from "@/components/book/BookPanelCard";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
 import { ViewModeToggle } from "@/components/catalog/ViewModeToggle";
-import { Badge, Button, TextField } from "@/components/ui";
+import { Badge, Button } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getConditionLabel, getLocalizedText } from "@/lib/localization";
 import { useCatalog } from "./hooks/useCatalog";
@@ -129,23 +129,6 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-1 flex-col gap-2">
-              <TextField
-                placeholder={t.filters.searchPlaceholder}
-                value={filters.searchQuery}
-                onChange={(event) => updateFilter("searchQuery", event.target.value)}
-                aria-label={t.filters.searchPlaceholder}
-              />
-              <p className="text-xs text-slate-500">{t.catalog.advancedHelper}</p>
-            </div>
-            <ViewModeToggle value={viewMode} onChange={setViewMode} labels={viewLabels} />
-          </div>
-        </div>
-      </div>
-
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
           <span className="uppercase tracking-wide text-slate-400">{t.catalog.activeLabel}</span>
@@ -264,22 +247,6 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
 
       <div className="grid gap-6 lg:grid-cols-[440px,1fr]">
         <div className="space-y-3">
-          <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold text-indigo-600">{t.filters.title}</p>
-                <p className="text-xs text-slate-500">{t.filters.subtitle}.</p>
-              </div>
-              <Button
-                variant="ghost"
-                className="text-sm font-semibold text-indigo-700"
-                onClick={resetFilters}
-              >
-                {t.filters.reset}
-              </Button>
-            </div>
-          </div>
-
           <div
             id={filtersPanelId}
             data-open={isFiltersOpen}
@@ -297,6 +264,14 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
               resetFilters={resetFilters}
             />
           </div>
+        </div>
+
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-end">
+          <ViewModeToggle
+            value={viewMode}
+            onChange={setViewMode}
+            labels={viewLabels}
+          />
         </div>
 
         <div className="space-y-6">

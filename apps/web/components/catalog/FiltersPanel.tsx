@@ -62,60 +62,46 @@ export function FiltersPanel({
         </div>
       </div>
 
-      <TextField
-        placeholder={t.filters.searchPlaceholder}
-        value={filters.searchQuery}
-        onChange={(event) => updateFilter("searchQuery", event.target.value)}
-      />
+      <div className="space-y-4">
+        <TextField
+          placeholder={t.filters.authorPlaceholder}
+          value={filters.authorQuery}
+          onChange={(event) => updateFilter("authorQuery", event.target.value)}
+        />
 
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-800">{t.filters.categories}</h3>
-          <Badge tone="info">{categories.length}</Badge>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
-          <p>{t.filters.selectionHint}</p>
-          {renderModeToggle("categories", filters.categories.mode)}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <FilterPill
-              key={category._id}
-              label={getLocalizedText(language, category.name, category.nameJa)}
-              state={resolvePillState(
-                filters.categories.include,
-                filters.categories.exclude,
-                category._id,
-              )}
-              onClick={() => cycleSelection("categories", category._id)}
-            />
-          ))}
-        </div>
-      </div>
+        <FilterDropdown
+          label={t.filters.categories}
+          placeholder={t.filters.categoriesPlaceholder}
+          items={categories}
+          selection={filters.categories}
+          language={language}
+          helper={t.filters.dropdownHelper}
+          badgeTone="info"
+          clearLabel={t.filters.clearSelection}
+          resetLabel={t.filters.reset}
+          includeLabel={t.filters.includeLabel}
+          excludeLabel={t.filters.excludeLabel}
+          matchAnyLabel={t.filters.matchAny}
+          matchAllLabel={t.filters.matchAll}
+          onChange={(next) => updateSelection("categories", next)}
+        />
 
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-800">{t.filters.genres}</h3>
-          <Badge tone="neutral">{genres.length}</Badge>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
-          <p>{t.filters.selectionHint}</p>
-          {renderModeToggle("genres", filters.genres.mode)}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {genres.map((genre) => (
-            <FilterPill
-              key={genre._id}
-              label={getLocalizedText(language, genre.name, genre.nameJa)}
-              state={resolvePillState(
-                filters.genres.include,
-                filters.genres.exclude,
-                genre._id,
-              )}
-              onClick={() => cycleSelection("genres", genre._id)}
-            />
-          ))}
-        </div>
+        <FilterDropdown
+          label={t.filters.genres}
+          placeholder={t.filters.genresPlaceholder}
+          items={genres}
+          selection={filters.genres}
+          language={language}
+          helper={t.filters.dropdownHelper}
+          badgeTone="neutral"
+          clearLabel={t.filters.clearSelection}
+          resetLabel={t.filters.reset}
+          includeLabel={t.filters.includeLabel}
+          excludeLabel={t.filters.excludeLabel}
+          matchAnyLabel={t.filters.matchAny}
+          matchAllLabel={t.filters.matchAll}
+          onChange={(next) => updateSelection("genres", next)}
+        />
       </div>
 
       <div className="space-y-3">
