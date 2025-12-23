@@ -10,6 +10,7 @@ import { ViewModeToggle } from "@/components/catalog/ViewModeToggle";
 import { Badge, Button } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { getConditionLabel, getLocalizedText } from "@/lib/localization";
+import { FiltersState } from "@/hooks/useFilters";
 import { useCatalog } from "./hooks/useCatalog";
 import { useViewToggle } from "./ViewModeToggle";
 import { Book } from "@/types/book";
@@ -20,6 +21,7 @@ type CatalogGridProps = {
   books: Book[];
   categories: Category[];
   genres: Genre[];
+  initialFilters?: Partial<FiltersState>;
 };
 
 type LocalizedEntity = {
@@ -39,7 +41,7 @@ function selectMatches<T extends LocalizedEntity>(
   };
 }
 
-export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
+export function CatalogGrid({ books, categories, genres, initialFilters }: CatalogGridProps) {
   const { language } = useLanguage();
   const t = useTranslations();
   const {
@@ -52,7 +54,7 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     updateFilter,
     resetFilters,
     loadMoreRef,
-  } = useCatalog(books);
+  } = useCatalog(books, initialFilters);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const { viewMode, setViewMode } = useViewToggle("panel");
   const filtersPanelId = "catalog-filters-panel";
