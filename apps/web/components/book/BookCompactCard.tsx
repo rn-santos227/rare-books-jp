@@ -28,6 +28,26 @@ export function BookCompactCard({ book }: BookCompactCardProps) {
           <FavoriteToggle book={book} size="sm" />
         </div>
       </div>
+      <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 via-black/20 to-transparent px-4 pb-4 pt-10 text-white">
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <span className="inline-flex h-2 w-2 rounded-full bg-white" aria-hidden />
+          {categoryLabel && <Badge tone="info" className="bg-white/90 text-slate-900">{categoryLabel}</Badge>}
+        </div>
+        <h3 className="text-base font-semibold leading-tight drop-shadow">{title}</h3>
+        <Button
+          variant="secondary"
+          className="mt-2 bg-white/90 text-slate-900 hover:bg-white"
+          href={book.slug ? `/books/${book.slug}` : "#"}
+          aria-disabled={!book.slug}
+          onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+            if (!book.slug) {
+              event.preventDefault();
+            }
+          }}
+        >
+          {t.common.viewDetails}
+        </Button>
+      </div>
     </article>
   );
 }
