@@ -9,4 +9,8 @@ type BookPanelCardProps = {
   book: Book;
 };
 
+export function BookPanelCard({ book }: BookPanelCardProps) {
+  const { t, title, author, description, conditionLabel, categoryLabel, genreLabels, inventoryLabel } =
+    useBookCopy(book);
 
+}
