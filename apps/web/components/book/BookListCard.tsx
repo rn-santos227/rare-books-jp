@@ -61,6 +61,28 @@ export function BookListCard({ book }: BookListCardProps) {
             )}
           </div>
         </div> 
+
+        <p className="line-clamp-3 text-sm text-slate-700">{description}</p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Button
+            variant="secondary"
+            href={book.slug ? `/books/${book.slug}` : "#"}
+            aria-disabled={!book.slug}
+            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+              if (!book.slug) {
+                event.preventDefault();
+              }
+            }}
+          >
+            {t.common.viewDetails}
+          </Button>
+          {genreLabels?.slice(4, 10).map((genre, index) => (
+            <Badge key={`${book._id}-list-extra-${index}`} tone="neutral" className="bg-slate-50">
+              {genre}
+            </Badge>
+          ))}
+        </div>
       </div>
     </article>
   );
