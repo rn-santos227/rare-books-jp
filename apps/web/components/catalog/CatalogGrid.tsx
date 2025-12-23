@@ -139,6 +139,67 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
         </div>
       </div>
 
+      <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-1 flex-col gap-2">
+              <TextField
+                placeholder={t.filters.searchPlaceholder}
+                value={filters.searchQuery}
+                onChange={(event) => updateFilter("searchQuery", event.target.value)}
+                aria-label={t.filters.searchPlaceholder}
+              />
+              <p className="text-xs text-slate-500">{t.catalog.advancedHelper}</p>
+            </div>
+            <ViewModeToggle value={viewMode} onChange={setViewMode} labels={viewLabels} />
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <FilterDropdown
+              label={t.filters.categories}
+              placeholder={t.filters.categoriesPlaceholder}
+              items={categories}
+              selected={filters.categories.include}
+              language={language}
+              helper={t.filters.dropdownHelper}
+              badgeTone="info"
+              clearLabel={t.filters.clearSelection}
+              resetLabel={t.filters.reset}
+              onChange={(ids) => updateDropdownSelection("categories", ids)}
+              onClear={() => updateDropdownSelection("categories", [])}
+            />
+            <FilterDropdown
+              label={t.filters.genres}
+              placeholder={t.filters.genresPlaceholder}
+              items={genres}
+              selected={filters.genres.include}
+              language={language}
+              helper={t.filters.dropdownHelper}
+              badgeTone="neutral"
+              clearLabel={t.filters.clearSelection}
+              resetLabel={t.filters.reset}
+              onChange={(ids) => updateDropdownSelection("genres", ids)}
+              onClear={() => updateDropdownSelection("genres", [])}
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-indigo-500" aria-hidden />
+              {t.filters.dropdownHelper}
+            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="neutral" className="bg-slate-100 text-slate-700">
+                {t.catalog.matches}: {filteredBooks.length}
+              </Badge>
+              <Button variant="ghost" className="text-indigo-700" onClick={resetFilters}>
+                {t.filters.reset}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
           <span className="uppercase tracking-wide text-slate-400">{t.catalog.activeLabel}</span>
