@@ -9,4 +9,7 @@ type BookCompactCardProps = {
   book: Book;
 };
 
+export function BookCompactCard({ book }: BookCompactCardProps) {
+  const { t, title, categoryLabel } = useBookCopy(book);
 
+}
