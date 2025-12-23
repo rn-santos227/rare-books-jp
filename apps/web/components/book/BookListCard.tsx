@@ -10,5 +10,7 @@ type BookListCardProps = {
 };
 
 export function BookListCard({ book }: BookListCardProps) {
+  const { t, title, author, description, conditionLabel, categoryLabel, genreLabels, inventoryLabel } =
+    useBookCopy(book);
 
 }
