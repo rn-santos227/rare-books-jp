@@ -51,6 +51,23 @@ export function FilterDropdown({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const resolvePillState = (id: string) => {
+    if (selection.include.includes(id)) return "include" as const;
+    if (selection.exclude.includes(id)) return "exclude" as const;
+    return "inactive" as const;
+  };
+
   return (
     <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
       <div className="flex items-center justify-between gap-2">
