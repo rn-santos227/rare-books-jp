@@ -25,6 +25,19 @@ export function BookPanelCard({ book }: BookPanelCardProps) {
             imgClassName="object-cover"
           />
         </div>
+        <div className="absolute right-3 top-3">
+          <FavoriteToggle book={book} size="sm" />
+        </div>
+        <div className="absolute inset-x-0 bottom-3 flex flex-wrap items-center justify-between gap-2 px-3 text-xs font-semibold text-white drop-shadow">
+          <span className="rounded-full bg-linear-to-r from-[#111827] to-[#1f2937] px-3 py-1">
+            {formatPriceLabel(book.price, t.common.askPrice)}
+          </span>
+          {inventoryLabel && (
+            <span className="rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white shadow-sm ring-1 ring-white/20">
+              {inventoryLabel}
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );
