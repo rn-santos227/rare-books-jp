@@ -2,36 +2,29 @@
 
 import { Badge, Button, ImageViewer } from "@/components/ui";
 import { FavoriteToggle } from "@/components/favorites/FavoriteToggle";
-import { useLanguage, useTranslations } from "@/context/LanguageContext";
-import { getConditionLabel, getLocalizedText } from "@/lib/localization";
-
+import { useBookCopy } from "./hooks/useBookCopy";
 import { Book } from "@/types/book";
+
+type Props = {
+  book: Book;
+};
 
 function formatPrice(price: number | null | undefined, fallbackLabel: string) {
   if (!price && price !== 0) return fallbackLabel;
   return `¥${price.toLocaleString()}`;
 }
 
-type Props = {
-  book: Book;
-};
-
 export default function BookCard({ book }: Props) {
-  const { language } = useLanguage();
-  const t = useTranslations();
-  const title = getLocalizedText(language, book.title, book.titleJa);
-  const author = getLocalizedText(language, book.author, book.authorJa) || t.common.unknownAuthor;
-  const description =
-    getLocalizedText(language, book.description, book.descriptionJa) || t.book.descriptionFallback;
-  const conditionLabel = getConditionLabel(language, book.condition);
-  const categoryLabel = getLocalizedText(language, book.category?.name, book.category?.nameJa);
-  const genreLabels = book.genres?.map((genre) => getLocalizedText(language, genre.name, genre.nameJa));
-  const inventoryLabel =
-    book.inventory === undefined || book.inventory === null
-      ? null
-      : book.inventory > 0
-        ? t.book.inventoryInStock(book.inventory)
-        : t.book.inventoryOutOfStock;
+  const {
+    t,
+    title,
+    author,
+    description,
+    conditionLabel,
+    categoryLabel,
+    genreLabels,
+    inventoryLabel,
+  } = useBookCopy(book);
 
   return (
     <article className="group grid h-full grid-rows-[auto,1fr] gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg">
