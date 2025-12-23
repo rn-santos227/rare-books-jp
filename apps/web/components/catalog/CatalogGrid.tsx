@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { BookCompactCard } from "@/components/book/BookCompactCard";
 import { BookListCard } from "@/components/book/BookListCard";
 import { BookPanelCard } from "@/components/book/BookPanelCard";
-import { FilterDropdown } from "@/components/catalog/FilterDropdown";
 import { FiltersPanel } from "@/components/catalog/FiltersPanel";
 import { ViewModeToggle } from "@/components/catalog/ViewModeToggle";
 import { Badge, Button, TextField } from "@/components/ui";
@@ -106,15 +105,6 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
     [t.catalog.listView, t.catalog.panelView, t.catalog.compactView],
   );
 
-  const updateDropdownSelection = (
-    key: "categories" | "genres",
-    nextIds: string[],
-  ) => {
-    const group = filters[key];
-    const cleanedExcludes = group.exclude.filter((id) => !nextIds.includes(id));
-    updateFilter(key, { ...group, include: nextIds, exclude: cleanedExcludes });
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -152,50 +142,6 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
               <p className="text-xs text-slate-500">{t.catalog.advancedHelper}</p>
             </div>
             <ViewModeToggle value={viewMode} onChange={setViewMode} labels={viewLabels} />
-          </div>
-
-          <div className="grid gap-3 md:grid-cols-2">
-            <FilterDropdown
-              label={t.filters.categories}
-              placeholder={t.filters.categoriesPlaceholder}
-              items={categories}
-              selected={filters.categories.include}
-              language={language}
-              helper={t.filters.dropdownHelper}
-              badgeTone="info"
-              clearLabel={t.filters.clearSelection}
-              resetLabel={t.filters.reset}
-              onChange={(ids) => updateDropdownSelection("categories", ids)}
-              onClear={() => updateDropdownSelection("categories", [])}
-            />
-            <FilterDropdown
-              label={t.filters.genres}
-              placeholder={t.filters.genresPlaceholder}
-              items={genres}
-              selected={filters.genres.include}
-              language={language}
-              helper={t.filters.dropdownHelper}
-              badgeTone="neutral"
-              clearLabel={t.filters.clearSelection}
-              resetLabel={t.filters.reset}
-              onChange={(ids) => updateDropdownSelection("genres", ids)}
-              onClear={() => updateDropdownSelection("genres", [])}
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-indigo-500" aria-hidden />
-              {t.filters.dropdownHelper}
-            </span>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge tone="neutral" className="bg-slate-100 text-slate-700">
-                {t.catalog.matches}: {filteredBooks.length}
-              </Badge>
-              <Button variant="ghost" className="text-indigo-700" onClick={resetFilters}>
-                {t.filters.reset}
-              </Button>
-            </div>
           </div>
         </div>
       </div>
