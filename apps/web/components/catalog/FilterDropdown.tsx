@@ -101,6 +101,14 @@ export function FilterDropdown({
     const hasAny = selection.include.length > 0 || selection.exclude.length > 0;
     if (!hasAny) return placeholder;
 
+    const includeCount = selection.include.length;
+    const excludeCount = selection.exclude.length;
+    const includeText = includeCount > 0 ? `${includeLabel}: ${includeCount}` : "";
+    const excludeText = excludeCount > 0 ? `${excludeLabel}: ${excludeCount}` : "";
+
+    return [includeText, excludeText].filter(Boolean).join(" · ");
+  }, [excludeLabel, selection.exclude.length, selection.include.length, includeLabel, placeholder]);
+
   return (
     <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
       <div className="flex items-center justify-between gap-2">
