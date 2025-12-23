@@ -248,6 +248,17 @@ export function CatalogGrid({ books, categories, genres }: CatalogGridProps) {
               </button>
             </Badge>
           )}
+          {filters.authorQuery && (
+            <Badge tone="neutral" className="flex items-center gap-2 bg-indigo-50 text-indigo-700">
+              {filters.authorQuery}
+              <button
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() => updateFilter("authorQuery", "")}
+              >
+                ×
+              </button>
+            </Badge>
+          )}
         </div>
       )}
 

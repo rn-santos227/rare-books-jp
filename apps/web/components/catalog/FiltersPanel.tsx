@@ -3,9 +3,10 @@
 import { Badge, Button, TextField } from "@/components/ui";
 import { useLanguage, useTranslations } from "@/context/LanguageContext";
 import { FiltersState } from "@/hooks/useFilters";
-import { getConditionLabel, getLocalizedText } from "@/lib/localization";
+import { getConditionLabel } from "@/lib/localization";
 import { Category } from "@/types/category";
 import { Genre } from "@/types/genre";
+import { FilterDropdown } from "./FilterDropdown";
 import { FilterPill } from "./FilterPill";
 
 type FiltersPanelProps = {
@@ -38,68 +39,10 @@ export function FiltersPanel({
   const { language } = useLanguage();
   const t = useTranslations();
 
-  const resolvePillState = (
-    ids: string[],
-    excluded: string[],
-    id: string,
-  ) => {
-    if (ids.includes(id)) return "include" as const;
-    if (excluded.includes(id)) return "exclude" as const;
-    return "inactive" as const;
-  };
-
-  const cycleSelection = (
+  const updateSelection = (
     key: "categories" | "genres",
-    id: string,
-  ) => {
-    const group = filters[key];
-    const state = resolvePillState(group.include, group.exclude, id);
-
-    if (state === "include") {
-      updateFilter(key, {
-        ...group,
-        include: group.include.filter((value) => value !== id),
-        exclude: [...group.exclude, id],
-      });
-      return;
-    }
-
-    if (state === "exclude") {
-      updateFilter(key, {
-        ...group,
-        exclude: group.exclude.filter((value) => value !== id),
-      });
-      return;
-    }
-
-    updateFilter(key, { ...group, include: [...group.include, id] });
-  };
-
-  const updateMode = (
-    key: "categories" | "genres",
-    mode: FiltersState["categories"]["mode"],
-  ) => updateFilter(key, { ...filters[key], mode });
-
-  const renderModeToggle = (
-    key: "categories" | "genres",
-    currentMode: FiltersState["categories"]["mode"],
-  ) => (
-    <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1 text-xs font-semibold text-slate-600">
-      {(["any", "all"] as const).map((mode) => (
-        <button
-          key={mode}
-          onClick={() => updateMode(key, mode)}
-          className={`rounded-full px-3 py-1 transition ${
-            currentMode === mode
-              ? "bg-white text-slate-900 shadow"
-              : "text-slate-600 hover:text-slate-800"
-          }`}
-        >
-          {mode === "any" ? t.filters.matchAny : t.filters.matchAll}
-        </button>
-      ))}
-    </div>
-  );
+    nextSelection: FiltersState["categories"],
+  ) => updateFilter(key, nextSelection);
 
   return (
     <aside className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
