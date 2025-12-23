@@ -68,6 +68,29 @@ export function FilterDropdown({
     return "inactive" as const;
   };
 
+  const togglePill = (id: string) => {
+    const state = resolvePillState(id);
+
+    if (state === "include") {
+      onChange({
+        ...selection,
+        include: selection.include.filter((value) => value !== id),
+        exclude: [...selection.exclude, id],
+      });
+      return;
+    }
+
+    if (state === "exclude") {
+      onChange({
+        ...selection,
+        exclude: selection.exclude.filter((value) => value !== id),
+      });
+      return;
+    }
+
+    onChange({ ...selection, include: [...selection.include, id] });
+  };
+
   return (
     <label className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-slate-50/60 p-3">
       <div className="flex items-center justify-between gap-2">
