@@ -1,8 +1,28 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
+import { buildOrderTrackingEmail } from "@/constants/email";
 import { sanityWriteClient } from "@/lib/sanity.client";
+import { sendEmail } from "@/lib/smtp.client";
 import { Order } from "@/types/order";
+
+async function sendOrderTrackingEmail({
+  buyerEmail,
+  buyerName,
+  trackingCode,
+}: {
+  buyerEmail: string;
+  buyerName: string;
+  trackingCode: string;
+}) {
+  const email = buildOrderTrackingEmail({ buyerName, trackingCode });
+
+  await sendEmail({
+    to: buyerEmail,
+    subject: email.subject,
+    text: email.text,
+  });
+}
 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -54,6 +74,12 @@ export async function POST(request: NextRequest) {
       message: message?.trim() || undefined,
       trackingCode,
       status: "new",
+    });
+
+    await sendOrderTrackingEmail({
+      buyerEmail: buyerEmail.trim(),
+      buyerName: buyerName.trim(),
+      trackingCode,
     });
 
     return NextResponse.json(

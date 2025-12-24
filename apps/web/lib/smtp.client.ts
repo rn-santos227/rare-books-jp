@@ -2,28 +2,49 @@ import net from "net";
 import tls from "tls";
 
 type SendEmailParams = {
+  to: string;
+  subject: string;
+  text: string;
+};
+
+type SmtpConfig = {
   host: string;
   port: number;
   secure: boolean;
   user: string;
   password: string;
   from: string;
-  to: string;
-  subject: string;
-  text: string;
 };
 
-export async function sendEmail({
-  host,
-  port,
-  secure,
-  user,
-  password,
-  from,
-  to,
-  subject,
-  text,
-}: SendEmailParams) {
+function getSmtpConfig(): SmtpConfig | null {
+  const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASSWORD, SMTP_FROM } = process.env;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASSWORD || !SMTP_FROM) {
+    return null;
+  }
+
+  const port = Number.parseInt(SMTP_PORT, 10);
+  if (Number.isNaN(port)) {
+    return null;
+  }
+
+  const secure = SMTP_SECURE === "true" || SMTP_SECURE === "1" || port === 465;
+
+  return {
+    host: SMTP_HOST,
+    port,
+    secure,
+    user: SMTP_USER,
+    password: SMTP_PASSWORD,
+    from: SMTP_FROM,
+  };
+}
+
+export async function sendEmail({ to, subject, text }: SendEmailParams) {
+  const config = getSmtpConfig();
+  if (!config) {
+    return;
+  }
+  const { host, port, secure, user, password, from } = config;
   const socket = await new Promise<net.Socket>((resolve, reject) => {
     const onError = (error: Error) => reject(error);
     const connection = secure
