@@ -1,7 +1,6 @@
 import net from "net";
 import tls from "tls";
 
-
 type SendEmailParams = {
   host: string;
   port: number;
@@ -14,3 +13,17 @@ type SendEmailParams = {
   text: string;
 };
 
+export async function sendEmail({
+  host,
+  port,
+  secure,
+  user,
+  password,
+  from,
+  to,
+  subject,
+  text,
+}: SendEmailParams) {
+
+
+}
