@@ -60,4 +60,30 @@ export async function sendEmail({
     return response;
   };
 
+  await readResponse();
+  await sendCommand(`EHLO ${host}`, 250);
+  await sendCommand("AUTH LOGIN", 334);
+  await sendCommand(Buffer.from(user).toString("base64"), 334);
+  await sendCommand(Buffer.from(password).toString("base64"), 235);
+  await sendCommand(`MAIL FROM:<${from}>`, 250);
+  await sendCommand(`RCPT TO:<${to}>`, 250);
+  await sendCommand("DATA", 354);
+  socket.write(
+    [
+      `From: ${from}`,
+      `To: ${to}`,
+      `Subject: ${subject}`,
+      "Content-Type: text/plain; charset=utf-8",
+      "",
+      text,
+      ".",
+      "",
+    ].join("\r\n"),
+  );
+  const dataResponse = await readResponse();
+  if (dataResponse.code !== 250) {
+    throw new Error(`SMTP error: ${dataResponse.message}`);
+  }
+  await sendCommand("QUIT");
+  socket.end();
 }
